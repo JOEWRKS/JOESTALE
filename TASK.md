@@ -51,3 +51,29 @@ Required specialist verdict: not applicable.
 Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending.
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
+
+## T-006 / 2026-10-30 / 실전 테스트에서 나온 오탐·결정표 공백 수정 (I-5~I-9)
+
+Roadmap item: P0-2, P1-2, P1-3 보강 (ISSUES I-5~I-9 닫기).
+Result: 검증기 G1 어절 분석 필터, G3 미등록 이름 한정·숫자 양방향 대조, 글자 수 출력. 결정표 D2(분량 우선순위·단위, 사물 시드 결정적 선택, 결합 시드 집계 기준)·D4(오탐 보고, 설계서 수정형 지적, 재검수, 검수자 설계서 범위)·D5(리포트 행 3개) 보강. seed_objects 30개.
+Changed files: `scripts/check_text.py`, `scripts/test_check_text.py`(+8건), `references/decisions.md`, `references/lexicon.json`, `references/reviewer-prompt.md`, `references/scene-design.md`, `ISSUES.md`.
+Check / target / result: test_check_text.py 26건 ALL OK. live-test-D `draft.v0.txt`(원래 오탐 3건이 난 판) 재검사 → G1·NNP 오탐 0. `final.txt`·worked-B `final.txt` PASS.
+Evidence: 이 항목의 실행 출력(채팅), test_check_text.py.
+Limits: XSM 태그 오류("손톱로")는 Kiwi 쪽 문제라 필터에서 일부러 제외. 수량 1은 대장 대조에서 빼기로 한 결정이라 "한 칸" 같은 누락은 못 잡음. 새 규칙으로 다시 쓴 실전 예는 없음.
+Required specialist verdict: not applicable.
+Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending.
+Related issue / knowledge: ISSUES I-5~I-9 (closed).
+Record handoff gap: none.
+
+## T-005 / 2026-10-30 / 새 세션 트리거 확인과 D 유형 실전 테스트
+
+Roadmap item: Phase 0 Optional "새 세션에서 joestale 트리거 확인", P4-1 예비 근거.
+Result: 새 세션 스킬 목록에 `joestale` 있음, "짧은 단편 하나 써줘"에 Skill 도구로 호출됨(트리거 성공). D 유형으로 0~5단계 전부 수행: 사물 시드 전기밥솥 + 결합 시드 장례식장, 6문단 1,229자, 검증 3회(위반 3 → 0 → 0), 서브에이전트 검수 지적 4건 → 처리 4건, 최종 PASS.
+Changed files: `joestale-work/live-test-D/`(design.json, draft.v0~v2.txt, final.txt, check.round1~3.json, report.json), `ISSUES.md`(I-5~I-9), `ROADMAP.md`(Optional 항목 갱신). `skills/joestale/`은 손대지 않음.
+Check / target / result: `check_text.py final.txt --design design.json` PASS, 수식어 비율 0.05, 정도부사 0, 감정 직설 0, 번역투 0, 감각 6종, 대장 일치.
+Evidence: joestale-work/live-test-D/report.json.
+Limits: 검증기 오탐 2종(G1 관형사형 어미, G3 의성어 NNP)·놓침 1종(본문 숫자의 대장 누락) 확인(I-5, I-6). 회색지대 8건은 report.json `grey_zones`, 결정표·절차 모호점은 I-7~I-9. 분량 1,229자는 가정(약 1,500자)에 미달. 검수 반영 후 재검수는 하지 않음. 커밋하지 않음.
+Required specialist verdict: not applicable.
+Completion boundaries: 트리거·절차 실행 complete / 본문 품질·회색지대 결정은 사용자 수락 pending.
+Related issue / knowledge: ISSUES I-5~I-9.
+Record handoff gap: none.

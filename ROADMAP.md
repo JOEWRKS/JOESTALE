@@ -3,7 +3,7 @@
 Project scope: 한국어 입력(완성 문장·단순 아이디어·러프한 의견·"써줘" 요청)을 받아 허관 작가의 원칙(정도부사·상태형용사 축소, 사물·행동·감각으로 제시)에 따라 쓰고, 기계 검증(조사·어미·금지어·수식어 비율·대장 일치)과 독립 검수를 거친 본문·설계서·리포트를 내는 Claude Code 스킬 `joestale`.
 Product authority: [기획서.md](기획서.md) 3장·3-B·3-C (2026-10-29 사용자 동의). 세부 결정은 JOEFLOW DISCOVER로 보충 예정(FREEZE 생략).
 Current stage: Phase 1 complete (2026-10-30). Phase 2 on hold (우리말샘 키), Phase 3 not started (공유마당 텍스트).
-Next eligible work: 사용자 작업 2건 — (1) 우리말샘 인증키 발급·약관 확인 → P2-1 실제 응답 검증, (2) 공유마당에서 김유정·이상·현진건 텍스트 확보 → P3-1. 둘 다 없으면 Phase 4 중 스킬 유/무 블라인드 비교(P4-1)는 Phase 3 없이도 예비 실행 가능(임계값 미보정 상태로 표기).
+Next eligible work: D 실전 테스트(T-005)에서 나온 검증기 오탐·규칙 공백 I-5~I-9의 처리 결정(사용자). 그 외 사용자 작업 2건 — (1) 우리말샘 인증키 발급·약관 확인 → P2-1 실제 응답 검증, (2) 공유마당에서 김유정·이상·현진건 텍스트 확보 → P3-1. 둘 다 없으면 Phase 4 중 스킬 유/무 블라인드 비교(P4-1)는 Phase 3 없이도 예비 실행 가능(임계값 미보정 상태로 표기).
 Phase 0 사용자 수락: pending (기술 검증은 complete).
 Status words: not started / in progress / verification pending / on hold / complete / removed from scope.
 
@@ -22,7 +22,7 @@ Completion condition: P0-1~P0-4 모두 통과. 사용자 수락은 별도.
 
 Scope decisions: 우리말샘 API 연동·감각 어휘장·스타일 프로파일은 Phase 1~3(아래)로 분리. none removed.
 User acceptance: Phase 0 결과물에 대한 사용자 확인 pending.
-Optional/later: 검증 리포트 HTML 뷰(JOEDESIGN 사용). JOEFLOW DISCOVER 등록은 decisions.md로 대체(사용자 지시 2026-10-30 "회색지대 없이 채워줘"). 새 세션에서 joestale 트리거 확인.
+Optional/later: 검증 리포트 HTML 뷰(JOEDESIGN 사용). JOEFLOW DISCOVER 등록은 decisions.md로 대체(사용자 지시 2026-10-30 "회색지대 없이 채워줘"). 새 세션에서 joestale 트리거 확인: 완료(2026-10-30, TASK T-005, D 유형 실전 PASS; 회색지대 ISSUES I-5~I-9 → T-006에서 전부 닫음).
 
 ## Stage Phase 1 — 레퍼런스 구축 — complete (2026-10-30)
 

@@ -1,0 +1,3 @@
+# 프로젝트 안의 Claude 스킬 정션(skills/joestale을 가리킴). 소스는 skills/에 있음
+.claude/skills/
+__pycache__/

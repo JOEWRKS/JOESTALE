@@ -1,0 +1,167 @@
+{
+ "request": "짧은 단편 하나 써줘",
+ "type": "D",
+ "trigger": "성공(스킬 목록에 joestale 존재, Skill 도구로 호출됨)",
+ "length_chars": {
+  "draft_v0": 1227,
+  "final": 1229,
+  "note": "공백 포함. 가정 '약 1,500자'에 미달. D2가 글자 수 단위(공백 포함 여부)를 정하지 않음"
+ },
+ "rounds": [
+  {
+   "round": 1,
+   "file": "draft.v0.txt",
+   "violations_count": 3,
+   "stats": {
+    "modifier_ratio": 0.05,
+    "nouns": 187,
+    "verbs": 102,
+    "senses": [
+     "body",
+     "hearing",
+     "smell",
+     "taste",
+     "temperature",
+     "touch"
+    ],
+    "ending_max_run": 2,
+    "para_first_max_run": 2,
+    "translationese": {},
+    "spacing_differs": true,
+    "violations": [
+     {
+      "rule": "G1",
+      "sentence": "수연은 그날부터 밥을 안칠 때마다 물을 한 칸 적게 잡는 버릇을 따라 하게 됐다.",
+      "stem": "잡",
+      "josa": "는"
+     },
+     {
+      "rule": "G3",
+      "kind": "unregistered_NNP",
+      "form": "치익"
+     },
+     {
+      "rule": "G3",
+      "kind": "unregistered_NNP",
+      "form": "웅"
+     }
+    ],
+    "pass": false
+   },
+   "action": "G1 '잡는'(관형사형 어미 오탐) 문장 재작성, G3 의성어 '치익'→'쉭', '웅 하는'→'웅웅'"
+  },
+  {
+   "round": 2,
+   "file": "draft.v1.txt",
+   "violations_count": 0,
+   "stats": {
+    "modifier_ratio": 0.05,
+    "nouns": 186,
+    "verbs": 99,
+    "senses": [
+     "body",
+     "hearing",
+     "smell",
+     "taste",
+     "temperature",
+     "touch"
+    ],
+    "ending_max_run": 2,
+    "para_first_max_run": 2,
+    "translationese": {},
+    "spacing_differs": true,
+    "violations": [],
+    "pass": true
+   },
+   "action": "PASS → 5단계"
+  },
+  {
+   "round": 3,
+   "file": "draft.v2.txt",
+   "violations_count": 0,
+   "stats": {
+    "modifier_ratio": 0.05,
+    "nouns": 188,
+    "verbs": 99,
+    "senses": [
+     "body",
+     "hearing",
+     "smell",
+     "taste",
+     "temperature",
+     "touch"
+    ],
+    "ending_max_run": 2,
+    "para_first_max_run": 2,
+    "translationese": {},
+    "spacing_differs": true,
+    "violations": [],
+    "pass": true
+   },
+   "action": "검수 지적 반영 후 재검증 PASS"
+  }
+ ],
+ "review": {
+  "mode": "서브에이전트(general-purpose), 본문+설계서 JSON(assumptions·rejected·nonvisual_by_paragraph 제외)",
+  "findings": 4,
+  "handled": 4,
+  "items": [
+   {
+    "no": 1,
+    "sentence": "신발장 위에 쌓인 부의록 봉투 더미를 식탁으로 옮기다가 주방 구석의 밥솥이 눈에 들어왔다.",
+    "handling": "주어 '수연은' 명시, 주절을 행동(걸음을 멈췄다)으로"
+   },
+   {
+    "no": 4,
+    "sentence": "둘째 날 밤에 큰고모가 상복 소매를 걷으며 물었다.",
+    "handling": "설계서 대장 numbers에 '둘째 날' 추가(본문 유지)"
+   },
+   {
+    "no": 4,
+    "sentence": "아버지는 밥을 안칠 때마다 물을 눈금보다 한 칸 적게 잡았다.",
+    "handling": "설계서 대장 numbers에 '한 칸' 추가(본문 유지)"
+   },
+   {
+    "no": 6,
+    "sentence": "뚜껑을 열고 올라온 김에 얼굴을 대고 냄새부터 맡았다.",
+    "handling": "'김에'→'올라오는 증기에'"
+   }
+  ],
+  "re_review": "없음(reviewer-prompt.md에 재검수 규정 없음)"
+ },
+ "remaining_violations": [],
+ "verifier_errors": {
+  "false_positives": [
+   {
+    "rule": "G1",
+    "form": "잡는",
+    "why": "동사 관형사형 어미 '-는'을 조사 '는'으로 판정(받침 뒤라 '은' 기대)"
+   },
+   {
+    "rule": "G3",
+    "form": "치익, 웅",
+    "why": "Kiwi가 의성어를 NNP로 태깅 → 미등록 고유명사로 보고"
+   }
+  ],
+  "misses": [
+   {
+    "rule": "G3",
+    "what": "본문의 숫자 '둘째 날', '한 칸'이 대장에 없는데 미검출(대장→본문 방향만 검사)"
+   },
+   {
+    "rule": "(범위 밖)",
+    "what": "주어 생략으로 행위자가 바뀌는 문장, '김에' 중의성 — 검수자만 잡음"
+   }
+  ]
+ },
+ "grey_zones": [
+  "D2 분량: '짧은'과 '단편'이 동시에 걸릴 때 우선순위 없음. 글자 수에 공백 포함 여부 없음",
+  "0단계 사물 시드: D 유형 입력에 구체 명사가 없을 때의 대체 규칙 없음(작가 5단계 '눈앞 사물'로 대체)",
+  "D2 결합 시드 선택 '비시각 감각 키워드 수'를 어디서 세는지(경로 문장 기준으로 셈)",
+  "4단계: 검증기 오탐일 때 처리 규칙 없음 → 오탐을 피하려고 문장을 바꿈(의성어 교체)",
+  "5단계: 검수 지적이 설계서(대장) 수정으로 해결되는 경우와 재검수 여부 규정 없음",
+  "5단계: 검수자에게 주는 설계서의 형식·범위(JSON 전체/표/가정 표 포함 여부) 미정",
+  "D5 리포트 '초고/최종' 2열에 4단계 중간 회차 수치를 적을 자리 없음",
+  "scene-design.md 3절 사물 예시 '녹슨 경첩, 세 겹 스티커'가 X1 금지 구절과 동일(설계서에 베끼면 본문 유출 위험)"
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "sentences": 45,
+ "paragraphs": 6,
+ "modifier": {
+  "content": 318,
+  "modifiers": 15,
+  "ratio": 0.05,
+  "forms": [
+   "검",
+   "하",
+   "안",
+   "누렇",
+   "적",
+   "내내",
+   "같",
+   "아무",
+   "크",
+   "그렇",
+   "툭툭",
+   "누렇",
+   "그대로",
+   "차갑",
+   "적"
+  ],
+  "nouns": 186,
+  "verbs": 99
+ },
+ "senses": [
+  "body",
+  "hearing",
+  "smell",
+  "taste",
+  "temperature",
+  "touch"
+ ],
+ "ending": {
+  "max_run": 2,
+  "form": "있었다",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 2,
+  "form": "수연은",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

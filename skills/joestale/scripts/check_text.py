@@ -73,6 +73,7 @@ def modifier_stats(text):
     return {"content": content, "modifiers": mods, "ratio": round(mods / max(content, 1), 2), "forms": forms, "nouns": nouns, "verbs": verbs}
 
 def josa_errors(text):
+    """받침 규칙 위반 조사. 어절을 Kiwi로 분석해 어미(E*)·용언(V*)·파생접사(XS*)가 있으면 조사가 아니므로 제외(I-5)."""
     out = []
     for m in JOSA_PAT.finditer(text):
         stem, j = m.group(1), m.group(2)
@@ -81,9 +82,26 @@ def josa_errors(text):
         has, want = (1 if b else 0), JOSA[j]
         if j in ("로", "으로") and b == 8: has = 0   # ㄹ받침: 로 정상, 으로 오류
         if want != has:
+            ej = kiwi().tokenize(stem + j)
+            if any(t.tag.startswith(("E", "V", "XSV", "XSA")) for t in ej):   # XSM("손톱로"의 '로')은 제외하지 않음
+                continue
             toks = kiwi().tokenize(stem)
             if toks and (toks[-1].tag[0] in "NX" or toks[-1].tag in ("SL", "SN", "NP", "NNB", "NR")):
                 out.append({"stem": stem, "josa": j})
+    return out
+
+def number_expressions(text):
+    """본문의 수량 표현: 수사(NR)·숫자(SN)·수관형사 + 뒤따르는 단위/명사 1개 (I-6)."""
+    toks = kiwi().tokenize(text)
+    out = []
+    ONE = {"한", "하나", "첫", "한번"}   # 수량 1은 대장 대상이 아님(한 번, 하나, 한 그릇)
+    for i, t in enumerate(toks):
+        is_num = t.tag in ("NR", "SN") or (t.tag == "MM" and NUMDET.match(t.form) and t.form not in ("이", "그", "저", "어느", "무슨", "맨", "온", "반", "몇"))
+        if not is_num or t.form in ONE: continue
+        end = t.start + t.len
+        if i + 1 < len(toks) and toks[i + 1].tag in ("NNB", "NNG", "NR", "SN") and toks[i + 1].start - end <= 1:
+            end = toks[i + 1].start + toks[i + 1].len
+        out.append(text[t.start:end])
     return out
 
 def run_length(items, limit):
@@ -154,14 +172,21 @@ def check(text, design=None):
                 if it and it not in text:
                     V.append({"rule": "G3", "kind": kind, "missing": it})
         known = set(design["ledger"].get("persons", [])) | set(design["ledger"].get("places", []))
-        seen = set()
+        counts = {}
         for t in kiwi().tokenize(text):
-            if t.tag == "NNP" and t.form not in known and t.form not in seen and not any(t.form in k for k in known):
-                seen.add(t.form)
-                V.append({"rule": "G3", "kind": "unregistered_NNP", "form": t.form})
+            if t.tag == "NNP": counts[t.form] = counts.get(t.form, 0) + 1
+        for form, n in counts.items():
+            # 의성어·의태어 오태깅 방지(I-5): 2회 이상 나오고 2글자 이상이며 허용 부사·감각 목록에 없는 것만
+            if form in known or any(form in k for k in known): continue
+            if n < 2 or len(form) < 2 or form in ALLOW_ADV or any(form == w for _, w in ALL_SENSE): continue
+            V.append({"rule": "G3", "kind": "unregistered_NNP", "form": form, "count": n})
+        ledger_nums = design["ledger"].get("numbers", [])
+        for expr in sorted(set(number_expressions(text))):
+            if not any(expr in ln or ln in expr for ln in ledger_nums):
+                V.append({"rule": "G3", "kind": "number_not_in_ledger", "form": expr})
     spaced = kiwi().space(text)
     return {
-        "sentences": len(sents), "paragraphs": len(paras),
+        "sentences": len(sents), "paragraphs": len(paras), "chars": len(text),
         "modifier": ms, "senses": senses_in(text), "ending": er, "para_first": pr,
         "translationese_counts": trans,
         "spacing_differs": spaced != text,
@@ -169,7 +194,7 @@ def check(text, design=None):
     }
 
 def summary_line(r):
-    return (f"문장 {r['sentences']} / 문단 {r['paragraphs']} / 수식어 비율 {r['modifier']['ratio']} {r['modifier']['forms']} "
+    return (f"문장 {r['sentences']} / 문단 {r['paragraphs']} / {r['chars']}자 / 수식어 비율 {r['modifier']['ratio']} {r['modifier']['forms']} "
             f"/ 명사 {r['modifier']['nouns']} 동사 {r['modifier']['verbs']} / 감각 {r['senses']} / 번역투 {r['translationese_counts']}")
 
 def lexicon_stats():

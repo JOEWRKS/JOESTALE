@@ -1,0 +1,68 @@
+{
+ "sentences": 45,
+ "paragraphs": 6,
+ "modifier": {
+  "content": 323,
+  "modifiers": 16,
+  "ratio": 0.05,
+  "forms": [
+   "검",
+   "하",
+   "안",
+   "누렇",
+   "적",
+   "내내",
+   "같",
+   "아무",
+   "크",
+   "그렇",
+   "툭툭",
+   "적",
+   "누렇",
+   "그대로",
+   "차갑",
+   "적"
+  ],
+  "nouns": 187,
+  "verbs": 102
+ },
+ "senses": [
+  "body",
+  "hearing",
+  "smell",
+  "taste",
+  "temperature",
+  "touch"
+ ],
+ "ending": {
+  "max_run": 2,
+  "form": "있었다",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 2,
+  "form": "수연은",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [
+  {
+   "rule": "G1",
+   "sentence": "수연은 그날부터 밥을 안칠 때마다 물을 한 칸 적게 잡는 버릇을 따라 하게 됐다.",
+   "stem": "잡",
+   "josa": "는"
+  },
+  {
+   "rule": "G3",
+   "kind": "unregistered_NNP",
+   "form": "치익"
+  },
+  {
+   "rule": "G3",
+   "kind": "unregistered_NNP",
+   "form": "웅"
+  }
+ ],
+ "pass": false
+}

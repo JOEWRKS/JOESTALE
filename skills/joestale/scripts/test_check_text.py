@@ -46,5 +46,18 @@ expect("G3 대장 일치 통과", not any(v["rule"] == "G3" for v in ct.check(DI
 g3 = [v for v in ct.check(DIALOG, DESIGN_BAD)["violations"] if v["rule"] == "G3"]
 expect("G3 누락·미등록 검출", any(v.get("missing") == "민재" for v in g3) and any(v.get("form") == "수진" for v in g3), g3)
 st = ct.lexicon_stats(); expect("어휘장 감각별 ≥30", st["senses_min"] >= 30, st["senses"])
+# I-5: 관형사형 어미 '-는/-은'을 조사로 오인하지 않음, 의성어 1회 NNP를 미등록 이름으로 보지 않음
+expect("I-5 관형사형 어미 오탐 없음", not ct.josa_errors("수연은 그날부터 밥을 짓지 않고 한 칸 남은 쌀을 잡는 버릇이 생겼다."))
+expect("I-5 조사 오류는 여전히 검출", bool(ct.josa_errors("경첩가 울었다.")))
+ONO = "밥솥이 치익 소리를 냈다. 수연은 두 번 뚜껑을 눌렀다. 수연은 숨을 참았다."
+g3 = [v for v in ct.check(ONO, {"ledger": {"persons": ["수연"], "places": [], "numbers": ["두 번"]}})["violations"] if v["rule"] == "G3"]
+expect("I-5 의성어 1회 NNP 오탐 없음", not any(v.get("kind") == "unregistered_NNP" for v in g3), g3)
+# I-6: 본문 숫자가 대장에 없으면 검출
+NUM = "수연은 둘째 날 아침에 밥솥 액정의 72시간을 보았다. 쌀통에는 한 칸이 남았다."
+g3 = [v for v in ct.check(NUM, {"ledger": {"persons": ["수연"], "places": [], "numbers": ["72시간"]}})["violations"] if v.get("kind") == "number_not_in_ledger"]
+expect("I-6 대장 누락 숫자 검출(둘째 날), 수량 1(한 칸)은 제외", any("둘째" in v["form"] for v in g3) and not any("한 칸" in v["form"] for v in g3), g3)
+g3 = [v for v in ct.check(NUM, {"ledger": {"persons": ["수연"], "places": [], "numbers": ["72시간", "한 칸", "둘째 날"]}})["violations"] if v.get("kind") == "number_not_in_ledger"]
+expect("I-6 대장 완비 시 통과", not g3, g3)
+expect("seed_objects 30개", len(ct.LEX.get("seed_objects", [])) == 30)
 print("\n" + ("ALL OK" if not fails else f"FAILED: {fails}"))
 sys.exit(1 if fails else 0)
