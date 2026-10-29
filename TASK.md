@@ -38,3 +38,16 @@ Required specialist verdict: not applicable.
 Completion boundaries: 구현·기술 검증 완료 / 사용자 수락 pending.
 Related issue / knowledge: ISSUES I-3(닫힘), I-4.
 Record handoff gap: none.
+
+## T-004 / 2026-10-30 / Phase 1 레퍼런스·결정표·검증기 확장, Phase 2 스크립트
+
+Roadmap item: P1-1 ~ P1-4, P2-1(부분).
+Result: 결정표(decisions.md D1~D7), lexicon.json(감각 6종 36~50개, 정도부사 30, 감정어 49, 번역투 20), check_text.py를 파일 기반으로 재작성(T1·T2·X1·문장 단위 R2·대화문 R4 예외·G3 미등록 고유명사 추가), 회귀 테스트 18건 ALL OK, B 유형 실전 예 PASS, lookup_synonyms.py 작성(키 없음 → exit 3).
+Changed files: `references/decisions.md`, `references/lexicon.json`, `references/reviewer-prompt.md`, `references/design.template.json`, `references/scene-design.md`(문단당 감각), `references/cliche-list.md`(해설용으로 전환), `scripts/check_text.py`, `scripts/test_check_text.py`, `scripts/lookup_synonyms.py`, `examples/worked-B/*`, `SKILL.md`, `.gitattributes`.
+Check / target / result: `test_check_text.py` ALL OK; `check_text.py --lexicon-stats` senses_min 36; worked-B 검증 1회 R5 1건 → 국소 수정 → PASS.
+Evidence: examples/worked-B/report.json, README.md.
+Limits: R6를 "숫자 또는 명사 3개"로 완화(작가 예문 A·B가 숫자 없이 통과해야 함). 우리말샘 응답 필드명 미검증. 5단계 검수는 서브에이전트 없이 DEGRADED. 새 세션 트리거 미검증.
+Required specialist verdict: not applicable.
+Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending.
+Related issue / knowledge: ISSUES I-1, I-4.
+Record handoff gap: none.

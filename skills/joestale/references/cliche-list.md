@@ -1,6 +1,6 @@
-# 금지·주의 목록과 검수 체크리스트 (Phase 0 초안)
+# 금지·주의 목록과 검수 체크리스트
 
-스크립트 `scripts/check_text.py`가 이 파일의 목록 절을 읽지는 않고 내장 목록을 쓴다(Phase 1에서 파일 읽기로 전환, ROADMAP P1-2).
+기계가 읽는 원본은 [lexicon.json](lexicon.json)이다(`check_text.py`가 직접 읽음). 이 문서는 사람용 해설. 목록을 바꿀 때는 lexicon.json을 고치고 `scripts/test_check_text.py`를 돌린다.
 
 ## R1 정도부사 (0회 목표)
 

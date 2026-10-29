@@ -1,0 +1,35 @@
+{
+ "sentences": 14,
+ "paragraphs": 3,
+ "modifier": {
+  "content": 114,
+  "modifiers": 4,
+  "ratio": 0.04,
+  "forms": [
+   "같",
+   "하",
+   "잘",
+   "같"
+  ],
+  "nouns": 66,
+  "verbs": 31
+ },
+ "senses": [
+  "hearing",
+  "touch"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}
