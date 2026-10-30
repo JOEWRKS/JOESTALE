@@ -14,12 +14,12 @@ Status: closed. Closed reference: 2026-10-30 어절 전체가 명사 한 토큰�
 
 Status: open.
 Affected roadmap item: ROADMAP.md P2-1.
-Cause: API 안내 페이지에 라이선스 본문·호출 제한이 없고 별도 약관 페이지를 아직 읽지 않음.
-Workaround: none. Phase 2 착수 전 확인.
-Residual risk: 상업·재배포 조건에 따라 로컬 사전 덤프로 대체해야 할 수 있음.
-Closure condition: 약관·저작권 정책 확인 결과를 Library/research.md에 기록하고 인증키 발급.
-Verification: missing.
-Next action: 사용자가 opendict.korean.go.kr에서 키 신청, 약관 요지 확인.
+Cause: API 안내 페이지에 라이선스 본문·호출 제한이 없음.
+Workaround: 약관·저작권 정책은 2026-10-30 확인(Library/research.md): 텍스트 CC BY-SA 2.0 KR, 개인 작문 보조 사용 가능, 문학 용례는 미사용. 호출 한도는 문서에 없어 키 발급 후 실제 응답(오류 코드 021 일시 정지)으로 확인.
+Residual risk: 유료 서비스화 시 약관 12조 상업 활동 금지 조항 해석 필요. 호출 한도 미확인.
+Closure condition: 인증키 발급 + 첫 실제 응답 3건 캡처(P2-1) + 리포트에 출처 표기("우리말샘, 국립국어원, CC BY-SA 2.0 KR") 규칙 추가.
+Verification: Library/research.md 2026-10-30 항목.
+Next action: 사용자가 kdict 계정으로 로그인 후 /service/openApiRegister 신청 → OPENDICT_KEY 환경변수 등록.
 
 ## I-2 / JOENESS 개인 설치본 소유권 불일치
 

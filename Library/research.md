@@ -17,7 +17,8 @@
 
 ## 한국어 데이터·도구
 
-- 우리말샘 오픈 API https://opendict.korean.go.kr/service/openApiInfo — 확인 2026-10-29. 사실: search/view 엔드포인트, view의 relation_info, JSON 지원, 32자 키. 미확인: 약관·호출 제한(ISSUES I-1).
+- 우리말샘 오픈 API https://opendict.korean.go.kr/service/openApiInfo — 확인 2026-10-29. 사실: search/view 엔드포인트, view의 relation_info, JSON 지원, 32자 키. 미확인: 호출 제한(ISSUES I-1).
+- 우리말샘 약관·저작권 — 확인 2026-10-30 (https://kdict.korean.go.kr/info/terms, /info/copyright). 사실: 텍스트는 **CC BY-SA 2.0 대한민국**(저작자 표시, 동일조건변경허락; 상업적 이용·변경 허용). 출처 표기된 문학 용례는 원저작자 권리 → 도구에서 **용례(exam) 미사용**. 멀티미디어는 항목별 정책. 약관 12조①11 "서비스를 이용한 상업 활동 금지"가 저작권 정책의 상업 이용 허용과 긴장 → 개인 작문 보조는 문제없고, 유료 서비스화 시 국립국어원 문의 필요. 호출 한도·캐시 규정은 두 문서에 없음. 키 신청 페이지(/service/openApiRegister)는 kdict 계정 로그인 필수(ID/비밀번호만, 소셜 로그인 없음).
 - ETRI 다의어 API https://data.go.kr/data/15144928/openapi.do — 검색 요약 기준.
 - 모두의 말뭉치 — 약정서 승인제. 2019 웅진북센 사건·2022 판결(https://bizhankook.com/articles/woongjin-loses-ai-copyright-lawsuit.html). 추론: 현대 소설 말뭉치는 상업 사용 시 약관 필수.
 - 저작권 만료 작가(김유정·이상·현진건, 1937~1943 사망) — 일반 지식, 공유마당 미확인.
