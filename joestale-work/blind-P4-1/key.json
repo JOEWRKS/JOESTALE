@@ -1,0 +1,18 @@
+{
+ "A": {
+  "가": "skill",
+  "나": "baseline"
+ },
+ "B": {
+  "가": "baseline",
+  "나": "skill"
+ },
+ "C": {
+  "가": "baseline",
+  "나": "skill"
+ },
+ "D": {
+  "가": "skill",
+  "나": "baseline"
+ }
+}

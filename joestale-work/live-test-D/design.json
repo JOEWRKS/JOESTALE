@@ -24,7 +24,41 @@
       ]
     ],
     "selection_note": "장례식장 경로는 비시각 감각 키워드 3개(소리·냄새·김), 숫자 2개(사흘·72시간)로 D2 선택 순서 1위",
-    "used": true
+    "used": true,
+    "candidates": [
+      {
+        "pair": "장례식장",
+        "path_keywords": [
+          "소리",
+          "냄새",
+          "김"
+        ],
+        "numbers": [
+          "사흘",
+          "72시간"
+        ],
+        "chosen": true,
+        "api": "lookup_synonyms.py 전기밥솥 --related-check 장례식장 → exit 0 (관계 없음, 2026-10-30 실측)"
+      },
+      {
+        "pair": "수능",
+        "path_keywords": [
+          "소리"
+        ],
+        "numbers": [],
+        "chosen": false,
+        "api": "exit 0 (관계 없음). 탈락 이유는 감각 키워드 1개·숫자 없음"
+      },
+      {
+        "pair": "횡단보도",
+        "path_keywords": [
+          "소리"
+        ],
+        "numbers": [],
+        "chosen": false,
+        "api": "exit 0 (관계 없음). 탈락 이유는 감각 키워드 1개·숫자 없음"
+      }
+    ]
   },
   "materials": {
     "objects": [

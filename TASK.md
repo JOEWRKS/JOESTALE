@@ -52,6 +52,45 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-022 / 2026-10-31 / 패턴 21 검증(코퍼스 분류 + 쌍 블라인드), 1원칙에 "묘사를 늘리지 않음" 명시
+
+Roadmap item: Phase 4 — 규칙 검증. 사용자 요청 "문구처럼 고치면 효과가 있는지도 면밀하고 넓게 검증해".
+Result: `joestale-work/blind-P4-1/negation-check.md`. (1) 고전 3편 부정문 비율 23~28%, 샘플 60문장 중 상태·습관 설명 17·반전 9·기타 30(분류자 2인 일치 71/75). (2) 긍정/부정 12쌍 판정자 3인: 상태 쌍은 구체 사물을 든 긍정형만 이김(5쌍 3:0), 사용자 제안 두 문장("같은 채널만", "콧바람이 닿지 않도록")은 0:3 패배. 반전 쌍은 "장면이 그려지는가" 기준에서 행동형 긍정이 10:2. 결론: 이기는 것은 긍정형이 아니라 구체형. 패턴 21을 "상태 설명에서는 구체성이 긍정/부정보다 먼저, 부정문 자체는 결함 아님, 구체 사물을 든 긍정형이 있을 때만 교체, 반전·무반응·불능 부정은 유지"로 확정. 검수 21·decisions·SKILL 동기화. 사용자 명시(2026-10-31) "묘사를 늘리라는 게 아니라 수식어를 감각 묘사로 대체, 더 간결해야"를 SKILL 1원칙과 principles 묘사의 양 절에 적음.
+Changed files: `joestale-work/blind-P4-1/negation_extract.py`·`neg_*.json`·`neg_sample.txt`·`judge*.txt`·`judge*.key.json`·`judge*.result.txt`·`class*.txt`·`pair_tally.json`·`negation-check.md`, `references/principles.md`·`reviewer-prompt.md`·`decisions.md`, `SKILL.md`.
+Check / target / result: 분류 일치 71/75. 쌍 판정 36표 집계 pair_tally.json. test_check_text.py ALL OK(검증기 미변경).
+Evidence: negation-check.md 표 3개.
+Limits: 판정자·분류자는 LLM(haiku 2·sonnet 1), 사람 독자 아님. 쌍 12개는 작성자가 만듦. 판정 문구("떠올렸다가 지울 것 없이")가 부정형에 불리했을 수 있음. 반전 쌍 결과는 극적 효과를 묻지 않은 것이라 패턴 18·19를 뒤집는 근거로 쓰지 않음. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 패턴 21 문구 확정. 사용자가 제안했던 두 문장의 판정 결과는 보고만 함.
+Related issue / knowledge: 패턴 21, T-021.
+Record handoff gap: none.
+
+## T-021 / 2026-10-31 / P4-1 판정 기록, 기준본 결함 → 패턴 21·22
+
+Roadmap item: Phase 4 P4-1 닫기.
+Result: pairs.md "판정" 절(항목별 선택·요지·결과, 기준본 결함 → 원칙 대응표). 스킬본 선호 3/4, 동률 1/4. principles 패턴 21(상태는 긍정·목적 서술, 부정문은 세계의 무반응에만), 22(한 장면 한 자리, 장소 분산 금지, 등장 자리의 사건 논리), 13 보강(결말 행동 변화의 원인), 19 보강(난감한 사건 뒤 반응 한 문장), 검사법 21·22. reviewer 22항목(8 물리 현실성, 9 양방향 신체 표현, 11 부수 연상, 21·22 신설). decisions 2줄, SKILL 서열 문단.
+Changed files: `joestale-work/blind-P4-1/pairs.md`, `references/principles.md`·`reviewer-prompt.md`·`decisions.md`, `SKILL.md`, ROADMAP.
+Check / target / result: 수락된 A~D 본문은 바꾸지 않음(스킬본이 전부 선호·동률). 새 패턴은 검수자 항목이며 기계 검사 없음. test_check_text.py 변경 없음.
+Evidence: pairs.md 판정 절·대응표.
+Limits: 판정자 1인(사용자). A·B 스킬본에 판정자 제안 문장이 있어 완전 블라인드 아님. 기준본 1회 생성. 외부 독자 3인 미실시. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: P4-1 complete(1인). 외부 독자 비교는 Optional.
+Related issue / knowledge: ROADMAP P4-1, principles 패턴 21·22.
+Record handoff gap: none.
+
+## T-020 / 2026-10-30 / P4-1 블라인드 비교표 준비, D candidates[].api 기록
+
+Roadmap item: Phase 4 P4-1, Next eligible work (3).
+Result: `joestale-work/blind-P4-1/`: baseline/A~D.txt(스킬·파일·지침 없이 서브에이전트가 같은 입력·분량으로 쓴 기준본), skill/A~D.txt(수락된 A v5·B v5·C v5·D v4 복사), build_pairs.py(가/나 무작위 배치 + check_text 수치), pairs.md(판정용), key.json(정답, 판정 전 열지 않음). D design.json `seed.candidates[]`에 `api` 필드: 전기밥솥 ↔ 장례식장·수능·횡단보도 모두 exit 0(관계 없음).
+Changed files: `joestale-work/blind-P4-1/*`, `joestale-work/live-test-D/design.json`, ROADMAP.
+Check / target / result: pairs.md 4항목 8본문 생성. 기계 수치(설계서 없이): 수식어 비율 스킬 0.03~0.13 / 기준본 0.07~0.19, 감각 종류 스킬 2~3 / 기준본 1~5. D PASS 유지.
+Evidence: pairs.md 하단 표, key.json.
+Limits: 기준본도 같은 모델이 썼으므로 "스킬 없음"은 "원칙 지침 없음"이지 다른 작가가 아니다. 기준본은 1회 생성(변동 미측정). 외부 독자 3인은 없음. 작성자(이 세션)는 key를 봤으므로 블라인드는 사용자에게만 성립. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 판정 완료(2026-10-31) → pairs.md "판정" 절, P4-1 닫음(T-021).
+Related issue / knowledge: ROADMAP P4-1, 기획서 165행.
+Record handoff gap: none.
+
 ## T-019 / 2026-10-30 / C v5·D v4: 패턴 19(저항과 무반응)·20(결말 신체 반응)
 
 Roadmap item: Phase 0 User acceptance — 7차 피드백(C 무기력, D 끝맺음) 반영.
