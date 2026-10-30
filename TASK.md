@@ -52,6 +52,32 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-024 / 2026-10-31 / 방법론 조사 추천안 반영: 패턴 23~27, 검증기 R7·R8·G4·W4·T1 확장
+
+Roadmap item: T-023 후속. 사용자 "추천안만 반영"(A1·A3·A4·A6·A9).
+Result: principles 패턴 23(사고 동사 풀기)·24(문단 첫 문장 상태 요약 금지)·25(beat는 인물만의 작은 동작)·26(수식어 간격)·27(이중 피동·"에 의해" 금지) + 검사법. reviewer 27항목. decisions D3에 R7·R8·G4·W4 행, T1 비고. SKILL 규칙 요약·서열 문단. 검증기: `thought_verbs()` R7(NNG+XSV·VV·VX 싶, 대화문·독백·원문 유지·전제 감정 제외), `first_sentence_state()` R8(문단 첫 문장 서술어 VA·XSA, 있다·없다 제외), `stacked_modifiers()` G4(한 명사 앞 상태 관형어·관형사 ≥2, 있는·없는 제외), W4 note(`weak_beats`), lexicon 이중 피동 패턴 확장(잊혀지·보여지 …, max 0). lexicon에 `thought_verbs`·`weak_beats`·`g4_mm_ignore`.
+Changed files: `references/principles.md`·`reviewer-prompt.md`·`decisions.md`·`lexicon.json`, `SKILL.md`, `scripts/check_text.py`·`test_check_text.py`.
+Check / target / result: test_check_text.py 59 OK(+15: R7 5, R8 3, G4 4, T1 1, W4 2). 수락본 A v5·B v5·C v5·D v4 전부 PASS 유지. 오탐 수정 2건: R7 "바라보다"(startswith → 완전 일치), G4 작가 예문 "가루 하나 없는 매끄러운 책상"(관계절 없는·있는 제외).
+Evidence: 테스트 출력, 수락본 4건 PASS.
+Limits: R7 목록은 보수적(알다·보다 제외). R8은 형용사 술어만 보며 "성격이었다"류는 R3이 맡음. W4는 note라 "고개를 끄덕였다"(B 수락본)는 목록 밖. A2·A5·A7·A8·A10은 미채택(사용자 결정). 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 새 규칙이 새 글에서 어떻게 작동하는지는 다음 생성에서 확인.
+Related issue / knowledge: T-023 보고서 A1·A3·A4·A6·A9, principles 패턴 23~27.
+Record handoff gap: none.
+
+## T-023 / 2026-10-31 / 글쓰기 방법론 조사(deep-research): 채용·보강·충돌 후보
+
+Roadmap item: 사용자 요청 "글쓰기 방법론에 대해 면밀히 조사해서 채용할 방식과 보강할 방식이 있는지 찾기".
+Result: 조사 노트 5건(국내 작가 문장론, 한국 교재·웹소설 작법, 해외 고전 문장론, 해외 현대 작법서, 실증 연구·한국어 특수성) → 보고서 `joestale-work/reports/소설 문장 기법 방법론 조사.md`. 패턴 1~22 ↔ 출처 이론 대조표(19개는 외부 이론에 뿌리, 10·11·7/16 검사법은 고유). 채용 후보 A1~A10(사고 동사 풀기, 심리적 거리 단계, 문단 첫 문장 감정 요약 금지, beat 규칙, 엇나간 응답, 수식어 간격, 서술자의 한숨 금지, 쉼표·연결어미 지표, 이중 피동·'-에 의해' 규범, 섬광·감각적 선택성). 보강 B1~B12(수식어 판정 3문, 실증 각주, Burroway significant detail, 주어 생략 실험, Maass inner mode, 부정문 조건 등). 충돌·약한 근거 C1~C12(감정 명명 전면 금지·혼자 있는 인물 금지·웹소설 깊은 3인칭은 채택 안 함; 구체어 선호 전제는 Maslej 2021이 역방향; 능동태·단문 직역 주의; 과격 격언 원문 단서; 수식어 밀도→질 저하 직접 실증 없음).
+Changed files: `joestale-work/research_notes/소설 문장 기법 방법론 조사/*.md`(5), `joestale-work/reports/소설 문장 기법 방법론 조사.md`.
+Check / target / result: 보고서 BLUF + 대조표 + 후보표 3개. 스킬 파일은 아직 바꾸지 않음.
+Evidence: 보고서 각 행의 URL.
+Limits: 인용 다수가 2차 자료(블로그·서평·AI 요약). 『문장강화』 7강·Strunk 1959판·체호프 고리키 서한·Stein liposuction 장 원문 미열람. 실증은 영어·독일어 소표본. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자가 A1~A10 중 채용할 것을 고르면 T-024에서 원칙·검증기·설계서에 반영.
+Related issue / knowledge: principles 패턴 1~22, negation-check.md.
+Record handoff gap: none.
+
 ## T-022 / 2026-10-31 / 패턴 21 검증(코퍼스 분류 + 쌍 블라인드), 1원칙에 "묘사를 늘리지 않음" 명시
 
 Roadmap item: Phase 4 — 규칙 검증. 사용자 요청 "문구처럼 고치면 효과가 있는지도 면밀하고 넓게 검증해".

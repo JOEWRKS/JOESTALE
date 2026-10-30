@@ -5,7 +5,8 @@
 
 규칙(임계값은 references/decisions.md D3):
   R1 정도부사 0회 · R2 수식어 비율 ≤0.18(문장 ≥0.50도 위반) · R3 상태 서술 패턴 · R4 감정 직설(대화문 제외)
-  R5 글 전체 비시각 감각 ≥1(문단별 부재는 W3 note) · R6 문단당 숫자·고유명사 ≥1 · G1 조사 받침 규칙 · G2 마지막 어절 3연속 반복
+  R5 글 전체 비시각 감각 ≥1(문단별 부재는 W3 note) · R6 문단당 숫자·고유명사 ≥1 · R7 사고 동사 · R8 문단 첫 문장 상태 요약
+  G1 조사 받침 규칙 · G2 마지막 어절 3연속 반복 · G4 한 명사 앞 수식어 2개 이상 · W4 상투 beat note
   G3 설계서 대장(누락·미등록 고유명사) · T1 번역투·AI 관용구 상한 · T2 문단 첫 어절 3연속 반복 · X1 작가 예문 복제
 목록은 references/lexicon.json. Kiwi 오타 교정은 쓰지 않는다. 띄어쓰기는 보고만.
 """
@@ -26,6 +27,60 @@ STATE_PATS = [re.compile(p) for p in LEX["state_patterns"]]
 TRANS = [(re.compile(t["pattern"]), t["label"], t["max"]) for t in LEX["translationese"]]
 AUTHOR_PHRASES = LEX["author_example_phrases"]
 SENSES = LEX["senses"]
+THOUGHT = LEX.get("thought_verbs", {})
+THOUGHT_NOUN = set(THOUGHT.get("noun_xsv", []))
+THOUGHT_VERB = set(THOUGHT.get("verb", []))
+THOUGHT_AUX = set(THOUGHT.get("aux", []))
+WEAK_BEATS = [re.compile(p) for p in LEX.get("weak_beats", {}).get("patterns", [])]
+G4_MM_IGNORE = set(LEX.get("g4_mm_ignore", []))
+ADJ_TAGS = ("VA", "VA-I", "VA-R", "XSA", "XSA-I", "XSA-R")
+
+
+def thought_verbs(toks):
+    """R7 사고 동사(패턴 23): 생각하다·깨닫다·느끼다·싶다 같은 사고·욕망 동사가 서술문에 있으면 그 형태를 돌려준다."""
+    out = []
+    for i, t in enumerate(toks):
+        if t.tag == "NNG" and t.form in THOUGHT_NOUN and i + 1 < len(toks) and toks[i + 1].tag.startswith("XSV"):
+            out.append(t.form + "하다")
+        elif t.tag.startswith("VV") and t.form in THOUGHT_VERB:
+            out.append(t.form + "다")
+        elif t.tag == "VX" and t.form in THOUGHT_AUX:
+            out.append(t.form + "다")
+    return out
+
+
+def first_sentence_state(toks):
+    """R8 문단 첫 문장의 상태 요약(패턴 24): 서술어가 상태 형용사(VA·XSA)로 끝나면 그 형태를 돌려준다. 있다·없다는 제외."""
+    pred, prev = None, None
+    for i, t in enumerate(toks):
+        if t.tag.startswith(("VA", "VV", "VX", "XSA", "XSV", "VCP", "VCN")):
+            pred, prev = t, (toks[i - 1] if i else None)
+    if pred is not None and pred.tag.startswith(ADJ_TAGS) and pred.form not in ("있", "없"):
+        return (prev.form if prev is not None and prev.tag == "XR" else "") + pred.form
+    return None
+
+
+def stacked_modifiers(toks):
+    """G4 수식어 간격(패턴 26): 한 명사 앞에 상태 관형어(VA/XSA+ETM, '~고' 연결 포함)나 관형사가 2개 이상 쌓이면 돌려준다."""
+    out = []
+    for i, t in enumerate(toks):
+        if t.tag not in ("NNG", "NNP"):
+            continue
+        j, n, forms = i - 1, 0, []
+        while j >= 0:
+            tg, fm = toks[j].tag, toks[j].form
+            if tg in ("ETM", "EC") and (tg == "ETM" or fm == "고") and j >= 1 and toks[j - 1].tag.startswith(ADJ_TAGS) and toks[j - 1].form not in ("있", "없"):
+                f = toks[j - 1].form; j -= 2
+                if j >= 0 and toks[j].tag == "XR":
+                    f = toks[j].form + f; j -= 1
+                n += 1; forms.append(f)
+            elif tg == "MM" and not NUMDET.match(fm) and fm not in G4_MM_IGNORE:
+                n += 1; forms.append(fm); j -= 1
+            else:
+                break
+        if n >= 2:
+            out.append({"noun": t.form, "modifiers": forms[::-1]})
+    return out
 # 항목 "쓰/VA"는 형태 '쓰' + 태그가 VA로 시작할 때만(쓰다=bitter, VV 쓰다=write 구분). 태그 없는 항목은 (sense, word, None).
 def _parse_sense(w):
     if "/" in w:
@@ -176,6 +231,11 @@ def check(text, design=None, length=None):
                 V.append({"rule": "R4", "sentence": s, "form": t.form})
         if any(p.search(plain) for p in STATE_PATS):
             V.append({"rule": "R3", "sentence": s})
+        if s not in premised:
+            for f in thought_verbs(toks):
+                V.append({"rule": "R7", "sentence": s, "form": f})
+        for m in stacked_modifiers(toks):
+            V.append({"rule": "G4", "sentence": s, **m})
         for e in josa_errors(s):
             V.append({"rule": "G1", "sentence": s, **e})
         ms = modifier_stats(plain)
@@ -196,6 +256,11 @@ def check(text, design=None, length=None):
             V.append({"rule": "R2", "paragraph": i, "ratio": pm["ratio"], "forms": pm["forms"]})
         if not senses_in(p):
             no_sense_paras.append(i)
+        first = next((s for s in split_sents(p) if strip_quotes(s).strip()), None)
+        if first and first not in kept and first not in monologued and first not in premised:
+            f = first_sentence_state(kiwi().tokenize(strip_quotes(first)))
+            if f:
+                V.append({"rule": "R8", "paragraph": i, "sentence": first, "form": f})
         toks = kiwi().tokenize(p)
         has_number = any(t.tag in ("NR", "SN", "NNP") or (t.tag == "MM" and NUMDET.match(t.form)) for t in toks)
         nng = sum(1 for t in toks if t.tag == "NNG")
@@ -243,6 +308,9 @@ def check(text, design=None, length=None):
         notes.append(f"W2 설계서 사물 {len(objs)}개 (기준 3개 이하, 같은 역할은 합칠 것): {objs}")
     if no_sense_paras:
         notes.append(f"W3 비시각 감각 없는 문단: {no_sense_paras} (글 전체 ≥1이면 통과, 문단마다 넣으려고 묘사를 늘리지 말 것)")
+    weak = [s for s in sents if any(p.search(strip_quotes(s)) for p in WEAK_BEATS)]
+    if weak:   # W4 상투 beat(패턴 25): 한숨·어깨 으쓱·미소 같은 누구나 하는 동작은 대사 사이 지문 자격이 없음
+        notes.append("W4 상투 동작(beat): " + " / ".join(weak) + " (대사 사이 지문이면 인물만의 작은 동작으로)")
     for i, p in enumerate(paras, 1):   # W1 묘사 과잉 의심: 문단 5문장 이상 (decisions D2 "문단 4문장 이하")
         n = len(split_sents(p))
         if n >= 5:

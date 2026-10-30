@@ -94,5 +94,27 @@ expect("T-017 '손톱로' G1 여전히 검출", any(v["rule"] == "G1" for v in c
 expect("P15-3 '글을 쓰다'는 미각 아님", "taste" not in ct.senses_in("민재는 편지를 쓰다가 멈췄다."), ct.senses_in("민재는 편지를 쓰다가 멈췄다."))
 expect("P15-3 '쓴맛'은 미각", "taste" in ct.senses_in("커피에서 쓴맛이 올라왔다."))
 expect("P15-3 '베고'는 촉각", "touch" in ct.senses_in("바람이 뺨을 베고 지나갔다."))
+
+# T-024 (2026-10-31): 패턴 23~27 — R7 사고 동사, R8 문단 첫 문장 상태 요약, G4 수식어 간격, T1 이중 피동, W4 상투 beat
+def rules_of(t, design=None):
+    return sorted({v["rule"] for v in ct.check(t, design)["violations"]})
+FILL = " 컵을 두 번 돌렸다. 창문 세 개가 닫혔다."
+expect("R7 생각했다", "R7" in rules_of("민재는 그녀를 생각했다." + FILL))
+expect("R7 싶었다", "R7" in rules_of("민재는 집에 가고 싶었다." + FILL))
+expect("R7 바라보았다 오탐 없음", "R7" not in rules_of("민재는 물을 바라보았다." + FILL))
+expect("R7 대화문 안 제외", "R7" not in rules_of('"나는 네 생각했어."' + FILL))
+expect("R7 전제 감정 문장 제외", "R7" not in rules_of("그토록 보고 싶었지만 지금은 아니었다." + FILL, {"premise_emotions": ["보고 싶었지만"]}))
+expect("R8 문단 첫 문장 가난했다", "R8" in rules_of("그녀는 가난했다. 집세가 석 달 밀렸다. 고지서 세 통이 쌓였다."))
+expect("R8 둘째 문장은 대상 아님", "R8" not in rules_of("집세가 석 달 밀렸다. 그녀는 가난했다. 고지서 세 통이 쌓였다."))
+expect("R8 있었다 제외", "R8" not in rules_of("방문은 머리를 숙여야만 드나들 수 있었다. 집세가 석 달 밀렸다. 고지서 세 통이 쌓였다."))
+expect("G4 길고 어둡고 축축한 복도", "G4" in rules_of("길고 어둡고 축축한 복도를 지났다." + FILL))
+expect("G4 새 빨간 모자", "G4" in rules_of("민재는 새 빨간 모자를 썼다." + FILL))
+expect("G4 낯익은 운동화 통과", "G4" not in rules_of("낯익은 운동화가 멈춰 섰다." + FILL))
+expect("G4 '가루 하나 없는 매끄러운' 관계절 통과", "G4" not in rules_of("지우개 가루 하나 없는 매끄러운 책상을 닦았다." + FILL))
+expect("T1 이중 피동 잊혀진", "T1" in rules_of("잊혀진 계절이 왔다." + FILL))
+w4 = ct.check('"응."\n\n민재는 깊은 한숨을 쉬었다.' + FILL)["notes"]
+expect("W4 상투 beat note", any(n.startswith("W4") for n in w4), w4)
+expect("W4 없음", not any(n.startswith("W4") for n in ct.check("민재는 컵을 두 번 돌렸다. 창문 세 개가 닫혔다.")["notes"]))
+
 print("\n" + ("ALL OK" if not fails else f"FAILED: {fails}"))
 sys.exit(1 if fails else 0)
