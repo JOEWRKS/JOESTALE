@@ -1,21 +1,26 @@
 {
- "sentences": 10,
+ "sentences": 11,
  "paragraphs": 3,
- "chars": 331,
+ "chars": 361,
  "notes": [],
  "kept_original": [],
+ "premise_emotions": [],
+ "monologue": [
+  "그 아침에 왜 밥솥부터 끄지 않았을까."
+ ],
  "modifier": {
   "content": 85,
-  "modifiers": 4,
-  "ratio": 0.05,
+  "modifiers": 5,
+  "ratio": 0.06,
   "forms": [
    "검",
    "하",
    "안",
-   "누렇"
+   "누렇",
+   "못다"
   ],
-  "nouns": 52,
-  "verbs": 26
+  "nouns": 48,
+  "verbs": 28
  },
  "senses": [
   "body",

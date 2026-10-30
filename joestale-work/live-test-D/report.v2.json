@@ -1,0 +1,39 @@
+{
+ "sentences": 10,
+ "paragraphs": 3,
+ "chars": 331,
+ "notes": [],
+ "kept_original": [],
+ "modifier": {
+  "content": 85,
+  "modifiers": 4,
+  "ratio": 0.05,
+  "forms": [
+   "검",
+   "하",
+   "안",
+   "누렇"
+  ],
+  "nouns": 52,
+  "verbs": 26
+ },
+ "senses": [
+  "body",
+  "hearing",
+  "touch"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

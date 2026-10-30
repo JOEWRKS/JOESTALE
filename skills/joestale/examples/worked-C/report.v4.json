@@ -1,0 +1,39 @@
+{
+ "sentences": 11,
+ "paragraphs": 4,
+ "chars": 278,
+ "notes": [],
+ "kept_original": [],
+ "premise_emotions": [],
+ "monologue": [],
+ "modifier": {
+  "content": 71,
+  "modifiers": 2,
+  "ratio": 0.03,
+  "forms": [
+   "요",
+   "그대로"
+  ],
+  "nouns": 42,
+  "verbs": 23
+ },
+ "senses": [
+  "smell",
+  "temperature",
+  "touch"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

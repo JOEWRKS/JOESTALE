@@ -52,6 +52,32 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-019 / 2026-10-30 / C v5·D v4: 패턴 19(저항과 무반응)·20(결말 신체 반응)
+
+Roadmap item: Phase 0 User acceptance — 7차 피드백(C 무기력, D 끝맺음) 반영.
+Result: principles 패턴 19·20 + 검사법, decisions 2줄, scene-design `closing_body`, reviewer 19·20(20항목), SKILL 서열 문단. C v5(381자): "내릴 역은 아니었다" 뒤 저항 대사 + 무반응 대비 문장 + 뻗은 손. D v4(361자): 마지막 문장 "수연의 뺨을 타고 그제야 못다 흘린 눈물이 내렸다".
+Changed files: `references/principles.md`·`decisions.md`·`reviewer-prompt.md`·`scene-design.md`, `SKILL.md`, `examples/worked-C/final.txt`·`design.json`·`report.json`·README(v4 보관), `joestale-work/live-test-D/final.txt`·`design.json`·`report.json`·README(v3 보관), `재판정-v2.md`, ISSUES I-18, ROADMAP.
+Check / target / result: C·D PASS. 검수 C 10건 → 0건 처리(사용자 수락·제시 문장), D 9건 → 1건 처리(못다 흘린). 재검수 없음(각 2건 이하). test_check_text.py 변경 없음(검증기 미변경).
+Evidence: 각 report.json, README v5/v4, 재판정-v2.md.
+Limits: 패턴 19·20은 검수자만 본다(기계 검사 없음). "나직한 외침"과 "!"의 세기 불일치, 두 시간 부사(나서야·그제야) 겹침은 검수 지적이나 사용자 제시 구절이라 유지. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: C v5·D v4 사용자 수락(2026-10-30 "둘 다 수락, 커밋"). 커밋 완료.
+Related issue / knowledge: ISSUES I-18, principles 패턴 19·20.
+Record handoff gap: none.
+
+## T-018 / 2026-10-30 / C v4·D v3: 패턴 15~18 적용 재작성
+
+Roadmap item: Phase 0 User acceptance — C·D 재제시.
+Result: C v4(278자): 수족관 연상 삭제(seed.used false), 대사 1줄 + 반응 문장, 결말에 손해 사실("내릴 역은 아니었다"). D v3(332자): 조립 세부 삭제, 클라이맥스 독백 1문장, 검수로 용어 3건 수정(부의 봉투 위 종이 → 사망진단서, 잠금 손잡이 → 뚜껑 손잡이를 열림으로, 사흘/72시간 중복 → 발인을 마치고).
+Changed files: `examples/worked-C/final.txt`·`design.json`·`report.json`·README(v3 보관), `joestale-work/live-test-D/final.txt`·`design.json`·`report.json`·README(v2 보관), `재판정-v2.md`.
+Check / target / result: C·D PASS. 검수 C 5건 → 1건 처리, D 9건 → 3건 처리 → 재검수 1회(결과는 live-test-D/README v3).
+Evidence: 각 report.json, 재판정-v2.md C·D.
+Limits: D의 "솥을 엎고 수도를 틂"이 청소로 읽힐 위험은 검수자 지적, 사용자 판정 대상. D는 1인 장면이라 대사 없음.
+Required specialist verdict: not applicable.
+Completion boundaries: C v4·D v3 사용자 판정 pending.
+Related issue / knowledge: ISSUES I-17, principles 패턴 15~18.
+Record handoff gap: none.
+
 ## T-017 / 2026-10-30 / B v5: 클라이맥스 독백(패턴 18), 검증기 monologue·G1 "그사이" 오탐
 
 Roadmap item: Phase 0 User acceptance — B 방향 수락("그래 좋다"), 문구 1건 수정("기운" → "휜").

@@ -1,19 +1,25 @@
 {
- "sentences": 8,
- "paragraphs": 3,
- "chars": 302,
- "notes": [],
+ "sentences": 15,
+ "paragraphs": 6,
+ "chars": 381,
+ "notes": [
+  "W3 비시각 감각 없는 문단: [4] (글 전체 ≥1이면 통과, 문단마다 넣으려고 묘사를 늘리지 말 것)"
+ ],
  "kept_original": [],
+ "premise_emotions": [],
+ "monologue": [],
  "modifier": {
-  "content": 79,
-  "modifiers": 2,
-  "ratio": 0.03,
+  "content": 93,
+  "modifiers": 4,
+  "ratio": 0.04,
   "forms": [
-   "어리",
-   "없"
+   "요",
+   "그대로",
+   "하",
+   "빠르"
   ],
-  "nouns": 48,
-  "verbs": 24
+  "nouns": 52,
+  "verbs": 30
  },
  "senses": [
   "smell",
