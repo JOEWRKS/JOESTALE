@@ -52,6 +52,19 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-014 / 2026-10-30 / 3차 피드백 반영: 사물 경제·전환 트리거 (I-16)
+
+Roadmap item: Phase 0 User acceptance 3차 → 원칙 보강.
+Result: 패턴 12(핵심 사물 2~3개, 한 사물 다역), 13(새 사물은 앞 문장의 원인·연속으로만) 추가. 설계서 objects ≤ 3·전환마다 트리거, 검수 13번, 검증기 W2 note. 연결·습관 부사 6개 허용 목록 추가(그제야·곧잘 등은 패턴 11·13의 도구). A v4: 난로 삭제, 장판 하나가 고집(아깝다고 화냄)·외로움(춥지 않은지 물어옴)·편안함(그제야 켜진 장판에 발을 넣곤 함)을 들게 함.
+Changed files: `references/principles.md`·`decisions.md`·`reviewer-prompt.md`·`scene-design.md`·`lexicon.json`, `scripts/check_text.py`(W2), `examples/worked-A/final.txt`·`design.json`·`report.json`·README, `재판정-v2.md`, ISSUES I-16.
+Check / target / result: test ALL OK. A v4 155자 PASS(원문 유지 1문장, 비율 허용 부사 반영 후).
+Evidence: worked-A/README v4.
+Limits: 사물 수는 설계서 기준으로만 세고 본문에서 자동 추출하지 않음(검수 13번 의존). 재판정 pending.
+Required specialist verdict: not applicable.
+Completion boundaries: 반영 complete / 사용자 재판정 pending.
+Related issue / knowledge: ISSUES I-16.
+Record handoff gap: none.
+
 ## T-013 / 2026-10-30 / 2차 피드백 반영: 직관성 우선 원칙 (I-15)
 
 Roadmap item: Phase 0 User acceptance 2차 → 원칙 보강.

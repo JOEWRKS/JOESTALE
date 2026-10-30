@@ -1,24 +1,22 @@
 {
  "sentences": 4,
  "paragraphs": 1,
- "chars": 159,
+ "chars": 155,
  "notes": [],
  "kept_original": [
   "방 안에서는 눅눅한 나무와 나프탈렌 냄새가 났고, 공기는 늘 축축하고 무거웠다."
  ],
  "modifier": {
-  "content": 29,
-  "modifiers": 5,
-  "ratio": 0.17,
+  "content": 27,
+  "modifiers": 3,
+  "ratio": 0.11,
   "forms": [
    "있",
-   "그냥",
-   "곧잘",
-   "춥",
-   "이제"
+   "아깝",
+   "춥"
   ],
   "nouns": 11,
-  "verbs": 10
+  "verbs": 9
  },
  "senses": [
   "smell",

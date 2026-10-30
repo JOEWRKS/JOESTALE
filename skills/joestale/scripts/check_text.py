@@ -224,6 +224,9 @@ def check(text, design=None, length=None):
     if length:
         ln = length_note(text, length)
         if ln: notes.append(ln)
+    objs = ((design or {}).get("materials") or {}).get("objects") or []
+    if len(objs) > 3:   # W2 사물 경제 (decisions D2: 핵심 사물 2~3개)
+        notes.append(f"W2 설계서 사물 {len(objs)}개 (기준 3개 이하, 같은 역할은 합칠 것): {objs}")
     for i, p in enumerate(paras, 1):   # W1 묘사 과잉 의심: 문단 5문장 이상 (decisions D2 "문단 4문장 이하")
         n = len(split_sents(p))
         if n >= 5:
