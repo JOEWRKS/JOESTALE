@@ -1,3 +1,8 @@
 # 프로젝트 안의 Claude 스킬 정션(skills/joestale을 가리킴). 소스는 skills/에 있음
 .claude/skills/
 __pycache__/
+
+# 코퍼스 원본 바이너리(공유마당 zip/pdf/hwp)는 제외, txt만 저장
+corpus/**/*.zip
+corpus/**/*.pdf
+corpus/**/*.hwp

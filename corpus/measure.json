@@ -1,0 +1,107 @@
+{
+ "rows": [
+  {
+   "chars": 6789,
+   "sentences": 156,
+   "paragraphs": 81,
+   "modifier_ratio": 0.18,
+   "nouns": 738,
+   "verbs": 499,
+   "degree_per_1000": 3.9,
+   "emotion_per_1000": 1.7,
+   "para_ratio_p50": 0.17,
+   "para_ratio_p90": 0.27,
+   "para_ratio_max": 0.5,
+   "paras_measured": 59,
+   "nonvisual_para_share": 0.23,
+   "senses": [
+    "body",
+    "hearing",
+    "smell",
+    "taste",
+    "temperature",
+    "touch"
+   ],
+   "translationese": {
+    "~에도 불구하고": 1,
+    "~것이다 남발": 14
+   },
+   "ending_max_run": 2,
+   "author": "김유정",
+   "file": "김유정-동백꽃-조광.txt"
+  },
+  {
+   "chars": 22168,
+   "sentences": 640,
+   "paragraphs": 174,
+   "modifier_ratio": 0.2,
+   "nouns": 2531,
+   "verbs": 1147,
+   "degree_per_1000": 10.9,
+   "emotion_per_1000": 5.6,
+   "para_ratio_p50": 0.19,
+   "para_ratio_p90": 0.3,
+   "para_ratio_max": 0.5,
+   "paras_measured": 162,
+   "nonvisual_para_share": 0.26,
+   "senses": [
+    "body",
+    "hearing",
+    "smell",
+    "taste",
+    "temperature",
+    "touch"
+   ],
+   "translationese": {
+    "~에 대해": 1,
+    "~에 있어": 2,
+    "~적인 남발": 8,
+    "~것이다 남발": 45,
+    "알 수 없는 ~": 1
+   },
+   "ending_max_run": 3,
+   "author": "이상",
+   "file": "김해경-날개-조광.txt"
+  },
+  {
+   "chars": 10050,
+   "sentences": 239,
+   "paragraphs": 120,
+   "modifier_ratio": 0.18,
+   "nouns": 1231,
+   "verbs": 700,
+   "degree_per_1000": 5.3,
+   "emotion_per_1000": 4.5,
+   "para_ratio_p50": 0.18,
+   "para_ratio_p90": 0.3,
+   "para_ratio_max": 0.4,
+   "paras_measured": 80,
+   "nonvisual_para_share": 0.27,
+   "senses": [
+    "body",
+    "hearing",
+    "smell",
+    "taste",
+    "temperature",
+    "touch"
+   ],
+   "translationese": {
+    "~것이다 남발": 1,
+    "~할 수 있었다 남발": 1,
+    "마치 ~처럼 직유": 1
+   },
+   "ending_max_run": 2,
+   "author": "현진건",
+   "file": "현진건-운수_좋은_날+B3356-개벽.txt"
+  }
+ ],
+ "summary": {
+  "works": 3,
+  "ratio_mean": 0.187,
+  "ratio_max": 0.2,
+  "para_p90_mean": 0.29,
+  "para_p90_max": 0.3,
+  "degree_per_1000_mean": 6.7,
+  "emotion_per_1000_mean": 3.9
+ }
+}

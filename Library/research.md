@@ -26,6 +26,10 @@
 - 음성상징어 4,622개 연구 https://dspace.ewha.ac.kr/handle/2015.oak/190066 ; 감각표현 형태론 https://www.earticle.net/Article/A301344 — 검색 요약 기준.
 - kiwipiepy 0.24.1 (Python 3.14, 이 PC 설치) — 실측 2026-10-29. 사실: 형용사 VA-I/VA-R, 파생형용사 XR+XSA, 일반부사 MAG, 관형사 MM. 오타 모드 부적합(ISSUES I-4). 태그 안내 https://wikidocs.net/313963.
 
+## 코퍼스 (공유마당 만료저작물)
+
+- 김유정 「동백꽃」, 이상 「날개」, 현진건 「운수 좋은 날」 — 2026-10-30, 출처·조건은 corpus/SOURCES.md. 측정은 corpus/MEASURE.md. 사실: 고전 3편의 수식어 비율 0.18~0.20, 문단 p90 0.27~0.30. 추론: 스킬 R2 0.18은 고전 평균 수준이고 작가 "후" 예문(0.00~0.07)은 그보다 훨씬 낮다 → R2는 상한으로만 두고 목표치로 쓰지 않는다. 한계: 1930년대 표기 → Kiwi 오차.
+
 ## 실측 기록
 
 - 수식어 비율 전→후: 기획서 §1.3 표. 스크립트 `prototype/modifier_ratio.py`.

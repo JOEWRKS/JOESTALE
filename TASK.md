@@ -52,6 +52,19 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-010 / 2026-10-30 / 코퍼스 측정과 임계값 보정 (Phase 3, P3-1)
+
+Roadmap item: ROADMAP.md P3-1.
+Result: 사용자가 넣은 공유마당 zip 3개(동백꽃·날개·운수 좋은 날)를 extracted/로 풀고 줄바꿈을 정규화해 측정. 전체 수식어 비율 0.18/0.20/0.18, 문단 p50 0.17~0.19, p90 0.27~0.30, 정도부사 4~11/1k, 감정어 2~6/1k, 비시각 감각 문단 23~27%. R2에 문단 상한 0.30(고전 p90) 추가, 글 전체 0.18 유지(고전 평균 수준, 스킬 산출물 0.02~0.09). R1·R5는 고전보다 엄격한 작가 원칙임을 결정표에 명시.
+Changed files: `scripts/measure_corpus.py`(신규), `scripts/check_text.py`(문단 R2), `scripts/test_check_text.py`(+1), `references/decisions.md`, `corpus/SOURCES.md`·`MEASURE.md`·`measure.json`·`*/extracted/*.txt`, `.gitignore`(zip/pdf/hwp 제외), ROADMAP Phase 3 complete, Library/user-actions.md 2번 완료.
+Check / target / result: measure_corpus.py 3편 정상, test_check_text.py 33건 ALL OK, 기존 실전 예 4건 PASS 유지(확인 결과는 아래 상세).
+Evidence: corpus/MEASURE.md, corpus/measure.json.
+Limits: 작가당 1편이라 작가별 프로파일은 미작성. 1930년대 표기(얼리었다, 뺏다 등)로 Kiwi 태깅 오차 → 수치는 참고치. 공유마당 출처 메모의 라이선스 표기란이 비어 있어 "만료저작물"은 사이트 분류 기준(사용자 확인).
+Required specialist verdict: not applicable.
+Completion boundaries: 측정·보정 complete / 사용자 수락 pending.
+Related issue / knowledge: Library/research.md 코퍼스 항목.
+Record handoff gap: none.
+
 ## T-009 / 2026-10-30 / 우리말샘 API 연결 검증 (Phase 2, P2-1)
 
 Roadmap item: ROADMAP.md P2-1.

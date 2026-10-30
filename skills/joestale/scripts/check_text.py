@@ -35,7 +35,7 @@ ALL_SENSE = [(k, *_parse_sense(w)) for k, ws in SENSES.items() for w in ws]
 JOSA = {"이":1,"가":0,"을":1,"를":0,"은":1,"는":0,"과":1,"와":0,"이랑":1,"랑":0,"으로":1,"로":0,"아":1,"야":0}
 JOSA_PAT = re.compile(r"([가-힣]+?)(이랑|으로|이|가|을|를|은|는|과|와|랑|로|아|야)(?=[\s.,!?'\"”’]|$)")
 QUOTE_PAT = re.compile(r"[\"“][^\"”]*[\"”]|'[^']*'")
-R2_TEXT, R2_SENT, G2_RUN, T2_RUN = 0.18, 0.50, 3, 3
+R2_TEXT, R2_SENT, R2_PARA, G2_RUN, T2_RUN = 0.18, 0.50, 0.30, 3, 3   # R2_PARA = 고전 코퍼스 문단 p90 (corpus/MEASURE.md)
 
 _kiwi = None
 def kiwi():
@@ -172,6 +172,9 @@ def check(text, design=None, length=None):
     if ms["ratio"] > R2_TEXT:
         V.append({"rule": "R2", "scope": "text", "ratio": ms["ratio"], "forms": ms["forms"]})
     for i, p in enumerate(paras, 1):
+        pm = modifier_stats(strip_quotes(p))
+        if pm["content"] >= 8 and pm["ratio"] >= R2_PARA:
+            V.append({"rule": "R2", "paragraph": i, "ratio": pm["ratio"], "forms": pm["forms"]})
         if not senses_in(p):
             V.append({"rule": "R5", "paragraph": i})
         toks = kiwi().tokenize(p)

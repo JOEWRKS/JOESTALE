@@ -2,8 +2,8 @@
 
 Project scope: 한국어 입력(완성 문장·단순 아이디어·러프한 의견·"써줘" 요청)을 받아 허관 작가의 원칙(정도부사·상태형용사 축소, 사물·행동·감각으로 제시)에 따라 쓰고, 기계 검증(조사·어미·금지어·수식어 비율·대장 일치)과 독립 검수를 거친 본문·설계서·리포트를 내는 Claude Code 스킬 `joestale`.
 Product authority: [기획서.md](기획서.md) 3장·3-B·3-C (2026-10-29 사용자 동의). 세부 결정은 JOEFLOW DISCOVER로 보충 예정(FREEZE 생략).
-Current stage: Phase 2 complete (2026-10-30). Phase 3 not started (공유마당 텍스트 대기). 열린 이슈는 I-2·I-4뿐.
-Next eligible work: 사용자 작업 2건(공유마당 코퍼스, Phase 0~2 수락 판정) — 방법은 [Library/user-actions.md](Library/user-actions.md). 코퍼스 전에도 가능한 것: D 유형 실전 예를 API 관계 배제를 켜고 한 번 더 돌려 `candidates[].api` 기록 형식 확정. — (1) 우리말샘 인증키 발급·약관 확인 → P2-1 실제 응답 검증, (2) 공유마당에서 김유정·이상·현진건 텍스트 확보 → P3-1. 둘 다 없으면 Phase 4 중 스킬 유/무 블라인드 비교(P4-1)는 Phase 3 없이도 예비 실행 가능(임계값 미보정 상태로 표기).
+Current stage: Phase 3 complete (2026-10-30, 작가 3인 × 1편). Phase 4 평가 진입 가능. 열린 이슈는 I-2·I-4뿐.
+Next eligible work: (1) 사용자 수락 판정(Library/user-actions.md 3번) → P4-1 블라인드 비교의 기준점. (2) 작가당 편수 늘리기(동백꽃·날개·운수 좋은 날 외 각 2편) → 작가별 프로파일. (3) D 유형 실전 예를 API 관계 배제를 켜고 재실행해 `candidates[].api` 형식 확정. — (1) 우리말샘 인증키 발급·약관 확인 → P2-1 실제 응답 검증, (2) 공유마당에서 김유정·이상·현진건 텍스트 확보 → P3-1. 둘 다 없으면 Phase 4 중 스킬 유/무 블라인드 비교(P4-1)는 Phase 3 없이도 예비 실행 가능(임계값 미보정 상태로 표기).
 Phase 0 사용자 수락: pending (기술 검증은 complete).
 Status words: not started / in progress / verification pending / on hold / complete / removed from scope.
 
@@ -61,15 +61,15 @@ Completion condition: P2-1.
 | --- | --- | --- | --- | --- |
 | P2-1 | `scripts/lookup_synonyms.py`가 단어 1개에 대해 비슷한말·반대말·상위어를 JSON으로 반환하고 `--related-check`로 관계 유무를 exit 코드로 알림 | complete | 실제 API 응답 3건 캡처 | 경첩·슬픔·바다 응답 확인, 관계 검사 4쌍(소금/설탕·슬픔/기쁨 관계 있음, 우산/치과·구름/중학교 없음) (TASK T-009, Library/research.md) |
 
-## Stage Phase 3 — 스타일 프로파일·임계값 보정 — not started
+## Stage Phase 3 — 스타일 프로파일·임계값 보정 — complete (2026-10-30, 1차)
 
 Goal: 저작권 만료 작가(김유정·이상·현진건) 텍스트로 R2 임계값 보정, 작가별 프로파일.
-Entry condition: Phase 1 complete, 공유마당 텍스트 확보.
+Entry condition: Phase 1 complete, 공유마당 텍스트 확보. 충족(작가 3인 × 1편, 2026-10-30).
 Completion condition: P3-1.
 
 | ID | Required outcome | Status | Check / completion criterion | Evidence or gap |
 | --- | --- | --- | --- | --- |
-| P3-1 | 작가 3인 이상 수식어 비율·감각어 밀도 측정표와 보정된 임계값 | not started | 측정표 + 보정 근거 | — |
+| P3-1 | 작가 3인 이상 수식어 비율·감각어 밀도 측정표와 보정된 임계값 | complete | 측정표 + 보정 근거 | corpus/MEASURE.md(3편), decisions D3 R2 문단 상한 0.30 추가, 고전 기준치 기록 (TASK T-010). 한계: 작가당 1편뿐 → 작가별 프로파일은 편수 늘린 뒤(Optional) |
 
 ## Stage Phase 4 — 평가 — not started
 
