@@ -1,6 +1,6 @@
 # Open problems and workarounds
 
-Active issues: I-1, I-2, I-4. (I-3 closed 2026-10-29; I-5~I-9 closed 2026-10-30 T-006; I-10~I-11 closed 2026-10-30 T-007)
+Active issues: I-2, I-4. (I-3 closed 2026-10-29; I-5~I-9 closed 2026-10-30 T-006; I-10~I-11 closed 2026-10-30 T-007; I-1 closed 2026-10-30 T-009)
 
 ## I-10 / 검수 프롬프트 항목 7이 "구절이 없다"를 지적하게 만듦
 
@@ -12,7 +12,7 @@ Status: closed. Closed reference: 2026-10-30 어절 전체가 명사 한 토큰�
 
 ## I-1 / 우리말샘 오픈 API 약관·호출 제한 미확인
 
-Status: open.
+Status: closed. Closed reference: 2026-10-30 키 발급(환경변수 OPENDICT_KEY, 기록 없음)·약관 확인·실제 응답으로 lookup_synonyms.py 검증(TASK T-009). 호출 한도는 문서에 없고 실측 20회 연속 정상. 출처 표기 규칙은 README 데이터 출처 절.
 Affected roadmap item: ROADMAP.md P2-1.
 Cause: API 안내 페이지에 라이선스 본문·호출 제한이 없음.
 Workaround: 약관·저작권 정책은 2026-10-30 확인(Library/research.md): 텍스트 CC BY-SA 2.0 KR, 개인 작문 보조 사용 가능, 문학 용례는 미사용. 호출 한도는 문서에 없어 키 발급 후 실제 응답(오류 코드 021 일시 정지)으로 확인.

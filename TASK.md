@@ -52,6 +52,19 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-009 / 2026-10-30 / 우리말샘 API 연결 검증 (Phase 2, P2-1)
+
+Roadmap item: ROADMAP.md P2-1.
+Result: 사용자가 키를 환경변수로 등록(끝 공백 1자 제거 후 재저장). 실제 응답으로 스크립트 수정: num≥10(오류 103), 응답 구조(sense[].target_code, senseInfo dict, relation_info 선택적), 동형어 번호·하이픈 제거, chunked 끊김 재시도, 역방향·공통 상위어 검사(일반 상위어 제외 목록). 4쌍 판정이 작가 규칙과 일치.
+Changed files: `scripts/lookup_synonyms.py`, `references/decisions.md`(관계 배제 규칙), `Library/research.md`(API 실측), `Library/user-actions.md`(1번 완료), ROADMAP Phase 2 complete, ISSUES I-1 closed.
+Check / target / result: 경첩 → 비슷한말 접철·정첩·합엽·힌지, 상위어 철물. 슬픔/기쁨 exit 2(반대말), 소금/설탕 exit 2(공통 상위어 결정체), 우산/치과·구름/중학교 exit 0.
+Evidence: 채팅 실행 출력, Library/research.md.
+Limits: 바다/육지는 사전에 반대말 관계가 없어 "곳" 제외 후 관계 없음으로 나옴 → LLM 판단이 보완(decisions D2). 소금처럼 동형어(악기 소금)의 관계어가 섞임 → 뜻풀이 기준 필터는 미구현. 키는 기록하지 않음.
+Required specialist verdict: not applicable.
+Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending.
+Related issue / knowledge: ISSUES I-1 (closed).
+Record handoff gap: none.
+
 ## T-008 / 2026-10-30 / 공개 저장소 생성 (우리말샘 API 신청용 URL)
 
 Roadmap item: Phase 2 entry condition 준비(사용자 지시 2026-10-30).
