@@ -1,0 +1,38 @@
+{
+ "sentences": 12,
+ "paragraphs": 3,
+ "chars": 436,
+ "notes": [],
+ "modifier": {
+  "content": 113,
+  "modifiers": 3,
+  "ratio": 0.03,
+  "forms": [
+   "어리",
+   "없",
+   "그대로"
+  ],
+  "nouns": 66,
+  "verbs": 35
+ },
+ "senses": [
+  "hearing",
+  "smell",
+  "temperature",
+  "touch"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

@@ -45,7 +45,9 @@ PYTHONIOENCODING=utf-8 python skills/joestale/scripts/check_text.py draft.txt --
 
 ### 5단계 독립 검수와 제출
 
-[reviewer-prompt.md](references/reviewer-prompt.md)의 블록을 서브에이전트에게 본문·설계서만 넣어 준다. 지적은 4단계로 돌린다. 서브에이전트가 불가하면 같은 맥락에서 하고 `검수: DEGRADED`로 표기한다.
+**기본은 서브에이전트다.** [reviewer-prompt.md](references/reviewer-prompt.md)의 블록에 본문과 설계서의 `ledger`·`banned_targets`·`assumptions` 세 블록만 넣어 일반 서브에이전트(저비용 모델 가능)에게 준다. seed·materials·초고·리포트는 주지 않는다. 지적은 4단계로 돌리고, 대장 쪽 오류면 design.json을 고쳐 3단계를 다시 돈다. 처리한 지적이 3건 이상이면 검수를 한 번 더(최대 2회). 서브에이전트를 띄울 수 없는 환경에서만 같은 맥락에서 하고 `검수: DEGRADED(같은 맥락)`로 표기한다.
+
+분량은 `--length a-b`(D2 기준)로 3단계에 넘겨 리포트의 note로 받는다. 위반이 아니다.
 
 제출은 decisions.md D5 형식 고정: 본문 → 설계서 → 검증 리포트(초고/최종 수치, 남은 위반, 검수 결과).
 
@@ -56,10 +58,22 @@ PYTHONIOENCODING=utf-8 python skills/joestale/scripts/check_text.py draft.txt --
 - 현대 작가의 문체를 흉내 내지 않는다. 원칙만 따른다.
 - D7의 두 경우 외에는 사용자에게 묻지 않는다.
 
+## 설치
+
+버전은 `VERSION`(현재 0.2.0). 이 프로젝트 안에서는 `.claude/skills/joestale` 정션으로 로드된다. 다른 프로젝트에서도 쓰려면 개인 설치:
+
+```powershell
+powershell -NoProfile -File skills/joestale/scripts/install.ps1 -Check   # ready / current / blocked
+powershell -NoProfile -File skills/joestale/scripts/install.ps1 -Apply   # ~/.claude/skills/joestale 로 복사
+```
+
+기존 설치의 VERSION이 다르면 덮어쓰지 않고 blocked. `-Remove` 뒤 `-Apply`. 설치 후 새 세션부터 로드된다. 요구: Python 3 + `pip install kiwipiepy`.
+
 ## 파일
 
 | 파일 | 역할 |
 |---|---|
+| VERSION, scripts/install.ps1 | 버전과 개인 설치(Check/Apply/Remove) |
 | references/decisions.md | 기본값·임계값·실패 동작·출력 형식·파일 위치 |
 | references/principles.md | 작가 원칙, 예문 4쌍, 변환 패턴 6개, 소재 낚기 5단계 |
 | references/scene-design.md, design.template.json | 설계서 질문지와 JSON 형식 |

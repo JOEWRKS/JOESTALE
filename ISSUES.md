@@ -1,6 +1,14 @@
 # Open problems and workarounds
 
-Active issues: I-1, I-2, I-4. (I-3 closed 2026-10-29; I-5~I-9 closed 2026-10-30, TASK T-006)
+Active issues: I-1, I-2, I-4. (I-3 closed 2026-10-29; I-5~I-9 closed 2026-10-30 T-006; I-10~I-11 closed 2026-10-30 T-007)
+
+## I-10 / 검수 프롬프트 항목 7이 "구절이 없다"를 지적하게 만듦
+
+Status: closed. Closed reference: 2026-10-30 worked-A·C 1차 검수에서 검수자가 작가 예문 9구절이 "본문에 없다"고 지적(의도의 반대). reviewer-prompt.md 항목 7을 "복제 금지 검사. 들어 있으면 지적, 없는 것이 정상"으로 고치고, 세부 위치(창가·승강장)와 간접 인용 시제는 지적 대상이 아님을 명시. 2차 검수에서 확인 (TASK T-007).
+
+## I-11 / 검증기 G1이 사전 단어 "창가"를 창+가로 오인
+
+Status: closed. Closed reference: 2026-10-30 어절 전체가 명사 한 토큰이면 제외. 회귀 테스트 추가 (TASK T-007).
 
 ## I-1 / 우리말샘 오픈 API 약관·호출 제한 미확인
 

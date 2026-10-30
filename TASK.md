@@ -52,6 +52,19 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-007 / 2026-10-30 / Phase 1.5 실전 보강 (P15-1~P15-5)
+
+Roadmap item: ROADMAP.md Phase 1.5 P15-1 ~ P15-5.
+Result: A(리라이트)·C(의견→장면) 실전 예를 T-006 규칙으로 0~5단계 수행, 서브에이전트 검수 2회(1차 지적 A 3·C 3 → 처리 3·기각 3, 2차 결과는 README 참조), 최종 PASS. 검증기 `--length` note, R5 형태소 단위 매칭(`형태/태그` 항목), G1 사전 단어 제외. SKILL.md 검수 서브에이전트 기본화·설치 절. VERSION 0.2.0, install.ps1.
+Changed files: `skills/joestale/scripts/check_text.py`·`test_check_text.py`(+6건, 총 32건), `references/lexicon.json`(태그 고정 9항목)·`decisions.md`(A 분량 3.0배, 분량 보충 규칙)·`reviewer-prompt.md`(항목 7 복제 금지 명시), `SKILL.md`, `VERSION`, `scripts/install.ps1`, `examples/worked-A/*`, `examples/worked-C/*`, `Library/user-actions.md`, ROADMAP, ISSUES I-10·I-11.
+Check / target / result: test_check_text.py 32건 ALL OK. worked-A 219자(1회 G1 오탐 → 수정 후 PASS), worked-C 349→436자(분량 보충 1회 → PASS). live-test-D·worked-B PASS 유지. install.ps1 임시 홈에서 ready→current→removed.
+Evidence: examples/worked-A/README.md, worked-C/README.md, report.json.
+Limits: 실전 예는 작성자(이 세션)가 직접 쓴 것이라 트리거 경로는 거치지 않음(트리거는 T-005에서 확인). 검수자는 haiku 모델. 개인 설치(~/.claude/skills)는 임시 홈으로만 시험.
+Required specialist verdict: not applicable.
+Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending (Library/user-actions.md 3번).
+Related issue / knowledge: ISSUES I-10, I-11 (closed); Library/user-actions.md.
+Record handoff gap: none.
+
 ## T-006 / 2026-10-30 / 실전 테스트에서 나온 오탐·결정표 공백 수정 (I-5~I-9)
 
 Roadmap item: P0-2, P1-2, P1-3 보강 (ISSUES I-5~I-9 닫기).

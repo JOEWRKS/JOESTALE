@@ -2,8 +2,8 @@
 
 Project scope: 한국어 입력(완성 문장·단순 아이디어·러프한 의견·"써줘" 요청)을 받아 허관 작가의 원칙(정도부사·상태형용사 축소, 사물·행동·감각으로 제시)에 따라 쓰고, 기계 검증(조사·어미·금지어·수식어 비율·대장 일치)과 독립 검수를 거친 본문·설계서·리포트를 내는 Claude Code 스킬 `joestale`.
 Product authority: [기획서.md](기획서.md) 3장·3-B·3-C (2026-10-29 사용자 동의). 세부 결정은 JOEFLOW DISCOVER로 보충 예정(FREEZE 생략).
-Current stage: Phase 1 complete (2026-10-30). Phase 2 on hold (우리말샘 키), Phase 3 not started (공유마당 텍스트).
-Next eligible work: D 실전 테스트(T-005)에서 나온 검증기 오탐·규칙 공백 I-5~I-9의 처리 결정(사용자). 그 외 사용자 작업 2건 — (1) 우리말샘 인증키 발급·약관 확인 → P2-1 실제 응답 검증, (2) 공유마당에서 김유정·이상·현진건 텍스트 확보 → P3-1. 둘 다 없으면 Phase 4 중 스킬 유/무 블라인드 비교(P4-1)는 Phase 3 없이도 예비 실행 가능(임계값 미보정 상태로 표기).
+Current stage: Phase 1.5 complete (2026-10-30). Phase 2 on hold (우리말샘 키), Phase 3 not started (공유마당 텍스트). 열린 이슈는 I-1·I-2·I-4뿐.
+Next eligible work: 사용자 작업 3건 — 방법은 [Library/user-actions.md](Library/user-actions.md) — (1) 우리말샘 인증키 발급·약관 확인 → P2-1 실제 응답 검증, (2) 공유마당에서 김유정·이상·현진건 텍스트 확보 → P3-1. 둘 다 없으면 Phase 4 중 스킬 유/무 블라인드 비교(P4-1)는 Phase 3 없이도 예비 실행 가능(임계값 미보정 상태로 표기).
 Phase 0 사용자 수락: pending (기술 검증은 complete).
 Status words: not started / in progress / verification pending / on hold / complete / removed from scope.
 
@@ -36,6 +36,20 @@ Completion condition: P1-1~P1-4.
 | P1-2 | 정도부사·감정 직설·번역투·AI 관용구 목록을 check_text.py가 파일에서 읽어 사용 | complete | test_check_text.py T1 검출 | TASK T-004 |
 | P1-3 | 결정표 `references/decisions.md` (입력 분류·기본값·임계값·실패 동작·출력 형식·파일 위치·묻는 경우) | complete | 문서 존재, SKILL.md가 참조 | TASK T-004 |
 | P1-4 | B 유형 실전 예 1건이 절차대로 PASS | complete | examples/worked-B/report.json pass=true | 검수는 DEGRADED(같은 맥락) |
+
+## Stage Phase 1.5 — 실전 보강 — complete (2026-10-30, 기술 검증; 사용자 수락 별도)
+
+Goal: 사용자 입력 없이 가능한 보강 5건. 새 규칙으로 A·C 유형 실전 예를 돌려 회색지대를 더 찾고, 검증기·절차·설치를 다듬는다.
+Entry condition: Phase 1 complete, I-5~I-9 closed. 충족.
+Completion condition: P15-1~P15-5.
+
+| ID | Required outcome | Status | Check / completion criterion | Evidence or gap |
+| --- | --- | --- | --- | --- |
+| P15-1 | A 유형(완성 글 리라이트)·C 유형(의견→장면) 실전 예 각 1건을 T-006 이후 규칙으로 0~5단계 수행, 서브에이전트 검수 포함 | complete | `examples/worked-A`, `examples/worked-C`의 report.json pass=true, README에 회색지대 목록 | 둘 다 PASS, 검수 2회(haiku), 회색지대 7건 → 전부 반영 (TASK T-007, ISSUES I-10·I-11) |
+| P15-2 | check_text.py `--length a-b`: 글자 수(공백 포함·줄바꿈 제외)가 범위 밖이면 위반 아닌 `notes`로 보고 | complete | 회귀 테스트 2건 | test_check_text.py P15-2 2건 OK (TASK T-007) |
+| P15-3 | R5 감각 매칭을 형태소 단위로: 1~2글자 어간은 Kiwi 토큰 일치, 3글자 이상·공백 포함 표현은 부분 문자열, 동형이의어는 `형태/태그`로 고정 | complete | "글을 쓰다"가 미각으로 안 잡힘, 작가 예문·실전 예 모두 여전히 PASS | test_check_text.py P15-3 3건 OK, live-test-D·worked-B PASS 유지 |
+| P15-4 | SKILL.md 5단계를 "서브에이전트 기본, 불가 시 DEGRADED"로 고정, 검수자에게 주는 설계서 범위 명시 | complete | SKILL.md 본문 확인 | SKILL.md 5단계 절 |
+| P15-5 | 설치 절차: `skills/joestale/VERSION`(0.2.0), `scripts/install.ps1`(Check/Apply/Remove, 버전 다르면 blocked), SKILL.md 설치 절 | complete | install.ps1 -Check 출력 JSON | 임시 홈에서 Check ready → Apply current → Check current → Remove removed 확인 (T-007) |
 
 ## Stage Phase 2 — 데이터 연결 — on hold
 

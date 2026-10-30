@@ -1,0 +1,39 @@
+{
+ "sentences": 6,
+ "paragraphs": 1,
+ "chars": 219,
+ "notes": [],
+ "modifier": {
+  "content": 54,
+  "modifiers": 3,
+  "ratio": 0.06,
+  "forms": [
+   "바르",
+   "그대로",
+   "요"
+  ],
+  "nouns": 27,
+  "verbs": 17
+ },
+ "senses": [
+  "body",
+  "hearing",
+  "smell",
+  "temperature",
+  "touch"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

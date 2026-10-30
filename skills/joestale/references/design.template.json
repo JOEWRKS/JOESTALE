@@ -6,7 +6,12 @@
     "object": "우산",
     "pair": "치과",
     "path": "우산살 하나가 휜 채 펴지는 소리 → 치과 의자에서 들은 드릴 소리 → 그 사람을 마지막으로 본 날",
-    "rejected": [["우산", "비"], ["우산", "장화"]]
+    "rejected": [["우산", "비"], ["우산", "장화"]],
+    "candidates": [
+      {"pair": "치과", "path_keywords": ["끼익", "소리"], "chosen": true},
+      {"pair": "도서관", "path_keywords": ["소리"], "chosen": false},
+      {"pair": "주유소", "path_keywords": [], "chosen": false}
+    ]
   },
   "materials": {
     "objects": ["휜 우산살", "젖은 운동화 끈", "편의점 비닐우산 3개"],

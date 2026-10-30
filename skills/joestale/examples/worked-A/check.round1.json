@@ -1,0 +1,48 @@
+{
+ "sentences": 6,
+ "paragraphs": 1,
+ "chars": 219,
+ "notes": [
+  "분량: 219자 (기준 78~194자)"
+ ],
+ "modifier": {
+  "content": 54,
+  "modifiers": 3,
+  "ratio": 0.06,
+  "forms": [
+   "바르",
+   "그대로",
+   "요"
+  ],
+  "nouns": 27,
+  "verbs": 17
+ },
+ "senses": [
+  "body",
+  "hearing",
+  "smell",
+  "temperature",
+  "touch"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [
+  {
+   "rule": "G1",
+   "sentence": "벽지는 창가 쪽만 햇볕에 바래 두 겹으로 들떠 있었고, 이불을 들추면 장판에서 식은 김치 냄새가 올라왔다.",
+   "stem": "창",
+   "josa": "가"
+  }
+ ],
+ "pass": false
+}

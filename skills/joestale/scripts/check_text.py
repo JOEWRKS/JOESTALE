@@ -26,7 +26,12 @@ STATE_PATS = [re.compile(p) for p in LEX["state_patterns"]]
 TRANS = [(re.compile(t["pattern"]), t["label"], t["max"]) for t in LEX["translationese"]]
 AUTHOR_PHRASES = LEX["author_example_phrases"]
 SENSES = LEX["senses"]
-ALL_SENSE = [(k, w) for k, ws in SENSES.items() for w in ws]
+# 항목 "쓰/VA"는 형태 '쓰' + 태그가 VA로 시작할 때만(쓰다=bitter, VV 쓰다=write 구분). 태그 없는 항목은 (sense, word, None).
+def _parse_sense(w):
+    if "/" in w:
+        f, tag = w.split("/", 1); return f, tag
+    return w, None
+ALL_SENSE = [(k, *_parse_sense(w)) for k, ws in SENSES.items() for w in ws]
 JOSA = {"이":1,"가":0,"을":1,"를":0,"은":1,"는":0,"과":1,"와":0,"이랑":1,"랑":0,"으로":1,"로":0,"아":1,"야":0}
 JOSA_PAT = re.compile(r"([가-힣]+?)(이랑|으로|이|가|을|를|은|는|과|와|랑|로|아|야)(?=[\s.,!?'\"”’]|$)")
 QUOTE_PAT = re.compile(r"[\"“][^\"”]*[\"”]|'[^']*'")
@@ -85,6 +90,8 @@ def josa_errors(text):
             ej = kiwi().tokenize(stem + j)
             if any(t.tag.startswith(("E", "V", "XSV", "XSA")) for t in ej):   # XSM("손톱로"의 '로')은 제외하지 않음
                 continue
+            if len(ej) == 1 and ej[0].tag.startswith("N"):   # "창가"처럼 어절 전체가 사전에 있는 한 단어
+                continue
             toks = kiwi().tokenize(stem)
             if toks and (toks[-1].tag[0] in "NX" or toks[-1].tag in ("SL", "SN", "NP", "NNB", "NR")):
                 out.append({"stem": stem, "josa": j})
@@ -123,9 +130,26 @@ def para_first_repeat(paras, limit=T2_RUN):
     return run_length(firsts, limit)
 
 def senses_in(text):
-    return sorted({k for k, w in ALL_SENSE if w in text})
+    """감각 매칭(P15-3). 3글자 이상 또는 공백 포함 표현은 부분 문자열, 1~2글자 어간은 Kiwi 토큰(용언·명사·부사)의 형태와 일치할 때만."""
+    toks = [t for t in kiwi().tokenize(text) if t.tag[0] in "NVM" or t.tag.startswith("XR")]
+    found = set()
+    for k, w, tag in ALL_SENSE:
+        if tag:
+            if any(t.form == w and t.tag.startswith(tag) for t in toks): found.add(k)
+        elif len(w) >= 3 or " " in w:
+            if w in text: found.add(k)
+        elif any(t.form == w for t in toks):
+            found.add(k)
+    return sorted(found)
 
-def check(text, design=None):
+def length_note(text, rng):
+    """분량(공백 포함, 줄바꿈 제외)이 a-b 범위 밖이면 note 문자열, 아니면 None (P15-2)."""
+    n = len(text.replace("\n", "").replace("\r", ""))
+    a, b = rng
+    if a <= n <= b: return None
+    return f"분량: {n}자 (기준 {a}~{b}자)"
+
+def check(text, design=None, length=None):
     paras = [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
     sents = split_sents(text)
     V = []
@@ -178,15 +202,20 @@ def check(text, design=None):
         for form, n in counts.items():
             # 의성어·의태어 오태깅 방지(I-5): 2회 이상 나오고 2글자 이상이며 허용 부사·감각 목록에 없는 것만
             if form in known or any(form in k for k in known): continue
-            if n < 2 or len(form) < 2 or form in ALLOW_ADV or any(form == w for _, w in ALL_SENSE): continue
+            if n < 2 or len(form) < 2 or form in ALLOW_ADV or any(form == w for _, w, _t in ALL_SENSE): continue
             V.append({"rule": "G3", "kind": "unregistered_NNP", "form": form, "count": n})
         ledger_nums = design["ledger"].get("numbers", [])
         for expr in sorted(set(number_expressions(text))):
             if not any(expr in ln or ln in expr for ln in ledger_nums):
                 V.append({"rule": "G3", "kind": "number_not_in_ledger", "form": expr})
     spaced = kiwi().space(text)
+    notes = []
+    if length:
+        ln = length_note(text, length)
+        if ln: notes.append(ln)
     return {
-        "sentences": len(sents), "paragraphs": len(paras), "chars": len(text),
+        "sentences": len(sents), "paragraphs": len(paras), "chars": len(text.replace("\n", "").replace("\r", "")),
+        "notes": notes,
         "modifier": ms, "senses": senses_in(text), "ending": er, "para_first": pr,
         "translationese_counts": trans,
         "spacing_differs": spaced != text,
@@ -208,18 +237,21 @@ def main():
     ap.add_argument("--design")
     ap.add_argument("--json", action="store_true")
     ap.add_argument("--lexicon-stats", action="store_true")
+    ap.add_argument("--length", help="분량 기준 a-b (예: 400-700). 범위 밖은 위반이 아니라 notes")
     a = ap.parse_args()
+    length = tuple(int(x) for x in a.length.split("-")) if a.length else None
     if a.lexicon_stats:
         print(json.dumps(lexicon_stats(), ensure_ascii=False, indent=1)); return
     if not a.path:
         ap.error("본문 경로 또는 - 필요")
     text = sys.stdin.read() if a.path == "-" else open(a.path, encoding="utf-8").read()
     design = json.load(open(a.design, encoding="utf-8")) if a.design else None
-    r = check(text, design)
+    r = check(text, design, length)
     if a.json:
         print(json.dumps(r, ensure_ascii=False, indent=1))
     else:
         print(summary_line(r))
+        for n in r["notes"]: print("  note:", n)
         print("PASS" if r["pass"] else "위반:")
         for v in r["violations"]:
             print(" ", json.dumps(v, ensure_ascii=False))

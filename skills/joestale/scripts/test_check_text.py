@@ -49,6 +49,7 @@ st = ct.lexicon_stats(); expect("어휘장 감각별 ≥30", st["senses_min"] >=
 # I-5: 관형사형 어미 '-는/-은'을 조사로 오인하지 않음, 의성어 1회 NNP를 미등록 이름으로 보지 않음
 expect("I-5 관형사형 어미 오탐 없음", not ct.josa_errors("수연은 그날부터 밥을 짓지 않고 한 칸 남은 쌀을 잡는 버릇이 생겼다."))
 expect("I-5 조사 오류는 여전히 검출", bool(ct.josa_errors("경첩가 울었다.")))
+expect("P15-1 사전 단어 '창가'는 조사 아님", not ct.josa_errors("벽지는 창가 쪽만 햇볕에 바랬다."))
 ONO = "밥솥이 치익 소리를 냈다. 수연은 두 번 뚜껑을 눌렀다. 수연은 숨을 참았다."
 g3 = [v for v in ct.check(ONO, {"ledger": {"persons": ["수연"], "places": [], "numbers": ["두 번"]}})["violations"] if v["rule"] == "G3"]
 expect("I-5 의성어 1회 NNP 오탐 없음", not any(v.get("kind") == "unregistered_NNP" for v in g3), g3)
@@ -59,5 +60,12 @@ expect("I-6 대장 누락 숫자 검출(둘째 날), 수량 1(한 칸)은 제외
 g3 = [v for v in ct.check(NUM, {"ledger": {"persons": ["수연"], "places": [], "numbers": ["72시간", "한 칸", "둘째 날"]}})["violations"] if v.get("kind") == "number_not_in_ledger"]
 expect("I-6 대장 완비 시 통과", not g3, g3)
 expect("seed_objects 30개", len(ct.LEX.get("seed_objects", [])) == 30)
+# P15-2 분량 note
+expect("P15-2 분량 범위 밖 note", ct.check("민재는 걸었다. 두 번 멈췄다.", length=(400, 700))["notes"] != [])
+expect("P15-2 분량 범위 안 note 없음", ct.check("민재는 걸었다. 두 번 멈췄다.", length=(1, 100))["notes"] == [])
+# P15-3 감각 매칭 형태소 단위
+expect("P15-3 '글을 쓰다'는 미각 아님", "taste" not in ct.senses_in("민재는 편지를 쓰다가 멈췄다."), ct.senses_in("민재는 편지를 쓰다가 멈췄다."))
+expect("P15-3 '쓴맛'은 미각", "taste" in ct.senses_in("커피에서 쓴맛이 올라왔다."))
+expect("P15-3 '베고'는 촉각", "touch" in ct.senses_in("바람이 뺨을 베고 지나갔다."))
 print("\n" + ("ALL OK" if not fails else f"FAILED: {fails}"))
 sys.exit(1 if fails else 0)
