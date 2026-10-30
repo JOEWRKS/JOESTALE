@@ -1,21 +1,22 @@
 {
- "sentences": 10,
+ "sentences": 9,
  "paragraphs": 3,
- "chars": 323,
+ "chars": 308,
  "notes": [],
  "kept_original": [],
  "modifier": {
-  "content": 90,
-  "modifiers": 4,
-  "ratio": 0.04,
+  "content": 88,
+  "modifiers": 5,
+  "ratio": 0.06,
   "forms": [
-   "그제야",
-   "같",
+   "그대로",
+   "덜",
    "잘",
+   "같",
    "같"
   ],
   "nouns": 50,
-  "verbs": 26
+  "verbs": 24
  },
  "senses": [
   "hearing",

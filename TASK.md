@@ -52,6 +52,19 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-015 / 2026-10-30 / 4차 피드백: 사용자안 분석으로 패턴 10·11·13 보강, 14 추가, A v5 확정, B v3
+
+Roadmap item: Phase 0 User acceptance — A 확정, B 재제시.
+Result: 사용자 제시 문장("아깝다고 고집부리며 틀지도 않던 장판을 내가 오면 켜곤 하셨다. 나는 그제야 미지근해진 이불 밑에 발을 밀어 넣곤 했다")이 스킬 v4보다 나은 이유를 분석해 규칙화: 패턴 10(양면성 = 한 행동의 평소/예외 대비, 예외 조건이 감정), 11(장면 전체 같은 상, 존대 어미로 관계), 13(트리거는 사물의 상태 변화, 사건을 요약하는 형용사는 남김), 14(행위 주체 전환 1회, 마음은 질문 보고가 아니라 행동). A v5 = 사용자안 확정(146자 PASS, 원문 유지 1문장). B v3: 사물 3(우산살·운동화 끈·버스), 주체 전환 최소, 상태 변화 트리거(손을 떼자 → 기움), 308자 PASS.
+Changed files: `references/principles.md`(패턴 10·11·13·14, 분석 사례 표), `lexicon.json`(촉각: 엄지·검지·손목·발바닥), `examples/worked-A/final.txt`·`design.json`·`report.json`·README, `worked-B/final.txt`·`design.json`·`report.json`·README, `재판정-v2.md`.
+Check / target / result: test ALL OK. A·B PASS.
+Evidence: principles.md 분석 사례 표, 재판정-v2.md.
+Limits: A 확정 문장은 사용자안이라 스킬 자력 생성 증거가 아님. B v3·C·D는 재판정 pending. "주체 전환 횟수"는 기계 검사 없음(검수 14번 미추가 → 다음 보강).
+Required specialist verdict: not applicable.
+Completion boundaries: A 수락 complete / B·C·D pending.
+Related issue / knowledge: ISSUES I-15·I-16, principles 분석 사례.
+Record handoff gap: none.
+
 ## T-014 / 2026-10-30 / 3차 피드백 반영: 사물 경제·전환 트리거 (I-16)
 
 Roadmap item: Phase 0 User acceptance 3차 → 원칙 보강.
