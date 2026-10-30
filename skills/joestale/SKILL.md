@@ -86,3 +86,4 @@ powershell -NoProfile -File skills/joestale/scripts/install.ps1 -Apply   # ~/.cl
 | scripts/test_check_text.py | 검증기 회귀 테스트 |
 | scripts/lookup_synonyms.py | 우리말샘 유의어·관계어 조회 (OPENDICT_KEY 필요) |
 | examples/before-after.md | 작가 예문 재현 수치 |
+| examples/worked-A·B·C, round2/ | 사용자 수락본(A~D 4편 + round2 4편)과 설계서·리포트 |

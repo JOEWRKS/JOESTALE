@@ -1,0 +1,47 @@
+{
+ "sentences": 12,
+ "paragraphs": 5,
+ "chars": 288,
+ "notes": [
+  "W3 비시각 감각 없는 문단: [4, 5] (글 전체 ≥1이면 통과, 문단마다 넣으려고 묘사를 늘리지 말 것)",
+  "W1 문단 1: 6문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)"
+ ],
+ "kept_original": [
+  "늦은 밤, 하은은 반사적으로 방범창을 바라보고는 현관문의 잠금장치도 두 번을 확인했다.",
+  "싱크대 위 불만 남기고 눕자마자 좁은 원룸의 현관문 밖에서 발소리가 들려왔다.",
+  "하은은 급히 다른 불마저 켜고 뒤늦게야 잠에 들었다."
+ ],
+ "premise_emotions": [],
+ "monologue": [
+  "설마…."
+ ],
+ "modifier": {
+  "content": 40,
+  "modifiers": 3,
+  "ratio": 0.07,
+  "forms": [
+   "저벅",
+   "저벅",
+   "그대로"
+  ],
+  "nouns": 24,
+  "verbs": 10
+ },
+ "senses": [
+  "hearing"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 2,
+  "form": "하은은",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

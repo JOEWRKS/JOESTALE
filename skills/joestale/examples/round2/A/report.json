@@ -1,0 +1,50 @@
+{
+ "sentences": 12,
+ "paragraphs": 4,
+ "chars": 219,
+ "notes": [
+  "분량: 219자 (기준 82~184자)",
+  "W1 문단 1: 6문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)"
+ ],
+ "kept_original": [
+  "나는 면접장 의자에 굳은 얼굴로 앉아 있었다.",
+  "말없이 이력서만 넘기는 면접관들 사이에선 초침 소리만이 흐르고 있었다."
+ ],
+ "premise_emotions": [],
+ "monologue": [
+  "'여기마저 떨어지면 열두 번째였던가.'",
+  "망했다.",
+  "이놈의 고질적인 집중력."
+ ],
+ "modifier": {
+  "content": 27,
+  "modifiers": 2,
+  "ratio": 0.07,
+  "forms": [
+   "어리",
+   "하"
+  ],
+  "nouns": 15,
+  "verbs": 4
+ },
+ "senses": [
+  "body",
+  "hearing"
+ ],
+ "ending": {
+  "max_run": 2,
+  "form": "있었다",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {
+  "~적인 남발": 1
+ },
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

@@ -61,7 +61,7 @@ Check / target / result: 4편 PASS(C의 "급히 다른 불마저" 문장은 수�
 Evidence: round2/README.md v3.
 Limits: 사용자 제시 문장이라 검수 생략. A 분량 초과 note 유지. W5는 수락본 D(8개 연속)에도 떠서 위반이 아닌 note로 둠. 커밋 안 함.
 Required specialist verdict: not applicable.
-Completion boundaries: B 수락. A·C·D v3 판정 pending.
+Completion boundaries: A·B·C·D 전부 수락(2026-10-31 "수락"). 최종본을 examples/round2/로 승격, 커밋.
 Related issue / knowledge: I-19, 패턴 21·28·30.
 Record handoff gap: none.
 
