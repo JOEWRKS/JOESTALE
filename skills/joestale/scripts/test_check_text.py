@@ -70,7 +70,26 @@ HEAVY = "매서운 바람이 몹시 차갑게 불었다. 낡고 오래된 문이
 r = ct.check(HEAVY); expect("P3 문단 R2 위반(문단 1만)", [v.get("paragraph") for v in r["violations"] if v["rule"] == "R2" and "paragraph" in v] == [1], [v for v in r["violations"] if v["rule"] == "R2"])
 # P15-2 분량 note
 expect("P15-2 분량 범위 밖 note", ct.check("민재는 걸었다. 두 번 멈췄다.", length=(400, 700))["notes"] != [])
-expect("P15-2 분량 범위 안 note 없음", ct.check("민재는 걸었다. 두 번 멈췄다.", length=(1, 100))["notes"] == [])
+expect("P15-2 분량 범위 안 note 없음", not any(n.startswith("분량") for n in ct.check("민재는 걸었다. 두 번 멈췄다.", length=(1, 100))["notes"]))
+# T-016 전제 감정(premise_emotions): R4만 면제
+PREM = "민재는 우산을 털었다. 그토록 그리웠지만 지금은 듣고 싶지 않은 목소리였다. 버스 문이 닫혔다."
+r0 = ct.check(PREM); r1 = ct.check(PREM, {"premise_emotions": ["그리웠지만"]})
+expect("T-016 premise 없이 R4 검출", any(v["rule"] == "R4" for v in r0["violations"]))
+expect("T-016 premise 지정 시 R4 제외·보고", not any(v["rule"] == "R4" for v in r1["violations"]) and len(r1["premise_emotions"]) == 1, r1["violations"])
+# T-016 대화문만 있는 문단은 R5·R6 제외, R5는 글 전체 기준 + W3 note
+DLG = "민재는 상가 입구에서 우산을 털었다.\n\n\"오랜만이네…. 잘…, 지내?\"\n\n민재는 휜 살을 엄지로 밀어 폈다."
+r = ct.check(DLG)
+expect("T-016 대화 문단 R6 없음", not any(v["rule"] == "R6" for v in r["violations"]), r["violations"])
+expect("T-016 R5 문단별 위반 없음·W3 note", not any(v["rule"] == "R5" for v in r["violations"]) and any(n.startswith("W3") for n in r["notes"]), r["notes"])
+expect("T-016 R5 글 전체 없으면 위반", any(v["rule"] == "R5" for v in ct.check("민재는 걸었다. 두 번 멈췄다.")["violations"]))
+expect("T-016 목소리는 청각", "hearing" in ct.senses_in("듣고 싶지 않은 목소리였다."))
+# T-017 독백(monologue): 대화문처럼 R2 문장·R4 면제, G1 "그사이" 오탐 없음
+MONO = "민재는 우산을 폈다. 왜 하필 오늘, 여기서였을까. 그사이 눈앞에서 문이 닫혔다."
+r0 = ct.check(MONO); r1 = ct.check(MONO, {"monologue": ["왜 하필"]})
+expect("T-017 독백 지정 전 R2 문장 검출", any(v["rule"] == "R2" and "sentence" in v for v in r0["violations"]), r0["violations"])
+expect("T-017 독백 지정 시 R2 제외·보고", not any(v["rule"] == "R2" for v in r1["violations"]) and len(r1["monologue"]) == 1, r1["violations"])
+expect("T-017 '그사이' G1 오탐 없음", not any(v["rule"] == "G1" for v in r0["violations"]), [v for v in r0["violations"] if v["rule"] == "G1"])
+expect("T-017 '손톱로' G1 여전히 검출", any(v["rule"] == "G1" for v in ct.check("손톱로 긁었다.")["violations"]))
 # P15-3 감각 매칭 형태소 단위
 expect("P15-3 '글을 쓰다'는 미각 아님", "taste" not in ct.senses_in("민재는 편지를 쓰다가 멈췄다."), ct.senses_in("민재는 편지를 쓰다가 멈췄다."))
 expect("P15-3 '쓴맛'은 미각", "taste" in ct.senses_in("커피에서 쓴맛이 올라왔다."))

@@ -52,6 +52,32 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-017 / 2026-10-30 / B v5: 클라이맥스 독백(패턴 18), 검증기 monologue·G1 "그사이" 오탐
+
+Roadmap item: Phase 0 User acceptance — B 방향 수락("그래 좋다"), 문구 1건 수정("기운" → "휜").
+Result: 사용자 제안(결말을 극적으로: 우산을 펴는 사이 문이 닫힘, 차마 세우지 못함, "왜 하필 지금")을 패턴 18로 규칙화: 불가역 사실 뒤에 독백 두 문장까지(질문형·불능 표현), 결론 감정은 쓰지 않고 행동으로 돌아옴. 검증기: 설계서 `monologue` 문장을 대화문처럼 처리·보고, G1 오탐("그사이")을 어간/조사 경계의 토큰 경계 유무로 제외. decisions 독백 행, 검수 18번, SKILL·scene-design 반영. B v5 329자 PASS.
+Changed files: `references/principles.md`(패턴 18, 분석 사례 2 결말 행), `decisions.md`, `reviewer-prompt.md`, `scene-design.md`, `SKILL.md`, `scripts/check_text.py`·`test_check_text.py`(+4건), `examples/worked-B/*`(v4 보관), `재판정-v2.md`.
+Check / target / result: test ALL OK(48건). B v5 PASS, A·C·D PASS 유지. 검수 7건 → 처리 0건(worked-B/README v5에 이유).
+Evidence: worked-B/report.json, 재판정-v2.md B.
+Limits: B 결말 문장 대부분이 사용자 제시문. "독백 한 자리"는 기계 검사 없음(검수 18만).
+Required specialist verdict: not applicable.
+Completion boundaries: B v5 사용자 수락(2026-10-30) / C·D 패턴 15~18 미적용.
+Related issue / knowledge: ISSUES I-17, principles 패턴 18.
+Record handoff gap: none.
+
+## T-016 / 2026-10-30 / 5차 피드백(B v3): 패턴 15~17, 검증기 전제 감정·대화 문단·R5 완화, B v4
+
+Roadmap item: Phase 0 User acceptance — B 재제시.
+Result: 사용자 피드백(공상 과제·대화문 부재·연상 반복)을 패턴 15(행동 시간순, 한 문장 한 행동, 상태는 수식어 하나로 압축 가능), 16(대사 한 줄 + 반응 문장, 전제 감정은 쓰고 결론 감정은 독자 몫), 17(연상은 상태당 1회, 결합 시드 미사용 허용, 설명 없는 세부 숫자 금지)로 규칙화. 검증기: 설계서 `premise_emotions` 문장은 R4 면제·보고, 대화문만 있는 문단은 R2·R5·R6 제외, R5는 글 전체 기준으로 완화(문단별은 W3 note), 청각에 목소리·말소리. decisions: B·C 200~500자, 대화문 사용 조건, 묘사 순서, 결합 시드 조건. 검수 항목 15~17. B v4(248자, 대사 2줄, 치과·숫자 삭제) PASS. 검수 지적 6건 → 처리 1건(버스 등장 근거).
+Changed files: `references/principles.md`(패턴 15~17, 분석 사례 2), `decisions.md`, `reviewer-prompt.md`, `scene-design.md`, `design.template.json`, `lexicon.json`, `SKILL.md`, `scripts/check_text.py`·`test_check_text.py`(+7건), `examples/worked-B/*`(v3 보관), `재판정-v2.md`.
+Check / target / result: test ALL OK(44건). B v4 PASS, A·C·D 여전히 PASS(R5 완화로 위반 감소 없음, 전부 0건 유지). 검수(haiku) 결과는 worked-B/README v4.
+Evidence: worked-B/report.json, 재판정-v2.md B.
+Limits: B·C 하한 200자는 내가 정한 기본값(사용자 확인 필요). 대화문 삽입 여부·"공상 과제" 판정은 기계 검사 없음(검수 15·16만). B v4의 대사·반응 문장은 사용자 제시문을 거의 그대로 채택.
+Required specialist verdict: not applicable.
+Completion boundaries: B v4 pending / C·D는 패턴 15~17 미적용(재작성 필요 여부 사용자 판단).
+Related issue / knowledge: ISSUES I-17, principles 분석 사례 2.
+Record handoff gap: none.
+
 ## T-015 / 2026-10-30 / 4차 피드백: 사용자안 분석으로 패턴 10·11·13 보강, 14 추가, A v5 확정, B v3
 
 Roadmap item: Phase 0 User acceptance — A 확정, B 재제시.

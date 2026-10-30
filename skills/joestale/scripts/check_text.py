@@ -5,7 +5,7 @@
 
 규칙(임계값은 references/decisions.md D3):
   R1 정도부사 0회 · R2 수식어 비율 ≤0.18(문장 ≥0.50도 위반) · R3 상태 서술 패턴 · R4 감정 직설(대화문 제외)
-  R5 문단당 비시각 감각 ≥1 · R6 문단당 숫자·고유명사 ≥1 · G1 조사 받침 규칙 · G2 마지막 어절 3연속 반복
+  R5 글 전체 비시각 감각 ≥1(문단별 부재는 W3 note) · R6 문단당 숫자·고유명사 ≥1 · G1 조사 받침 규칙 · G2 마지막 어절 3연속 반복
   G3 설계서 대장(누락·미등록 고유명사) · T1 번역투·AI 관용구 상한 · T2 문단 첫 어절 3연속 반복 · X1 작가 예문 복제
 목록은 references/lexicon.json. Kiwi 오타 교정은 쓰지 않는다. 띄어쓰기는 보고만.
 """
@@ -92,6 +92,8 @@ def josa_errors(text):
                 continue
             if len(ej) == 1 and ej[0].tag.startswith("N"):   # "창가"처럼 어절 전체가 사전에 있는 한 단어
                 continue
+            if not any(t.start == len(stem) for t in ej):   # 어간/조사 경계에 토큰 경계가 없음: Kiwi가 다르게 끊어 읽은 한 단어("그사이" = 그+사이)
+                continue
             toks = kiwi().tokenize(stem)
             if toks and (toks[-1].tag[0] in "NX" or toks[-1].tag in ("SL", "SN", "NP", "NNB", "NR")):
                 out.append({"stem": stem, "josa": j})
@@ -156,15 +158,21 @@ def check(text, design=None, length=None):
     # 원문 유지(직관성 우선, principles 서열): 설계서 keep_original의 구절이 든 문장은 R1~R4·문장 R2에서 제외하고 kept로 보고
     keep = (design or {}).get("keep_original") or []
     kept = [s for s in sents if any(k in s for k in keep)]
+    # 전제 감정(패턴 16): 설계서 premise_emotions의 구절이 든 문장은 R4만 면제(결론 감정이 아니라 독자가 짐작할 전제)
+    premise = (design or {}).get("premise_emotions") or []
+    premised = [s for s in sents if s not in kept and any(k in s for k in premise)]
+    # 독백(패턴 18): 설계서 monologue의 구절이 든 문장은 대화문처럼 R1~R4·문장 R2에서 제외하고 보고
+    mono = (design or {}).get("monologue") or []
+    monologued = [s for s in sents if s not in kept and any(k in s for k in mono)]
     for s in sents:
-        if s in kept:
+        if s in kept or s in monologued:
             continue
         plain = strip_quotes(s)
         toks = kiwi().tokenize(plain)
         for t in toks:
             if t.tag == "MAG" and t.form in DEGREE:
                 V.append({"rule": "R1", "sentence": s, "form": t.form})
-            if t.tag in ("VA", "VA-I", "VA-R", "XR", "NNG") and any(t.form.startswith(e) for e in EMOTION):
+            if s not in premised and t.tag in ("VA", "VA-I", "VA-R", "XR", "NNG") and any(t.form.startswith(e) for e in EMOTION):
                 V.append({"rule": "R4", "sentence": s, "form": t.form})
         if any(p.search(plain) for p in STATE_PATS):
             V.append({"rule": "R3", "sentence": s})
@@ -174,22 +182,28 @@ def check(text, design=None, length=None):
         if ms["content"] >= 4 and ms["ratio"] >= R2_SENT:
             V.append({"rule": "R2", "sentence": s, "ratio": ms["ratio"], "forms": ms["forms"]})
     measured = text
-    for s in kept:
+    for s in kept + monologued:
         measured = measured.replace(s, " ")
     ms = modifier_stats(measured)
     if ms["ratio"] > R2_TEXT:
         V.append({"rule": "R2", "scope": "text", "ratio": ms["ratio"], "forms": ms["forms"]})
+    no_sense_paras = []
     for i, p in enumerate(paras, 1):
+        if not strip_quotes(p).strip():   # 대화문만 있는 문단(decisions "대화는 줄 바꿈"): 문단 규칙 R2·R5·R6 제외
+            continue
         pm = modifier_stats(strip_quotes(p))
         if pm["content"] >= 8 and pm["ratio"] >= R2_PARA:
             V.append({"rule": "R2", "paragraph": i, "ratio": pm["ratio"], "forms": pm["forms"]})
         if not senses_in(p):
-            V.append({"rule": "R5", "paragraph": i})
+            no_sense_paras.append(i)
         toks = kiwi().tokenize(p)
         has_number = any(t.tag in ("NR", "SN", "NNP") or (t.tag == "MM" and NUMDET.match(t.form)) for t in toks)
         nng = sum(1 for t in toks if t.tag == "NNG")
         if not has_number and nng < 3:
             V.append({"rule": "R6", "paragraph": i, "nouns": nng})
+    # R5: 글 전체에 비시각 감각이 없으면 위반. 문단별 부재는 W3 note(코퍼스 기준 비시각 문단 23~27%, 압축 원칙 패턴 15와 충돌하므로 위반 아님)
+    if not senses_in(text):
+        V.append({"rule": "R5", "scope": "text"})
     er = ending_repeat(sents)
     if er["violation"]: V.append({"rule": "G2", **er})
     pr = para_first_repeat(paras)
@@ -227,13 +241,15 @@ def check(text, design=None, length=None):
     objs = ((design or {}).get("materials") or {}).get("objects") or []
     if len(objs) > 3:   # W2 사물 경제 (decisions D2: 핵심 사물 2~3개)
         notes.append(f"W2 설계서 사물 {len(objs)}개 (기준 3개 이하, 같은 역할은 합칠 것): {objs}")
+    if no_sense_paras:
+        notes.append(f"W3 비시각 감각 없는 문단: {no_sense_paras} (글 전체 ≥1이면 통과, 문단마다 넣으려고 묘사를 늘리지 말 것)")
     for i, p in enumerate(paras, 1):   # W1 묘사 과잉 의심: 문단 5문장 이상 (decisions D2 "문단 4문장 이하")
         n = len(split_sents(p))
         if n >= 5:
             notes.append(f"W1 문단 {i}: {n}문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)")
     return {
         "sentences": len(sents), "paragraphs": len(paras), "chars": len(text.replace("\n", "").replace("\r", "")),
-        "notes": notes, "kept_original": kept,
+        "notes": notes, "kept_original": kept, "premise_emotions": premised, "monologue": monologued,
         "modifier": ms, "senses": senses_in(text), "ending": er, "para_first": pr,
         "translationese_counts": trans,
         "spacing_differs": spaced != text,
@@ -271,6 +287,8 @@ def main():
         print(summary_line(r))
         for n in r["notes"]: print("  note:", n)
         for k in r["kept_original"]: print("  원문 유지(직관성):", k)
+        for k in r["premise_emotions"]: print("  전제 감정(짐작 유도):", k)
+        for k in r["monologue"]: print("  독백(대화문 취급):", k)
         print("PASS" if r["pass"] else "위반:")
         for v in r["violations"]:
             print(" ", json.dumps(v, ensure_ascii=False))

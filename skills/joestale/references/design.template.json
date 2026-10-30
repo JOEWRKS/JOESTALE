@@ -1,12 +1,14 @@
 {
   "type": "B",
   "input": "비 오는 날 재회",
-  "defaults": {"length": "300~500자", "pov": "3인칭 제한", "tense": "과거"},
-  "setting": {"era": "현대 한국", "place": "도시 버스 정류장", "forbidden": []},
+  "defaults": {"length": "200~500자", "pov": "3인칭 제한", "tense": "과거"},
+  "setting": {"era": "현대 한국", "place": "도시 상가 입구", "forbidden": []},
   "seed": {
     "object": "우산",
     "pair": "치과",
     "path": "우산살 하나가 휜 채 펴지는 소리 → 치과 의자에서 들은 드릴 소리 → 그 사람을 마지막으로 본 날",
+    "used": false,
+    "unused_reason": "주 사물(싸구려 우산)이 처지를 이미 들고 있어 두 번째 연상 층이 됨(패턴 17)",
     "rejected": [["우산", "비"], ["우산", "장화"]],
     "candidates": [
       {"pair": "치과", "path_keywords": ["끼익", "소리"], "chosen": true},
@@ -15,23 +17,27 @@
     ]
   },
   "materials": {
-    "objects": ["휜 우산살", "젖은 운동화 끈", "편의점 비닐우산 3개"],
-    "actions": ["우산을 두 번 털다", "끈을 풀지 않고 발을 비집어 넣다"],
-    "nonvisual": "우산살이 펴지며 끼익 하는 소리",
-    "number": "세 번째 신호에서",
-    "cause_effect": "우산을 털자 → 물방울이 상대 신발 코에 튀었다"
+    "objects": ["싸구려 비닐우산(휜 살)", "낯익은 운동화", "버스"],
+    "actions": ["우산을 털다", "휜 쪽을 몸 뒤로 돌리며 고개를 끄덕이다", "휜 살을 엄지로 밀어 폈다 놓다"],
+    "nonvisual": "목소리(청각), 엄지(촉각)",
+    "dialogue": ["오랜만이네…. 잘…, 지내?", "응."],
+    "number": "없음(설명 없는 세부 숫자 금지)",
+    "cause_effect": "물을 보고 있으니 → 운동화가 멈춰 섬 / 목소리 → 휜 쪽을 뒤로 돌림 / 손을 떼자 → 우산이 기움"
   },
   "ledger": {
     "persons": ["민재"],
-    "places": ["정류장"],
-    "numbers": ["두 번", "세 번째", "3개"]
+    "places": ["상가 입구"],
+    "numbers": []
   },
   "banned_targets": [
-    {"original": "반가웠다", "valence": "긍정·소극", "plan": "우산을 접다 말고 상대 신발을 본다", "sentences": 1, "misread_risk": "없음"},
-    {"original": "어색하게", "valence": "부정·소극", "plan": "같은 말을 두 번 한다", "sentences": 1, "misread_risk": "없음"}
+    {"original": "가난·궁색", "valence": "부정·소극", "plan": "싸구려 비닐우산, 휜 살을 몸 뒤로 돌린다", "sentences": 2, "misread_risk": "없음"},
+    {"original": "부끄러움·들킴(결론 감정)", "valence": "부정·소극", "plan": "쓰지 않음. 전제 감정 '그리웠지만 듣고 싶지 않은'만 쓰고 독자가 짐작", "sentences": 1, "misread_risk": "없음"}
   ],
+  "premise_emotions": ["그리웠지만"],
+  "keep_original": [],
   "assumptions": [
     {"item": "시점", "value": "3인칭 제한", "why": "요청에 없음"},
-    {"item": "이름", "value": "민재", "why": "요청에 없음"}
+    {"item": "이름", "value": "민재", "why": "요청에 없음"},
+    {"item": "상대", "value": "전 연인, 이름 없음", "why": "'재회'의 기본값"}
   ]
 }
