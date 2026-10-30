@@ -1,7 +1,8 @@
 {
   "type": "B",
   "input": "비 오는 날 재회",
-  "defaults": {"length": "400~700자", "pov": "3인칭 제한", "tense": "과거"},
+  "defaults": {"length": "300~500자", "pov": "3인칭 제한", "tense": "과거"},
+  "setting": {"era": "현대 한국", "place": "도시 버스 정류장", "forbidden": []},
   "seed": {
     "object": "우산",
     "pair": "치과",
@@ -26,8 +27,8 @@
     "numbers": ["두 번", "세 번째", "3개"]
   },
   "banned_targets": [
-    {"original": "반가웠다", "plan": "우산을 접다 말고 상대 신발을 본다"},
-    {"original": "어색하게", "plan": "같은 말을 두 번 한다"}
+    {"original": "반가웠다", "valence": "긍정·소극", "plan": "우산을 접다 말고 상대 신발을 본다", "sentences": 1, "misread_risk": "없음"},
+    {"original": "어색하게", "valence": "부정·소극", "plan": "같은 말을 두 번 한다", "sentences": 1, "misread_risk": "없음"}
   ],
   "assumptions": [
     {"item": "시점", "value": "3인칭 제한", "why": "요청에 없음"},

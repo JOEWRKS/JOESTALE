@@ -216,6 +216,10 @@ def check(text, design=None, length=None):
     if length:
         ln = length_note(text, length)
         if ln: notes.append(ln)
+    for i, p in enumerate(paras, 1):   # W1 묘사 과잉 의심: 문단 5문장 이상 (decisions D2 "문단 4문장 이하")
+        n = len(split_sents(p))
+        if n >= 5:
+            notes.append(f"W1 문단 {i}: {n}문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)")
     return {
         "sentences": len(sents), "paragraphs": len(paras), "chars": len(text.replace("\n", "").replace("\r", "")),
         "notes": notes,

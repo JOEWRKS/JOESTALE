@@ -52,6 +52,19 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-011 / 2026-10-30 / 사용자 1차 수락 피드백 반영 (I-12~I-14)
+
+Roadmap item: Phase 0 User acceptance(부분 수락) → 규칙 보강.
+Result: 피드백 3건을 규칙으로 변환. (1) 길이·반복: 한 치환 목표당 문장 ≤ 2, 문단 ≤ 4문장, 분량 기본값 축소(A 0.8~1.8배, B·C 300~500, D 600~1,000), 검증기 W1 note. (2) 배경·시대 정합성: 설계서 `setting` 필수, 시대 중립 사물 목록 30개, 검수 8번. (3) 감정의 방향: principles 패턴 7, 설계서 치환 계획에 방향·문장 수·오독 가능성, 검수 9·10번. 기각된 D 예문을 방향 표지를 넣어 다시 써서 PASS(0.04, 165자).
+Changed files: `references/decisions.md`·`principles.md`·`scene-design.md`·`reviewer-prompt.md`·`design.template.json`·`lexicon.json`(seed_objects_era_neutral), `scripts/check_text.py`(W1), `SKILL.md`, `examples/before-after.md`, ISSUES I-12~I-14, ROADMAP User acceptance.
+Check / target / result: test_check_text.py 33건 ALL OK. 새 D 예문 PASS. 기존 실전 예 4건은 새 분량 기준에서 note(길이 초과)가 뜨지만 위반 아님.
+Evidence: examples/before-after.md D 2차.
+Limits: 감정의 방향·배경 정합성·묘사 과잉은 기계가 못 재고 검수자(LLM)가 맡음. 기존 실전 예(B·C·D·A)는 새 분량·반복 상한으로 다시 쓰지 않음 → 재판정 시 새로 돌릴 것. 사용자 재판정 pending.
+Required specialist verdict: not applicable.
+Completion boundaries: 규칙 반영 complete / 사용자 재판정 pending.
+Related issue / knowledge: ISSUES I-12~I-14.
+Record handoff gap: none.
+
 ## T-010 / 2026-10-30 / 코퍼스 측정과 임계값 보정 (Phase 3, P3-1)
 
 Roadmap item: ROADMAP.md P3-1.
