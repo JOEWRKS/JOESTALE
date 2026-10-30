@@ -8,7 +8,7 @@
 
 어떻게:
 1. https://opendict.korean.go.kr 접속 → 로그인(회원가입 필요, 네이버·카카오 연동 가능).
-2. 하단 또는 「우리말샘 소개」 메뉴의 **오픈 API** → 「오픈 API 사용 신청」. 사용 목적에 "개인 작문 보조 도구의 유의어 조회" 정도로 적는다.
+2. 하단 또는 「우리말샘 소개」 메뉴의 **오픈 API** → 「오픈 API 사용 신청」(https://opendict.korean.go.kr/service/openApiRegister, kdict 계정 로그인 필요). 기입값: 서비스명 **JOESTALE**, 서비스 URL **https://github.com/JOEWRKS/JOESTALE**, 사용 목적 "개인 작문 보조 도구에서 단어의 비슷한말·반대말·상위어를 조회해 어휘 선택을 돕는 용도(개인·비영리)". "AI 학습" 표현은 쓰지 않는다(용도는 조회).
 3. 발급된 32자 키를 **파일에 적지 말고** 환경변수로 등록:
    ```powershell
    [Environment]::SetEnvironmentVariable('OPENDICT_KEY', '<발급키>', 'User')

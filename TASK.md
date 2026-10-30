@@ -52,6 +52,19 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-008 / 2026-10-30 / 공개 저장소 생성 (우리말샘 API 신청용 URL)
+
+Roadmap item: Phase 2 entry condition 준비(사용자 지시 2026-10-30).
+Result: GitHub CLI 2.103.3 설치(winget), 사용자가 기기 인증으로 로그인, `JOEWRKS/JOESTALE` 공개 저장소 생성 후 main 푸시. URL https://github.com/JOEWRKS/JOESTALE.
+Changed files: `README.md`(공개용), `Library/user-actions.md`(신청 기입값), 원격 origin 추가.
+Check / target / result: `gh repo view` url·visibility PUBLIC·defaultBranch main 확인. 푸시 전 32자 키 패턴 스캔 0건.
+Evidence: gh 출력(채팅).
+Limits: 저장소에 허관 작가 예문 4쌍·소재 낚기 5단계가 출처 표기와 함께 인용돼 공개됨(사용자에게 알림). 저장된 자격증명 자동 사용은 분류기가 차단해 수동 로그인.
+Required specialist verdict: not applicable.
+Completion boundaries: 저장소 생성 complete / API 키 신청은 사용자 작업.
+Related issue / knowledge: ISSUES I-1, Library/user-actions.md.
+Record handoff gap: none.
+
 ## T-007 / 2026-10-30 / Phase 1.5 실전 보강 (P15-1~P15-5)
 
 Roadmap item: ROADMAP.md Phase 1.5 P15-1 ~ P15-5.
