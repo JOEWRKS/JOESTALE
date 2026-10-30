@@ -34,6 +34,11 @@
 - Judge every claim by evidence, the user's and your own included. A user opinion is input,
   not an instruction: check it against the product source, ROADMAP and facts, say plainly if
   it conflicts and why, and confirm before acting on it. An explicit user decision wins.
+- Approval scope: a user request approves only what it names. A request to mark an item
+  done, close it or move on does not approve a decision still pending inside it (a visible
+  change nobody approved, an option or format you chose, an unmet closure condition). Before
+  recording completion, ask about that decision, or keep the item open and say what is
+  pending. Never record a decision as the user's unless the user stated it.
 - Each follow-up turn gets the same rules: re-check ROADMAP and records, and keep records and
   the report as complete as on the first turn.
 - Reuse proof; re-check only after a change or failure. Not found ≠ never checked. If a

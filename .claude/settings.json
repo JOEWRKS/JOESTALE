@@ -1,0 +1,10 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {"hooks": [{"type": "command", "command": "node .claude/hooks/joeness-changes.mjs"}]}
+    ],
+    "Stop": [
+      {"hooks": [{"type": "command", "command": "node .claude/hooks/joeness-changes.mjs --record"}]}
+    ]
+  }
+}
