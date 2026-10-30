@@ -1,23 +1,20 @@
 {
- "sentences": 6,
+ "sentences": 4,
  "paragraphs": 1,
- "chars": 224,
+ "chars": 165,
  "notes": [],
  "modifier": {
-  "content": 55,
-  "modifiers": 3,
-  "ratio": 0.05,
+  "content": 43,
+  "modifiers": 1,
+  "ratio": 0.02,
   "forms": [
-   "바르",
-   "그대로",
    "요"
   ],
-  "nouns": 27,
-  "verbs": 18
+  "nouns": 23,
+  "verbs": 14
  },
  "senses": [
   "body",
-  "hearing",
   "smell",
   "temperature",
   "touch"

@@ -52,6 +52,19 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-012 / 2026-10-30 / 실전 예 4건 v2 재작성 (재판정용)
+
+Roadmap item: Phase 0 User acceptance 재판정 준비.
+Result: B·C·D·A를 T-011 규칙으로 다시 씀. 분량 B 305·C 311·D 331·A 167자(전부 기준 안), 상태당 2문장, 설계서에 배경·방향·오독 위험 추가. 서브에이전트(haiku) 검수 1차 지적 4건(B 대장, C 방향·반복, A 방향) → 전부 처리, 2차 지적 1건(B 작가 구절 변형) → 처리. 4건 최종 PASS.
+Changed files: 각 폴더 `final.txt`·`design.json`·`report.json`·README v2 절, 이전 판 `final.v1.txt`·`design.v1.json` 보존.
+Check / target / result: check_text.py --length 4건 PASS. 검수 2회.
+Evidence: 각 README v2 절, report.json.
+Limits: 검증기가 문맥에 따라 "땀내"를 땀+내로 쪼개 감각을 놓침(2글자 어휘장 한계, C README). 사용자 재판정 pending.
+Required specialist verdict: not applicable.
+Completion boundaries: 재작성·검수 complete / 사용자 재판정 pending.
+Related issue / knowledge: ISSUES I-12~I-14, principles 패턴 7.
+Record handoff gap: none.
+
 ## T-011 / 2026-10-30 / 사용자 1차 수락 피드백 반영 (I-12~I-14)
 
 Roadmap item: Phase 0 User acceptance(부분 수락) → 규칙 보강.

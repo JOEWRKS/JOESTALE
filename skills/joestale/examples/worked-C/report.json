@@ -1,22 +1,20 @@
 {
- "sentences": 12,
+ "sentences": 8,
  "paragraphs": 3,
- "chars": 445,
+ "chars": 304,
  "notes": [],
  "modifier": {
-  "content": 115,
-  "modifiers": 3,
+  "content": 79,
+  "modifiers": 2,
   "ratio": 0.03,
   "forms": [
    "어리",
-   "없",
-   "그대로"
+   "없"
   ],
-  "nouns": 67,
-  "verbs": 36
+  "nouns": 47,
+  "verbs": 25
  },
  "senses": [
-  "hearing",
   "smell",
   "temperature",
   "touch"
