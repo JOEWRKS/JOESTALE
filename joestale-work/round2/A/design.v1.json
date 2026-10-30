@@ -1,0 +1,91 @@
+{
+  "type": "A",
+  "input": "면접장은 매우 조용했고 나는 너무 긴장됐다. 면접관들은 아주 차갑고 무뚝뚝해 보였다. 내 목소리는 심하게 떨렸고 손은 땀으로 축축했다. 그래도 나는 정말 간절하게 이 일을 원했다.",
+  "defaults": {
+    "length": "원문 102자의 0.8~1.8배 = 82~184자",
+    "pov": "1인칭(원문)",
+    "tense": "과거"
+  },
+  "setting": {
+    "era": "현대 한국",
+    "place": "회사 면접장",
+    "forbidden": []
+  },
+  "seed": {
+    "object": "이력서",
+    "pair": null,
+    "used": false,
+    "unused_reason": "A 유형은 원문에 사물(면접장·손)이 있어 결합 시드 불필요"
+  },
+  "materials": {
+    "objects": [
+      "벽시계",
+      "이력서",
+      "의자"
+    ],
+    "actions": [
+      "'저는'을 두 번 말함",
+      "손바닥을 바지에 문지름",
+      "몸을 앞으로 기울이고 앉아 입만 봄"
+    ],
+    "nonvisual": [
+      "초침 소리(청각)",
+      "손바닥 축축(촉각)"
+    ],
+    "dialogue": [],
+    "number": "세 사람, 두 번",
+    "cause_effect": "조용함 → 초침 소리 / 긴장 → '저는' 두 번·손바닥 / 간절함 → 의자 끝·입만 봄"
+  },
+  "ledger": {
+    "persons": [],
+    "places": [
+      "면접장"
+    ],
+    "numbers": [
+      "세 사람",
+      "두 번"
+    ]
+  },
+  "banned_targets": [
+    {
+      "original": "매우 조용했고",
+      "valence": "부정·긴장",
+      "plan": "벽시계 초침 소리가 들림",
+      "sentences": 1,
+      "misread_risk": "없음"
+    },
+    {
+      "original": "너무 긴장됐다 / 목소리는 심하게 떨렸고 / 손은 땀으로 축축했다",
+      "valence": "부정·소극",
+      "plan": "'저는'을 두 번 말함, 바지에 문지른 손바닥이 다시 축축해짐",
+      "sentences": 1,
+      "misread_risk": "없음"
+    },
+    {
+      "original": "아주 차갑고 무뚝뚝해 보였다",
+      "valence": "부정",
+      "plan": "이력서를 넘기는 동안 한 번도 고개를 들지 않음(세계의 무반응, 패턴 21 예외)",
+      "sentences": 1,
+      "misread_risk": "없음"
+    },
+    {
+      "original": "정말 간절하게 원했다",
+      "valence": "능동",
+      "plan": "몸을 앞으로 기울이고 앉음 / 그래도 세 사람의 입만 봄",
+      "sentences": 1,
+      "misread_risk": "'의자 끝'은 위축으로도 읽혀(검수 [9]) '몸을 앞으로 기울이고'로"
+    }
+  ],
+  "assumptions": [
+    {
+      "item": "면접관 수",
+      "value": "세 사람",
+      "why": "요청에 없음, 숫자 1개 확보"
+    }
+  ],
+  "premise_emotions": [],
+  "monologue": [],
+  "keep_original": [],
+  "closing_body": "",
+  "revision": "v1 (2026-10-31 round2)"
+}

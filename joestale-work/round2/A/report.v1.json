@@ -1,0 +1,37 @@
+{
+ "sentences": 4,
+ "paragraphs": 1,
+ "chars": 144,
+ "notes": [],
+ "kept_original": [],
+ "premise_emotions": [],
+ "monologue": [],
+ "modifier": {
+  "content": 37,
+  "modifiers": 1,
+  "ratio": 0.03,
+  "forms": [
+   "하"
+  ],
+  "nouns": 19,
+  "verbs": 7
+ },
+ "senses": [
+  "hearing",
+  "touch"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": false,
+ "violations": [],
+ "pass": true
+}

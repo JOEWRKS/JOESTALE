@@ -1,0 +1,46 @@
+{
+ "sentences": 18,
+ "paragraphs": 6,
+ "chars": 418,
+ "notes": [
+  "W3 비시각 감각 없는 문단: [3] (글 전체 ≥1이면 통과, 문단마다 넣으려고 묘사를 늘리지 말 것)",
+  "W1 문단 5: 5문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)"
+ ],
+ "kept_original": [
+  "현수는 고된 야근을 마치고 열한 시에 들어왔다."
+ ],
+ "premise_emotions": [],
+ "monologue": [],
+ "modifier": {
+  "content": 103,
+  "modifiers": 5,
+  "ratio": 0.05,
+  "forms": [
+   "타다닥",
+   "가볍",
+   "헐레벌떡",
+   "여전히",
+   "같"
+  ],
+  "nouns": 63,
+  "verbs": 30
+ },
+ "senses": [
+  "hearing",
+  "smell"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

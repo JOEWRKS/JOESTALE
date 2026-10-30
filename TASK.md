@@ -52,6 +52,45 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-027 / 2026-10-31 / round2 v3: 9차 피드백 수용(A 전환·C 상식 행동·D 양가 독백)
+
+Roadmap item: Phase 0 user acceptance(round2).
+Result: 검증기 — 문단 R2도 keep_original·monologue 문장 제외(테스트 61 OK). 사용자 지시 "원칙과 정면으로 대치하는 부분 없으면 객관적으로 수용" → 세 지적 모두 기존 원칙과 정합(28 표지 뒤 전환, 21 기대되지 않은 부정의 반례, 30 동기 독백)이라 수용. **정정(같은 날)**: D 수정의 본질은 양가 감정이 아니라 "묘사만 이어진 문단에 속마음·대사로 직관적 표현을 넣는다"는 일반 원칙 → 패턴 32 신설, 검수 32, decisions W5, 검증기 W5 note(대사·독백 없는 서술문 5개 연속) + 테스트 3(ALL OK). A v3(219자)·C v3(288자)·D v3(465자), B 확정(287자). principles 28·21·30 보강, 검수 28 보강.
+Changed files: round2/A·C·D (v2 보관), README, references/principles.md·reviewer-prompt.md, scripts/check_text.py·test_check_text.py.
+Check / target / result: 4편 PASS(C의 "급히 다른 불마저" 문장은 수식어 3개라 keep_original). 수락본 A~C PASS 유지.
+Evidence: round2/README.md v3.
+Limits: 사용자 제시 문장이라 검수 생략. A 분량 초과 note 유지. W5는 수락본 D(8개 연속)에도 떠서 위반이 아닌 note로 둠. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: B 수락. A·C·D v3 판정 pending.
+Related issue / knowledge: I-19, 패턴 21·28·30.
+Record handoff gap: none.
+
+## T-026 / 2026-10-31 / round2 v2: 8차 피드백 → 패턴 28~31, 네 편 재작성
+
+Roadmap item: Phase 0 user acceptance 연장(round2).
+Result: ISSUES I-19. principles 패턴 28(첫 문장 신체 표지·분위기 시간어)·29(고조는 점층·의성어·더듬는 대사·짧은 독백)·30(동기 감정은 숫자 든 독백 + 외부 호출 + 판정 독백; 패턴 18 자리 확장)·31(소개 대사·관계어, 공간 종류, 처지에 맞는 사물, 흔한 행동) + 검사법, 13 보강(상태 전환 트리거). reviewer 31항목. decisions 4줄 + D4 setting 포함. SKILL 서열 문단. 검증기: 독백만 있는 문단 R6 제외(+테스트 1, 60 OK). round2 A~D v2(사용자 제시 문장 채택) 검증 PASS, 검수 17건 → 8건 처리, D 재검수 1회.
+Changed files: references/principles.md·reviewer-prompt.md·decisions.md, SKILL.md, scripts/check_text.py·test_check_text.py, ISSUES.md, joestale-work/round2/* (v1 보관).
+Check / target / result: 4편 PASS. 테스트 ALL OK(60).
+Evidence: round2/README.md v2 표, 각 review.md.
+Limits: A는 분량 기본값(82~184) 초과 215자(사용자 제시 독백·호출 채택, note). A "망했다"·현재형 "나지 않는다"는 사용자 문장이라 검수 지적 미처리. 패턴 28~31은 검수자만 봄(기계 검사 없음). 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: round2 v2 사용자 판정 pending.
+Related issue / knowledge: ISSUES I-19, 패턴 28~31.
+Record handoff gap: none.
+
+## T-025 / 2026-10-31 / round2: 새 소재 4편 생성(패턴 1~27 일반화 확인)
+
+Roadmap item: Next eligible work (0). 사용자 "네가 골라서 써".
+Result: `joestale-work/round2/{A,B,C,D}/` — A 면접 긴장 리라이트(144자), B 첫 월급 굴비 선물(279자), C 혼자 사는 밤(226자), D 비 오는 밤 강아지 산책(303자). 전부 설계서 → 초고 → 검증 PASS → haiku 검수(27항목) → 국소 수정 → 재검증 PASS. C는 처리 3건이라 재검수 1회(상한).
+Changed files: round2/* (input·design·draft·final·report·review_input·review·README).
+Check / target / result: 4편 PASS. 검수 지적 합계 17건 → 처리 12건. 새 규칙 R7·R8·G4·W4는 초고에서 0건(초고 단계에서 이미 지켜짐).
+Evidence: 각 report.json, review.md, README.md 표.
+Limits: 검수자 haiku. R8이 절 안의 상태 요약("문 밖은 조용했고")을 못 잡음(검수가 잡음). D 결합 시드 우산은 API 미조회(LLM 판단). 사용자 판정 pending. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 판정 → 수락이면 examples/로 승격, 아니면 피드백 → 패턴 보강.
+Related issue / knowledge: 패턴 1~27, T-024.
+Record handoff gap: none.
+
 ## T-024 / 2026-10-31 / 방법론 조사 추천안 반영: 패턴 23~27, 검증기 R7·R8·G4·W4·T1 확장
 
 Roadmap item: T-023 후속. 사용자 "추천안만 반영"(A1·A3·A4·A6·A9).

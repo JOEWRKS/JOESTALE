@@ -1,0 +1,105 @@
+{
+  "type": "B",
+  "input": "첫 월급으로 부모님 선물",
+  "defaults": {
+    "length": "200~500자",
+    "pov": "3인칭 제한",
+    "tense": "과거"
+  },
+  "setting": {
+    "era": "현대 한국",
+    "place": "백화점 식품관 → 집",
+    "forbidden": []
+  },
+  "seed": {
+    "object": "굴비 세트",
+    "pair": "마릿수 세기",
+    "path": "상자 뚜껑 → 세는 소리 → 저녁상의 큰 토막",
+    "used": true,
+    "candidates": [
+      {
+        "pair": "마릿수 세기",
+        "path_keywords": [
+          "소리"
+        ],
+        "chosen": true,
+        "api": "비사물이라 API 미조회"
+      },
+      {
+        "pair": "영수증",
+        "path_keywords": [],
+        "chosen": false
+      },
+      {
+        "pair": "현관 신발",
+        "path_keywords": [],
+        "chosen": false
+      }
+    ]
+  },
+  "materials": {
+    "objects": [
+      "굴비 세트(가격표·마릿수·토막)",
+      "저녁상",
+      "신발"
+    ],
+    "actions": [
+      "가격표를 두 번 뒤집어 봄",
+      "마릿수를 셈",
+      "큰 토막을 올리고 꼬리 쪽을 자기 앞에 둠",
+      "밥을 두 공기 먹음"
+    ],
+    "nonvisual": [
+      "문단 4: 세는 소리(청각)",
+      "문단 5: 가시를 바름(촉각)"
+    ],
+    "dialogue": [
+      "뭘 이런 걸 사 와.",
+      "꼬리가 더 고소해."
+    ],
+    "number": "두 번, 열까지, 두 마리, 두 공기",
+    "cause_effect": "가격표 두 번 → 옆 칸 굴비 / 상자 → 마릿수 세기 → 지우가 들음 / 저녁상 → 큰 토막·꼬리 쪽 → 두 공기"
+  },
+  "ledger": {
+    "persons": [
+      "지우",
+      "어머니"
+    ],
+    "places": [
+      "백화점",
+      "집"
+    ],
+    "numbers": [
+      "두 번",
+      "열까지",
+      "두 마리",
+      "두 공기"
+    ]
+  },
+  "banned_targets": [
+    {
+      "original": "뿌듯함·쑥스러움(입력에 없음, 소재에서 생김)",
+      "valence": "긍정·능동",
+      "plan": "한우 앞에서 가격표 두 번 → 굴비 / 어머니 말과 반대로 마릿수를 셈 / 큰 토막은 지우에게, 꼬리는 자기에게 / 두 공기",
+      "sentences": 4,
+      "misread_risk": "어머니의 말이 핀잔으로만 읽힐 위험 → 마릿수 세기로 뒤집음"
+    }
+  ],
+  "assumptions": [
+    {
+      "item": "부모님",
+      "value": "어머니 한 사람",
+      "why": "인물 2인으로 장면 압축"
+    },
+    {
+      "item": "선물",
+      "value": "굴비 세트",
+      "why": "가격표 대비(한우)와 마릿수·토막이라는 사물 상태를 가짐"
+    }
+  ],
+  "premise_emotions": [],
+  "monologue": [],
+  "keep_original": [],
+  "closing_body": "",
+  "revision": "v1 (2026-10-31 round2)"
+}

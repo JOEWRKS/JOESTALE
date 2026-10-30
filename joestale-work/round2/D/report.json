@@ -1,0 +1,50 @@
+{
+ "sentences": 23,
+ "paragraphs": 8,
+ "chars": 465,
+ "notes": [
+  "W3 비시각 감각 없는 문단: [3] (글 전체 ≥1이면 통과, 문단마다 넣으려고 묘사를 늘리지 말 것)"
+ ],
+ "kept_original": [
+  "현수는 고된 야근을 마치고 열한 시에 들어왔다.",
+  "나직이 나오는 한숨을 삼켰다."
+ ],
+ "premise_emotions": [],
+ "monologue": [
+  "'너도 집에만 있기 힘들겠지….'"
+ ],
+ "modifier": {
+  "content": 106,
+  "modifiers": 6,
+  "ratio": 0.06,
+  "forms": [
+   "타다닥",
+   "가볍",
+   "헐레벌떡",
+   "여전히",
+   "같",
+   "그렇"
+  ],
+  "nouns": 63,
+  "verbs": 32
+ },
+ "senses": [
+  "hearing",
+  "smell",
+  "taste"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

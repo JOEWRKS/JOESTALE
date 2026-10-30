@@ -6,7 +6,7 @@
 규칙(임계값은 references/decisions.md D3):
   R1 정도부사 0회 · R2 수식어 비율 ≤0.18(문장 ≥0.50도 위반) · R3 상태 서술 패턴 · R4 감정 직설(대화문 제외)
   R5 글 전체 비시각 감각 ≥1(문단별 부재는 W3 note) · R6 문단당 숫자·고유명사 ≥1 · R7 사고 동사 · R8 문단 첫 문장 상태 요약
-  G1 조사 받침 규칙 · G2 마지막 어절 3연속 반복 · G4 한 명사 앞 수식어 2개 이상 · W4 상투 beat note
+  G1 조사 받침 규칙 · G2 마지막 어절 3연속 반복 · G4 한 명사 앞 수식어 2개 이상 · W4 상투 beat note · W5 서술문 5개 연속 note
   G3 설계서 대장(누락·미등록 고유명사) · T1 번역투·AI 관용구 상한 · T2 문단 첫 어절 3연속 반복 · X1 작가 예문 복제
 목록은 references/lexicon.json. Kiwi 오타 교정은 쓰지 않는다. 띄어쓰기는 보고만.
 """
@@ -249,9 +249,12 @@ def check(text, design=None, length=None):
         V.append({"rule": "R2", "scope": "text", "ratio": ms["ratio"], "forms": ms["forms"]})
     no_sense_paras = []
     for i, p in enumerate(paras, 1):
-        if not strip_quotes(p).strip():   # 대화문만 있는 문단(decisions "대화는 줄 바꿈"): 문단 규칙 R2·R5·R6 제외
+        if not strip_quotes(p).strip() or all(x in monologued for x in split_sents(p)):   # 대화문·독백만 있는 문단: 문단 규칙 R2·R5·R6 제외
             continue
-        pm = modifier_stats(strip_quotes(p))
+        pmeas = strip_quotes(p)
+        for x in kept + monologued:   # 원문 유지·독백 문장은 문단 비율에서도 제외
+            pmeas = pmeas.replace(x, " ")
+        pm = modifier_stats(pmeas)
         if pm["content"] >= 8 and pm["ratio"] >= R2_PARA:
             V.append({"rule": "R2", "paragraph": i, "ratio": pm["ratio"], "forms": pm["forms"]})
         if not senses_in(p):
@@ -311,6 +314,14 @@ def check(text, design=None, length=None):
     weak = [s for s in sents if any(p.search(strip_quotes(s)) for p in WEAK_BEATS)]
     if weak:   # W4 상투 beat(패턴 25): 한숨·어깨 으쓱·미소 같은 누구나 하는 동작은 대사 사이 지문 자격이 없음
         notes.append("W4 상투 동작(beat): " + " / ".join(weak) + " (대사 사이 지문이면 인물만의 작은 동작으로)")
+    run, best = 0, 0   # W5 묘사 연속(패턴 32): 대사·독백 없이 서술문만 5개 이상 이어지면 note
+    for s_ in sents:
+        if '"' in s_ or "“" in s_ or s_ in monologued:
+            run = 0
+        else:
+            run += 1; best = max(best, run)
+    if best >= 5:
+        notes.append(f"W5 대사·독백 없는 서술문 {best}개 연속 (기준 4개, 사이에 속마음 한 줄이나 대사 한 줄)")
     for i, p in enumerate(paras, 1):   # W1 묘사 과잉 의심: 문단 5문장 이상 (decisions D2 "문단 4문장 이하")
         n = len(split_sents(p))
         if n >= 5:
