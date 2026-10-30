@@ -1,8 +1,9 @@
 {
  "sentences": 8,
  "paragraphs": 3,
- "chars": 304,
+ "chars": 302,
  "notes": [],
+ "kept_original": [],
  "modifier": {
   "content": 79,
   "modifiers": 2,
@@ -11,8 +12,8 @@
    "어리",
    "없"
   ],
-  "nouns": 47,
-  "verbs": 25
+  "nouns": 48,
+  "verbs": 24
  },
  "senses": [
   "smell",

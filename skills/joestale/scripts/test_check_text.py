@@ -60,6 +60,11 @@ expect("I-6 대장 누락 숫자 검출(둘째 날), 수량 1(한 칸)은 제외
 g3 = [v for v in ct.check(NUM, {"ledger": {"persons": ["수연"], "places": [], "numbers": ["72시간", "한 칸", "둘째 날"]}})["violations"] if v.get("kind") == "number_not_in_ledger"]
 expect("I-6 대장 완비 시 통과", not g3, g3)
 expect("seed_objects 30개", len(ct.LEX.get("seed_objects", [])) == 30)
+# 원문 유지(keep_original): 직관성 우선 문장은 R1·R2에서 제외
+KEEP = "방 안에서는 나프탈렌 냄새가 났다. 공기는 늘 축축하고 무거웠다. 나는 찬 발을 장판에 밀어 넣곤 했다."
+r0 = ct.check(KEEP); r1 = ct.check(KEEP, {"keep_original": ["축축하고 무거웠다"]})
+expect("keep 없이 R1 검출", any(v["rule"] == "R1" for v in r0["violations"]))
+expect("keep 지정 시 R1 제외·kept 보고", not any(v["rule"] == "R1" for v in r1["violations"]) and len(r1["kept_original"]) == 1, r1["kept_original"])
 # P3 문단 R2 (고전 p90 0.30)
 HEAVY = "매서운 바람이 몹시 차갑게 불었다. 낡고 오래된 문이 시끄럽게 열렸다. 어둡고 축축한 방이 넓게 펼쳐졌다.\n\n민재는 두 번 문을 두드렸다. 쇠 손잡이가 손바닥에 닿았다."
 r = ct.check(HEAVY); expect("P3 문단 R2 위반(문단 1만)", [v.get("paragraph") for v in r["violations"] if v["rule"] == "R2" and "paragraph" in v] == [1], [v for v in r["violations"] if v["rule"] == "R2"])

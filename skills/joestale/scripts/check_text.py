@@ -153,7 +153,12 @@ def check(text, design=None, length=None):
     paras = [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
     sents = split_sents(text)
     V = []
+    # 원문 유지(직관성 우선, principles 서열): 설계서 keep_original의 구절이 든 문장은 R1~R4·문장 R2에서 제외하고 kept로 보고
+    keep = (design or {}).get("keep_original") or []
+    kept = [s for s in sents if any(k in s for k in keep)]
     for s in sents:
+        if s in kept:
+            continue
         plain = strip_quotes(s)
         toks = kiwi().tokenize(plain)
         for t in toks:
@@ -168,7 +173,10 @@ def check(text, design=None, length=None):
         ms = modifier_stats(plain)
         if ms["content"] >= 4 and ms["ratio"] >= R2_SENT:
             V.append({"rule": "R2", "sentence": s, "ratio": ms["ratio"], "forms": ms["forms"]})
-    ms = modifier_stats(text)
+    measured = text
+    for s in kept:
+        measured = measured.replace(s, " ")
+    ms = modifier_stats(measured)
     if ms["ratio"] > R2_TEXT:
         V.append({"rule": "R2", "scope": "text", "ratio": ms["ratio"], "forms": ms["forms"]})
     for i, p in enumerate(paras, 1):
@@ -222,7 +230,7 @@ def check(text, design=None, length=None):
             notes.append(f"W1 문단 {i}: {n}문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)")
     return {
         "sentences": len(sents), "paragraphs": len(paras), "chars": len(text.replace("\n", "").replace("\r", "")),
-        "notes": notes,
+        "notes": notes, "kept_original": kept,
         "modifier": ms, "senses": senses_in(text), "ending": er, "para_first": pr,
         "translationese_counts": trans,
         "spacing_differs": spaced != text,
@@ -259,6 +267,7 @@ def main():
     else:
         print(summary_line(r))
         for n in r["notes"]: print("  note:", n)
+        for k in r["kept_original"]: print("  원문 유지(직관성):", k)
         print("PASS" if r["pass"] else "위반:")
         for v in r["violations"]:
             print(" ", json.dumps(v, ensure_ascii=False))

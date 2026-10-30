@@ -4,7 +4,7 @@ Project scope: 한국어 입력(완성 문장·단순 아이디어·러프한 �
 Product authority: [기획서.md](기획서.md) 3장·3-B·3-C (2026-10-29 사용자 동의). 세부 결정은 JOEFLOW DISCOVER로 보충 예정(FREEZE 생략).
 Current stage: Phase 3 complete (2026-10-30, 작가 3인 × 1편). Phase 4 평가 진입 가능. 열린 이슈는 I-2·I-4뿐.
 Next eligible work: (1) 사용자 수락 판정(Library/user-actions.md 3번) → P4-1 블라인드 비교의 기준점. (2) 작가당 편수 늘리기(동백꽃·날개·운수 좋은 날 외 각 2편) → 작가별 프로파일. (3) D 유형 실전 예를 API 관계 배제를 켜고 재실행해 `candidates[].api` 형식 확정. — (1) 우리말샘 인증키 발급·약관 확인 → P2-1 실제 응답 검증, (2) 공유마당에서 김유정·이상·현진건 텍스트 확보 → P3-1. 둘 다 없으면 Phase 4 중 스킬 유/무 블라인드 비교(P4-1)는 Phase 3 없이도 예비 실행 가능(임계값 미보정 상태로 표기).
-Phase 0 사용자 수락: **부분 수락 2026-10-30** — 좋다: 정류장 장면의 공감·연상. 아니다: (1) 전체적으로 길고 묘사 과반복, (2) 배경·시대와 맞지 않는 사물 위험, (3) D 예문의 가난·위축 치환이 감정 방향을 잃음(ISSUES I-12~I-14 → T-011 반영). T-011 규칙 반영 → T-012에서 4건 v2 재작성 완료. **재판정 pending** (읽을 것: worked-B·C·A final.txt, live-test-D final.txt).
+Phase 0 사용자 수락: **부분 수락 2026-10-30** — 좋다: 정류장 장면의 공감·연상. 아니다: (1) 전체적으로 길고 묘사 과반복, (2) 배경·시대와 맞지 않는 사물 위험, (3) D 예문의 가난·위축 치환이 감정 방향을 잃음(ISSUES I-12~I-14 → T-011 반영). T-011 규칙 반영 → T-012 v2 재작성 → **2차 피드백(A, 2026-10-30)**: 좋다 1문장(온기를 기다림, 단 간결하게), 아니다 4문장(비직관적 치환·쓰지 않는 연어·한 면만 보여준 성격) → I-15, T-013에서 원칙 서열(직관성 우선)과 패턴 8~11 추가, A v3. **B·C·D 판정과 A v3 재판정 pending.**
 Status words: not started / in progress / verification pending / on hold / complete / removed from scope.
 
 ## Stage Phase 0 — 프로토타입 — verification pending

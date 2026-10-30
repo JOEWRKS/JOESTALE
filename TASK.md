@@ -52,6 +52,19 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-013 / 2026-10-30 / 2차 피드백 반영: 직관성 우선 원칙 (I-15)
+
+Roadmap item: Phase 0 User acceptance 2차 → 원칙 보강.
+Result: 원칙 서열을 "직관성 > 감정의 방향 > 수식어 제거"로 명시하고 패턴 8(인식 경로·한 단계 연상), 9(감각 전환은 실제 쓰는 연어로), 10(이중 성격은 대비문), 11(습관 "~곤 했다") 추가. 검증기에 `keep_original`(원문 유지 문장을 R1~R4에서 제외, 리포트 표시). 설계서에 인식 경로 칸, 검수 11·12번. A v3: 사용자 제시 문장 채택("머리를 숙여야만", "눅눅한 나무와 나프탈렌 냄새", "화를 내면서도 춥지는 않은지", "찬 발을 … 밀어 넣곤 했다"), "공기는 늘 축축하고 무거웠다"는 원문 유지. C "손가락이 두 개씩 밀려 내려갔다" → "손이 한 뼘씩 아래로 밀렸다". B·D는 패턴 8·9로 점검, 변경 없음.
+Changed files: `references/principles.md`·`decisions.md`·`reviewer-prompt.md`·`scene-design.md`, `scripts/check_text.py`(keep_original)·`test_check_text.py`(+2, 35건), `SKILL.md`, `examples/worked-A/final.txt`·`design.json`·`report.json`·README, `worked-C/final.txt`·`design.json`·`report.json`, `examples/재판정-v2.md`, ISSUES I-15.
+Check / target / result: test 35건 ALL OK. A 159자 PASS(원문 유지 1문장), C·B·D PASS.
+Evidence: worked-A/README v3, 재판정-v2.md.
+Limits: "실제로 쓰는 말인가"(연어)는 기계가 못 재고 검수 11번에 의존. A v3 문장 4개 중 3개는 사용자 제시안을 그대로 채택한 것이라 스킬의 자력 생성 증거는 아님. 재판정 pending.
+Required specialist verdict: not applicable.
+Completion boundaries: 규칙·예문 반영 complete / 사용자 재판정 pending.
+Related issue / knowledge: ISSUES I-15, principles 패턴 8~11.
+Record handoff gap: none.
+
 ## T-012 / 2026-10-30 / 실전 예 4건 v2 재작성 (재판정용)
 
 Roadmap item: Phase 0 User acceptance 재판정 준비.
