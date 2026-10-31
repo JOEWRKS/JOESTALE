@@ -35,6 +35,7 @@
   ],
   "premise_emotions": ["그리웠지만"],
   "keep_original": [],
+  "structure": {"form": "", "stages": [], "stake": {"wants": "", "threat": "", "warmth": "", "feeling_monologue": ""}},
   "assumptions": [
     {"item": "시점", "value": "3인칭 제한", "why": "요청에 없음"},
     {"item": "이름", "value": "민재", "why": "요청에 없음"},

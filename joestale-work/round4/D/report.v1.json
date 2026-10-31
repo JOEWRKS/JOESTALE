@@ -1,0 +1,62 @@
+{
+ "sentences": 64,
+ "paragraphs": 26,
+ "chars": 1504,
+ "notes": [
+  "W3 비시각 감각 없는 문단: [4, 6, 8, 10, 11, 14, 15, 16, 19, 23, 25] (글 전체 ≥1이면 통과, 문단마다 넣으려고 묘사를 늘리지 말 것)",
+  "W5 대사·독백 없는 서술문 15개 연속 (기준 4개, 사이에 속마음 한 줄이나 대사 한 줄)",
+  "W1 문단 14: 7문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)",
+  "W1 문단 25: 5문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)"
+ ],
+ "kept_original": [],
+ "premise_emotions": [],
+ "monologue": [
+  "'혼자 오시는 분이 왜 늘 두 개를.'",
+  "'두 개, 두 개, 두 개…… 하나.'"
+ ],
+ "modifier": {
+  "content": 387,
+  "modifiers": 17,
+  "ratio": 0.04,
+  "forms": [
+   "가깝",
+   "없",
+   "하",
+   "있",
+   "길",
+   "더",
+   "그대로",
+   "차갑",
+   "어둡",
+   "다",
+   "안",
+   "매일",
+   "서로",
+   "매일",
+   "안",
+   "안",
+   "어제"
+  ],
+  "nouns": 233,
+  "verbs": 79
+ },
+ "senses": [
+  "hearing",
+  "temperature",
+  "touch"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

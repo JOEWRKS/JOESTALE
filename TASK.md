@@ -52,6 +52,45 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-032 / 2026-10-31 / round4 v3: 14차 피드백(감정 부재) → 패턴 38 걸린 것·온기, 단편 재작성
+
+Roadmap item: Phase 0 user acceptance(round4).
+Result: ISSUES I-22. principles 패턴 38(시점 인물에게 걸린 것: 원하는 것·위협 장면·잃기 전 온기 장면·바람/두려움 독백) + 검사법(35~38). reviewer 38항목. scene-design 6-B에 `structure.stake`(wants·threat·warmth·feeling_monologue), design.template.json 반영. decisions 1줄. SKILL 1단계·서열 문단(패턴 8~38). round4 D v3 1,847자 PASS(온기 장면·'할아버지?'·'할아버지는요'·결말 되받기). 검수(38항목) 12건 → 5건 반영(손등 주어, 첫 문단 사실화, 차가움 연어, 전언 표지, '주무시는 거겠지' 독백), 7건 보류(v2 수락 문장). 13차 피드백(35 문구·37 정의 교정)도 이 턴 직전에 반영.
+Changed files: round4/D/* (v2 보관 *.v2.*), round4/README.md, references/principles.md·reviewer-prompt.md·scene-design.md·decisions.md·design.template.json, SKILL.md, ISSUES.md.
+Check / target / result: PASS(수식어 비율 0.04), 테스트 ALL OK(검증기 미변경). note: W5 서술문 8개 연속(열다섯 장째~안 온 날 첫 두 문장, 사건 연속이라 유지), W1 5~6문장 문단 5개(사건 진행, 반복 묘사 아님).
+Evidence: round4/README.md v3, review.md, chain.md v3, design.json structure.stake.
+Limits: 패턴 38은 검수자만 봄(기계 검사 없음). 감정 유무는 사용자 판정 대상. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: round4 v3 사용자 "통과"(2026-11-01) → examples/round4/D 승격. 커밋 pending.
+Related issue / knowledge: I-22, 패턴 38.
+Record handoff gap: none.
+
+## T-031 / 2026-10-31 / round4 v2: 12차 피드백 → 패턴 35·36·37, 구조표, 단편 재작성
+
+Roadmap item: Phase 0 user acceptance(round4).
+Result: ISSUES I-21. principles 패턴 35(당위성·트리거 재사용 금지)·36(지식 범위·서술자 단정 금지·물리 현실성)·37(스토리의 줄기가 있는 글은 목적에 맞는 형식 먼저 + 단계별 신체 표지; 13차 피드백으로 분량 기준 제거) + 검사법, 11 보강(습관 어미는 그 인물에). reviewer 37항목. scene-design 6-B 구조표(+JSON `structure`). decisions 3줄. SKILL 1단계(형식 6-B)·서열 문단. 13차 피드백: 35 문구 교정(연유를 앞에 써서 당위성 부여 / 불필요한 서술은 삭제), 37 정의 수정(분량 → 글의 종류, 6-B JSON `structure.form`). round4 D v2 1549자 PASS, 검수 16건 → 12건, 재검수 8건 → 5건.
+Changed files: round4/D/* (v1·사용자 피드백 보관), round4/README.md, references/principles.md·reviewer-prompt.md·scene-design.md·decisions.md, SKILL.md, ISSUES.md.
+Check / target / result: PASS, 테스트 ALL OK(검증기 미변경). 구조표 문단 범위를 본문에 맞게 재계산(기 1~3, 승 4~11, 전 12~17, 결 18~28).
+Evidence: round4/README.md v2, review.md, chain.md v2.
+Limits: 패턴 35~37은 검수자만 봄. 초자연 암시의 "단정" 경계(사건의 사실 서술 vs 원인의 단정)는 사용자 판정 대상. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: round4 v2 사용자 판정 pending.
+Related issue / knowledge: I-21, 패턴 35~37.
+Record handoff gap: none.
+
+## T-030 / 2026-10-31 / round4: 단편 분량(1,504자) 미스터리 1편
+
+Roadmap item: Next eligible work — round4(장편 분량).
+Result: `joestale-work/round4/D/` 편의점 야간 알바 미스터리(3인칭 제한·과거, 1,504자). chain.md(사실 사슬) → 설계서 → 초고 989자 → 복선 장면 추가로 1,500 도달 → 검증 PASS → 검수 2회(9건 → 8건, 6건 → 4건).
+Changed files: round4/D/*, round4/README.md.
+Check / target / result: PASS, 분량 1,500~2,500 안. 재검수에서 34(사실 사슬) 지적 없음.
+Evidence: report.json, review.md, chain.md.
+Limits: 검수자 haiku. 분량 하한에 겨우 걸침(1,504). 상실 소재가 다시 들어옴(미스터리 반전으로 선택). 사용자 판정 pending. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 판정 → 수락이면 examples/round4.
+Related issue / knowledge: 패턴 32·34, T-029.
+Record handoff gap: none.
+
 ## T-029 / 2026-10-31 / round3 v2: 10차 피드백 → 패턴 33(행동의 관습·이유)·34(흐름 먼저 장식 나중)
 
 Roadmap item: Phase 0 user acceptance(round3).
