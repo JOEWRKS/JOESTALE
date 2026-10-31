@@ -1,0 +1,105 @@
+{
+  "type": "C",
+  "input": "요즘 회사 가기 싫다",
+  "defaults": {
+    "length": "200~500자",
+    "pov": "1인칭 현재형(round3)",
+    "tense": "현재"
+  },
+  "setting": {
+    "era": "현대 한국",
+    "place": "집 → 지하철 → 회사 9층",
+    "forbidden": []
+  },
+  "seed": {
+    "object": "알람",
+    "pair": "계단",
+    "path": "알람을 세 번 끔(미룸) → 엘리베이터 대신 계단(또 미룸, 숨이 차서 생각이 끊김) → 윗단추",
+    "used": true,
+    "candidates": [
+      {
+        "pair": "계단",
+        "path_keywords": [
+          "숨"
+        ],
+        "chosen": true,
+        "api": "미조회(LLM: 관계 없음)"
+      },
+      {
+        "pair": "셔츠",
+        "path_keywords": [],
+        "chosen": false,
+        "reason": "시드 사물과 같은 아침 준비 범주"
+      },
+      {
+        "pair": "메일",
+        "path_keywords": [],
+        "chosen": false
+      }
+    ]
+  },
+  "materials": {
+    "objects": [
+      "알람",
+      "셔츠(깃)",
+      "계단"
+    ],
+    "actions": [
+      "알람을 세 번째로 끔",
+      "창밖만 봄",
+      "계단으로 9층",
+      "깃을 한 번 당기고 첫 메일"
+    ],
+    "nonvisual": [
+      "문단 3: 숨이 참(신체)"
+    ],
+    "dialogue": [
+      "안녕하세요."
+    ],
+    "number": "세 번째, 9층, 마흔두 통",
+    "cause_effect": "알람 세 번 → 셔츠 그대로 → 독백 / 역 가까움 → 휴대폰 끔 / 인사 → 고개만 → 계단 → 숨 → 생각 끊김 / 메일 수 → 윗단추"
+  },
+  "ledger": {
+    "persons": [
+      "경비 아저씨"
+    ],
+    "places": [
+      "지하철",
+      "회사"
+    ],
+    "numbers": [
+      "세 번째",
+      "9층",
+      "마흔두 통"
+    ]
+  },
+  "banned_targets": [
+    {
+      "original": "가기 싫다",
+      "valence": "부정·소극",
+      "plan": "알람 세 번째 / 독백 '오늘 하루만' / 창밖만 봄 / 계단으로 9층(미룸이자 생각 끊기) / 독백 '점심은 거르겠다'(상황 판단) / 깃을 당기고 첫 메일(그래도 일함)",
+      "sentences": 5,
+      "misread_risk": "게으름으로 읽힐 위험 → 다려 놓은 셔츠, 첫 메일을 여는 행동으로 성실함 유지"
+    }
+  ],
+  "assumptions": [
+    {
+      "item": "시점",
+      "value": "1인칭 현재",
+      "why": "round3 시점 실험(의견이 1인칭)"
+    },
+    {
+      "item": "층수",
+      "value": "9층",
+      "why": "숨이 찰 만한 높이"
+    }
+  ],
+  "premise_emotions": [],
+  "monologue": [
+    "오늘 하루만",
+    "점심은 거르겠다"
+  ],
+  "keep_original": [],
+  "closing_body": "",
+  "revision": "v1 (2026-10-31 round3)"
+}

@@ -1,0 +1,115 @@
+{
+  "type": "B",
+  "input": "아빠와 처음으로 술 한잔",
+  "defaults": {
+    "length": "200~500자",
+    "pov": "3인칭 제한(준호)",
+    "tense": "과거",
+    "mode": "대화 중심(round3)"
+  },
+  "setting": {
+    "era": "현대 한국",
+    "place": "동네 술집",
+    "forbidden": []
+  },
+  "seed": {
+    "object": "소주잔",
+    "pair": "김치 한 조각",
+    "path": "잔을 번갈아 보는 눈 → 말 대신 번갈아 집는 김치 → 빈 병을 들어 보임",
+    "used": true,
+    "candidates": [
+      {
+        "pair": "김치",
+        "path_keywords": [
+          "번갈아"
+        ],
+        "chosen": true,
+        "api": "미조회(LLM: 관계 없음)"
+      },
+      {
+        "pair": "군대",
+        "path_keywords": [],
+        "chosen": false
+      },
+      {
+        "pair": "계산서",
+        "path_keywords": [],
+        "chosen": false
+      }
+    ]
+  },
+  "materials": {
+    "objects": [
+      "소주잔·병",
+      "안주 접시의 김치",
+      "빈 병"
+    ],
+    "actions": [
+      "잔을 보고 준호를 보고 다시 잔을 봄",
+      "두 손으로 받고 고개를 돌려 마심",
+      "김치를 번갈아 집음",
+      "빈 병을 들어 보이고 한 병 더"
+    ],
+    "nonvisual": [
+      "문단 4: 씹는 소리(청각)",
+      "문단 4: 김치(미각)"
+    ],
+    "dialogue": [
+      "너 술 마실 줄 알았냐.",
+      "군대에서요.",
+      "회사는 다닐 만하냐.",
+      "네.",
+      "그래."
+    ],
+    "number": "두 손, 한 조각, 한 병",
+    "cause_effect": "잔 놓음 → 눈이 오감 → 대사 / 따름 → 고개 돌려 마심 / 병 비는 동안 → 김치 / 짧은 대화 → 독백 → 한 병 더 → 말리지 않음"
+  },
+  "ledger": {
+    "persons": [
+      "준호",
+      "아버지"
+    ],
+    "places": [
+      "술집"
+    ],
+    "numbers": [
+      "두 손",
+      "한 조각",
+      "한 병",
+      "둘"
+    ]
+  },
+  "banned_targets": [
+    {
+      "original": "쑥스러움·애틋함(입력에 없음, 소재에서 생김)",
+      "valence": "긍정·소극",
+      "plan": "눈이 잔과 준호 사이를 오감 / 고개 돌려 마심 / 말 대신 김치 번갈아 / 세 마디 대화 + 독백 / 아버지는 말리지 않음",
+      "sentences": 5,
+      "misread_risk": "어색함이 불화로 읽힐 위험 → '먼저 따랐다', '말리지 않았다'로 방향"
+    }
+  ],
+  "assumptions": [
+    {
+      "item": "이름",
+      "value": "준호",
+      "why": "요청에 없음"
+    },
+    {
+      "item": "장소",
+      "value": "동네 술집",
+      "why": "소주·안주 접시"
+    },
+    {
+      "item": "시점",
+      "value": "3인칭 제한(준호)",
+      "why": "독백 1개는 준호"
+    }
+  ],
+  "premise_emotions": [],
+  "monologue": [
+    "묻고 싶은 게"
+  ],
+  "keep_original": [],
+  "closing_body": "",
+  "revision": "v1 (2026-10-31 round3)"
+}

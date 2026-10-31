@@ -1,0 +1,45 @@
+{
+ "sentences": 11,
+ "paragraphs": 3,
+ "chars": 306,
+ "notes": [
+  "W3 비시각 감각 없는 문단: [1] (글 전체 ≥1이면 통과, 문단마다 넣으려고 묘사를 늘리지 말 것)",
+  "W1 문단 3: 6문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)"
+ ],
+ "kept_original": [],
+ "premise_emotions": [
+  "나는 입고 온 셔츠의 깃을 손가락으로 한 번 당기고, 체념하는 마음으로 첫 메일을 연다."
+ ],
+ "monologue": [
+  "'내일만 지나면.'",
+  "'마흔두 통이면 점심은 거르겠다.'"
+ ],
+ "modifier": {
+  "content": 73,
+  "modifiers": 2,
+  "ratio": 0.03,
+  "forms": [
+   "가깝",
+   "하"
+  ],
+  "nouns": 41,
+  "verbs": 21
+ },
+ "senses": [
+  "body"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}

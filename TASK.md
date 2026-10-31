@@ -52,6 +52,32 @@ Completion boundaries: 구현·기술 검증 complete / 사용자 수락 pending
 Related issue / knowledge: ISSUES I-1, I-4.
 Record handoff gap: none.
 
+## T-029 / 2026-10-31 / round3 v2: 10차 피드백 → 패턴 33(행동의 관습·이유)·34(흐름 먼저 장식 나중)
+
+Roadmap item: Phase 0 user acceptance(round3).
+Result: ISSUES I-20. principles 패턴 33·34 + 검사법, 8·20 보강(행동 관형절, 결말 감정 부사구 1회 → R4 예외는 premise_emotions 필드 재사용). reviewer 34항목. decisions R4 비고·2줄. SKILL 2단계에 "사실 사슬 먼저". round3 v2: A 160자·B 343자·C 306자·D 371자 PASS. D만 다시 쓴 부분이 커서 검수 1회 + 재검수 1회(7건 → 5건, 3건 → 1건).
+Changed files: round3/* (v1 보관), references/principles.md·reviewer-prompt.md·decisions.md, SKILL.md, ISSUES.md.
+Check / target / result: 4편 PASS, 테스트 ALL OK(검증기 미변경). D 초고 R5·G3 → 라이터 소리·대장 복원.
+Evidence: round3/README.md v2, D/review.md.
+Limits: 사용자 제시 문장(B·C·D 일부)은 검수 생략. 패턴 33·34는 검수자만 봄. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: round3 v2 전부 수락(2026-10-31 "수락, 커밋") → examples/round3 승격, 커밋.
+Related issue / knowledge: I-20, 패턴 33·34. 11차(같은 날): 패턴 34를 "행동과 결과 사이의 시간·수량 간극을 중간 상태로 메운다"는 기제로 재서술(검수 34·decisions 동기화). 나머지 A·C·D v2는 사용자 OK.
+Record handoff gap: none.
+
+## T-028 / 2026-10-31 / round3: 1인칭 현재형·대화 중심 4편 생성(패턴 1~32 일반화)
+
+Roadmap item: Next eligible work — round3(장르·시점 변화).
+Result: `joestale-work/round3/{A,B,C,D}/` — A 회의실 분노(1인칭 현재, 157자), B 아버지와 첫 술(대화 중심, 311자), C 회사 가기 싫다(1인칭 현재, 299자), D 친구 다툼·화해(대화 중심, 307자). 설계서 → 초고 → 검증 → haiku 검수(32항목) → 국소 수정 → PASS. C 재검수 1회(상한).
+Changed files: round3/*, references/principles.md(패턴 32 검사법: 독백 반복 시 각도 바꿈).
+Check / target / result: 4편 PASS. 검수 지적 합계 17건 → 처리 11건. 초고 위반: B R5·G3, D G3·분량; note: C W5.
+Evidence: 각 report.json, review.md, README.md.
+Limits: 검수자 haiku. 1인칭 현재형에서 시제 규칙(G2·T2)이 "-ㄴ다" 반복을 어떻게 다루는지는 별도 검토 안 함(이번 4편은 통과). 사용자 판정 pending. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 판정 → 수락이면 examples/round3 승격.
+Related issue / knowledge: 패턴 1~32, T-025~T-027.
+Record handoff gap: none.
+
 ## T-027 / 2026-10-31 / round2 v3: 9차 피드백 수용(A 전환·C 상식 행동·D 양가 독백)
 
 Roadmap item: Phase 0 user acceptance(round2).

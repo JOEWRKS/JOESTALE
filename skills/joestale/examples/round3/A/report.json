@@ -1,0 +1,40 @@
+{
+ "sentences": 6,
+ "paragraphs": 1,
+ "chars": 160,
+ "notes": [
+  "W1 문단 1: 6문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)"
+ ],
+ "kept_original": [
+  "다들 고개만 끄덕인다."
+ ],
+ "premise_emotions": [],
+ "monologue": [
+  "'지난 주말 이틀을 다 쓴 건 나였는데.'"
+ ],
+ "modifier": {
+  "content": 34,
+  "modifiers": 0,
+  "ratio": 0.0,
+  "forms": [],
+  "nouns": 20,
+  "verbs": 6
+ },
+ "senses": [
+  "touch"
+ ],
+ "ending": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "para_first": {
+  "max_run": 1,
+  "form": "",
+  "violation": false
+ },
+ "translationese_counts": {},
+ "spacing_differs": true,
+ "violations": [],
+ "pass": true
+}
