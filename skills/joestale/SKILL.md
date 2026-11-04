@@ -51,7 +51,7 @@ PYTHONIOENCODING=utf-8 python skills/joestale/scripts/check_text.py draft.txt --
 
 ### 5단계 독립 검수와 제출
 
-**기본은 서브에이전트다.** [reviewer-prompt.md](references/reviewer-prompt.md)의 블록에 본문과 설계서의 `ledger`·`banned_targets`·`assumptions` 세 블록만 넣어 일반 서브에이전트(저비용 모델 가능)에게 준다. seed·materials·초고·리포트는 주지 않는다. 지적은 4단계로 돌리고, 대장 쪽 오류면 design.json을 고쳐 3단계를 다시 돈다. 처리한 지적이 3건 이상이면 검수를 한 번 더(최대 2회). 서브에이전트를 띄울 수 없는 환경에서만 같은 맥락에서 하고 `검수: DEGRADED(같은 맥락)`로 표기한다.
+**기본은 서브에이전트다.** [reviewer-prompt.md](references/reviewer-prompt.md)의 블록에 본문과 설계서의 `ledger`·`banned_targets`·`assumptions`·`setting`(연재·장편이면 `continuity`도) 블록만 넣어 일반 서브에이전트(저비용 모델 가능)에게 준다. seed·materials·초고·리포트는 주지 않는다. 지적은 4단계로 돌리고, 대장 쪽 오류면 design.json을 고쳐 3단계를 다시 돈다. 처리한 지적이 3건 이상이면 검수를 한 번 더(최대 2회). 서브에이전트를 띄울 수 없는 환경에서만 같은 맥락에서 하고 `검수: DEGRADED(같은 맥락)`로 표기한다.
 
 분량은 `--length a-b`(D2 기준)로 3단계에 넘겨 리포트의 note로 받는다. 위반이 아니다.
 

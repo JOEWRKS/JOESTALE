@@ -1,6 +1,6 @@
 # Open problems and workarounds
 
-Active issues: I-2, I-4, I-24, I-26. (I-25 closed 2026-11-02 T-036; (I-23 closed 2026-11-02 T-034; I-17 5차 피드백 → T-016; I-3 closed 2026-10-29; I-5~I-9 closed 2026-10-30 T-006; I-10~I-11 closed 2026-10-30 T-007; I-1 closed 2026-10-30 T-009; I-12~I-14 사용자 피드백 2026-10-30 → T-011에서 처리; I-15 2차 피드백 → T-013; I-16 3차 피드백 → T-014)
+Active issues: I-2, I-4, I-26. (I-24 closed 2026-11-04 T-038; (I-25 closed 2026-11-02 T-036; (I-23 closed 2026-11-02 T-034; I-17 5차 피드백 → T-016; I-3 closed 2026-10-29; I-5~I-9 closed 2026-10-30 T-006; I-10~I-11 closed 2026-10-30 T-007; I-1 closed 2026-10-30 T-009; I-12~I-14 사용자 피드백 2026-10-30 → T-011에서 처리; I-15 2차 피드백 → T-013; I-16 3차 피드백 → T-014)
 
 ## I-26 / 기획 절차 결함 후보 10건(long-plan-input 세션 보고): 영역별 점검 증거 없음, 재검수 상한 미수렴, ④ 관문 미이행 등
 
@@ -37,7 +37,7 @@ Next action: 사용자 결정(스킬 반영 여부).
 
 ## I-24 / check_text.py R4가 "그립"(수직손잡이)을 감정어 "그립다"로 오인
 
-Status: open. 발견 2026-11-02 T-033.
+Status: closed (T-038, 2026-11-04). 발견 2026-11-02 T-033. 조치: R4 판정을 `is_emotion_token()`으로 분리 — 형용사(VA*)는 어간 접두 일치, 명사(NNG)·어근(XR)은 전체 일치만, lexicon `emotion_noun_homographs`("그립")는 NNG에서 제외. 회귀 테스트 3건(그립 오탐 0, 그리웠다·그리움 검출). ALL OK.
 Affected roadmap item: P1-2 검증기.
 Cause: R4 감정 직설 검사가 어간 문자열 일치로 "그립"을 잡음. 기획 문서에서 9건, 밀덕 소재 본문(수직손잡이·그립 패드)에서도 재현될 것.
 Workaround: 없음(이번엔 본문이 아니라 무시).

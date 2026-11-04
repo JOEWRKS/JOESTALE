@@ -33,6 +33,7 @@ THOUGHT_VERB = set(THOUGHT.get("verb", []))
 THOUGHT_AUX = set(THOUGHT.get("aux", []))
 WEAK_BEATS = [re.compile(p) for p in LEX.get("weak_beats", {}).get("patterns", [])]
 G4_MM_IGNORE = set(LEX.get("g4_mm_ignore", []))
+EMOTION_NOUN_HOMOGRAPHS = set(LEX.get("emotion_noun_homographs", []))  # I-24: 감정어 어간과 같은 꼴의 명사(그립=손잡이)
 ADJ_TAGS = ("VA", "VA-I", "VA-R", "XSA", "XSA-I", "XSA-R")
 
 
@@ -206,6 +207,14 @@ def length_note(text, rng):
     if a <= n <= b: return None
     return f"분량: {n}자 (기준 {a}~{b}자)"
 
+def is_emotion_token(t):
+    """R4 감정어 판정. 형용사(VA*)는 어간 접두 일치, 명사(NNG)·어근(XR)은 전체 일치만 — 수직손잡이 "그립"(NNG)이 "그립다" 어간에 걸리지 않게(I-24)."""
+    if t.tag in ("VA", "VA-I", "VA-R"):
+        return any(t.form.startswith(e) for e in EMOTION)
+    if t.tag in ("NNG", "XR"):
+        return t.form in EMOTION and t.form not in EMOTION_NOUN_HOMOGRAPHS
+    return False
+
 def check(text, design=None, length=None):
     paras = [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
     sents = split_sents(text)
@@ -227,7 +236,7 @@ def check(text, design=None, length=None):
         for t in toks:
             if t.tag == "MAG" and t.form in DEGREE:
                 V.append({"rule": "R1", "sentence": s, "form": t.form})
-            if s not in premised and t.tag in ("VA", "VA-I", "VA-R", "XR", "NNG") and any(t.form.startswith(e) for e in EMOTION):
+            if s not in premised and is_emotion_token(t):
                 V.append({"rule": "R4", "sentence": s, "form": t.form})
         if any(p.search(plain) for p in STATE_PATS):
             V.append({"rule": "R3", "sentence": s})

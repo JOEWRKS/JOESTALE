@@ -36,6 +36,7 @@
   "premise_emotions": ["그리웠지만"],
   "keep_original": [],
   "structure": {"form": "", "stages": [], "stake": {"wants": "", "threat": "", "warmth": "", "feeling_monologue": ""}},
+  "continuity": {"prev_summary": "", "clock": {"date": "", "time": "", "pressure": {}}, "characters": {}, "withheld_still": [], "last_scene": {"place": "", "ends_with": ""}},
   "planning": {"fiction_elements": [], "axes": [], "pressure_lines": [], "foreshadow": [], "withheld": [], "knowledge": []},
   "assumptions": [
     {"item": "시점", "value": "3인칭 제한", "why": "요청에 없음"},

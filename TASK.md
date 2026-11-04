@@ -2,6 +2,45 @@
 
 닫힌 항목 T-001~T-031은 [TASK-archive.md](TASK-archive.md)로 이동(2026-11-02). 여기에는 열린 항목만 둔다.
 
+## T-040 / 2026-11-04 / 장편 본문 후속 (a) continuity 검수 입력, (b) 검수 34·36 강화 + 6장 재검수 검증
+
+Roadmap item: (0-2) 후속.
+Result: decisions D2 "앞 장 맥락" 행·D4 검수자 설계서 범위(+setting·continuity), reviewer 34(감각 차단 뒤 시각·경과 기간)·36(시점 인물 자신이 모르는 것의 단정·withheld_still) + "앞 장 맥락" 입력 절, design.template `continuity`, scene-design 6-C 본문 문장, SKILL 5단계. 검증: 기존 6장 재검수(sonnet) → 블라인드 모순 3건 전부 검출, 앞 장 대조 지적 23건 신규, 지적 수 장당 2~3배. 보고서 `reports/장편 일관성 테스트 1권 1~10장.md` 후속 절, 원문 `long-run-test/판정/재검수_ab/`.
+Changed files: references/decisions.md·reviewer-prompt.md·design.template.json·scene-design.md, SKILL.md, long-run-test/판정/재검수_ab/*, reports/장편 일관성 테스트….md, ROADMAP.md, TASK.md.
+Check / target / result: 기존 놓친 모순 3/3 검출 → 통과. test_check_text.py ALL OK(검증기 미변경). 억지 지적 비율 미측정.
+Evidence: 재검수_ab/rr_*.md.
+Limits: 재검수에서 continuity를 검수자가 직접 작성(규정은 작성자). T7 DEGRADED. 재생성 안 함. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: (c) 장편 분량 행, (d) 입력 모순 20건, (e) 11~25장 연장은 미착수.
+Related issue / knowledge: T-039, I-26.
+Record handoff gap: none.
+
+## T-039 / 2026-11-04 / (0-2) 장편 일관성 테스트 실행: 1권 1~10장, 추적 파일 유(T)/무(N), Opus 5.5
+
+Roadmap item: (0-2).
+Result: 두 세션(write-T-track·write-N-notrack)이 같은 입력으로 10장씩 집필(T 31,130자 / N 30,693자, 전 장 PASS). 블라인드 모순 수(sonnet 조건당 2회): T 1·0 / N 2·2. 유형은 시점(36) 2건·경과 기간(P1) 1건뿐, 추적 항목(위치·장비·수량·복선·지식)은 양쪽 0. 결론: 10장 범위에서 추적 파일 효과 미측정, 스킬 기본 절차로 일관성 유지됨. T는 절차 이탈(갱신 묶음, 5/10장만 파일 반영). 보고서 `reports/장편 일관성 테스트 1권 1~10장.md`.
+Changed files: joestale-work/long-run-test/**(README·T-track·N-notrack·판정/), reports/장편 일관성 테스트 1권 1~10장.md, ROADMAP.md, TASK.md.
+Check / target / result: 통과 기준 T ≤ N/2 → 숫자상 충족(0.5 vs 2)이나 바닥 효과. 결정 후보 (a)~(e)는 보고서.
+Evidence: long-run-test/판정/*.md, T-track/log.md·tracking.json·issues.md, N-notrack/log.md·issues.md, 공유 노트 2건.
+Limits: 판정자 sonnet·작성자 Opus(같은 계열). T 절차 이탈. 문장 품질 미측정(사용자 판독 전). 입력 모순 약 20건은 long-plan-input 동결본 결함으로 남음. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 결정 — 추적 파일 검수 입력 축소 도입(a), 검수 34·36 강화(b), 장편 분량 행(c), 입력 모순 처리(d), 11~25장 연장(e).
+Related issue / knowledge: T-038, I-26, ROADMAP (0-2).
+Record handoff gap: none.
+
+## T-038 / 2026-11-04 / I-24 R4 "그립" 오탐 수정 + (0-2) 본문 1~10장 테스트 설계(추적 파일 유/무)
+
+Roadmap item: P1-2 검증기, (0-2) 장편 일관성 테스트.
+Result: check_text.py R4를 `is_emotion_token()`으로 분리(VA* 접두 일치 / NNG·XR 전체 일치 / lexicon `emotion_noun_homographs` 제외), lexicon 키 추가, test_check_text.py에 I-24 케이스 3건 → ALL OK. 테스트 설계 `joestale-work/long-run-test/README.md`(T 추적 유 / N 추적 무, 같은 입력·같은 모델 Opus 5.5, 장 3,000~4,500자, 측정 = sonnet 블라인드 모순 수 2회 + 검증기 + 비용, 통과 기준 T ≤ N/2) + `T-track/tracking.json` 초기값.
+Changed files: scripts/check_text.py·test_check_text.py, references/lexicon.json, joestale-work/long-run-test/{README.md, T-track/tracking.json}, ISSUES.md(I-24 closed), TASK.md.
+Check / target / result: 회귀 ALL OK. 집필 세션 2개는 Remote Control 환경 제한으로 시작 못 함(데스크톱 앱에서 입력 필요).
+Evidence: test_check_text.py 출력, long-run-test/README.md.
+Limits: 추적 파일은 테스트용 형식이고 스킬 규정 아님(결과에 따라 round5 반영). 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 집필 세션 T·N 실행 → 판정 → 결과 기록이 남음.
+Related issue / knowledge: I-24, I-26, T-037.
+Record handoff gap: none.
+
 ## T-037 / 2026-11-03 / (0-2) 기획 입력 제작 ③·④ 검증(Opus 5.5) + 폴더명 변경
 
 Roadmap item: (0-2) 장편 일관성 테스트의 고정 입력.

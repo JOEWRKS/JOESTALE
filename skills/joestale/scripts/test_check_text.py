@@ -43,6 +43,11 @@ expect("AI 관용구 T1", "T1" in rules, r["translationese_counts"])
 expect("문단 첫 어절 T2", "T2" in rules, r["para_first"])
 expect("R4 대화문 예외", "R4" not in {v["rule"] for v in ct.check(DIALOG, DESIGN)["violations"]})
 expect("G3 대장 일치 통과", not any(v["rule"] == "G3" for v in ct.check(DIALOG, DESIGN)["violations"]))
+# I-24 R4: 명사 "그립"(수직손잡이)은 감정어가 아님, 형용사 "그리웠다"·명사 "그리움"은 감정어
+GRIP = "건우는 수직 그립을 쥐었다. 레일의 그립 자국을 떼고 왔다."
+expect("I-24 그립(NNG) R4 오탐 0", not any(v["rule"] == "R4" for v in ct.check(GRIP)["violations"]), [v for v in ct.check(GRIP)["violations"] if v["rule"] == "R4"])
+expect("I-24 그리웠다 R4 검출", any(v["rule"] == "R4" for v in ct.check("그는 어머니가 그리웠다.")["violations"]))
+expect("I-24 그리움 R4 검출", any(v["rule"] == "R4" for v in ct.check("그리움이 밀려왔다.")["violations"]))
 g3 = [v for v in ct.check(DIALOG, DESIGN_BAD)["violations"] if v["rule"] == "G3"]
 expect("G3 누락·미등록 검출", any(v.get("missing") == "민재" for v in g3) and any(v.get("form") == "수진" for v in g3), g3)
 st = ct.lexicon_stats(); expect("어휘장 감각별 ≥30", st["senses_min"] >= 30, st["senses"])
