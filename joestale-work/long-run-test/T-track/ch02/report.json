@@ -61,5 +61,15 @@
   "서 중사 초소만 늘 한 자리라.\""
  ],
  "review": "지적 13건→처리 13건, 재검수 지적 7건→처리 7건",
- "subagents": 2
+ "subagents": 2,
+ "pattern40_fix": {
+  "date": "2026-11-04",
+  "change": "TOD 서술, 가산 배급을 민규 대사로",
+  "v1": "final.v1.txt",
+  "v1_chars": 3004,
+  "chars": 3099,
+  "modifier_ratio": 0.05,
+  "pass": true,
+  "review_39_41": "지적 1(면담, 대상 문장 밖) 처리 0"
+ }
 }

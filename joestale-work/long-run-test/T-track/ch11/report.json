@@ -1,0 +1,100 @@
+{
+ "chapter": "ch11",
+ "draft": {
+  "chars": 3388,
+  "sentences": 140,
+  "paragraphs": 56,
+  "modifier_ratio": 0.05,
+  "senses": [
+   "body",
+   "hearing",
+   "smell",
+   "temperature",
+   "touch"
+  ],
+  "translationese": {},
+  "violations": 7,
+  "notes": [
+   "W3 비시각 감각 없는 문단: [6, 8, 16, 23, 29, 32, 33, 42, 49] (글 전체 ≥1이면 통과, 문단마다 넣으려고 묘사를 늘리지 말 것)",
+   "W5 대사·독백 없는 서술문 13개 연속 (기준 4개, 사이에 속마음 한 줄이나 대사 한 줄)",
+   "W1 문단 15: 7문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)",
+   "W1 문단 31: 7문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)",
+   "W1 문단 46: 5문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)",
+   "W1 문단 47: 5문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)",
+   "W1 문단 56: 6문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)"
+  ]
+ },
+ "final": {
+  "chars": 3377,
+  "sentences": 144,
+  "paragraphs": 62,
+  "modifier_ratio": 0.05,
+  "senses": [
+   "body",
+   "hearing",
+   "smell",
+   "temperature",
+   "touch"
+  ],
+  "translationese": {},
+  "violations": 0,
+  "notes": [
+   "W3 비시각 감각 없는 문단: [6, 15, 18, 31, 33, 36, 46, 55] (글 전체 ≥1이면 통과, 문단마다 넣으려고 묘사를 늘리지 말 것)",
+   "W5 대사·독백 없는 서술문 10개 연속 (기준 4개, 사이에 속마음 한 줄이나 대사 한 줄)",
+   "W1 문단 15: 5문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)",
+   "W1 문단 50: 5문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)",
+   "W1 문단 62: 6문장 (기준 4문장 이하, 같은 상태의 반복 묘사인지 확인)"
+  ]
+ },
+ "rounds_violations": [
+  7,
+  0,
+  0,
+  1,
+  0
+ ],
+ "pass": true,
+ "remaining": [],
+ "monologue": [
+  "'닷새가 사흘이면, 또 뭐가 줄어든 거지?'"
+ ],
+ "premise_emotions": [],
+ "kept_original": [],
+ "title": "가산",
+ "draft_chars": 3388,
+ "supplement_count": 0,
+ "review_findings": 32,
+ "review_processed": 27,
+ "filtered_count": 5,
+ "filtered": [
+  "[32] 마지막 문단 서술 연속: 결미 훅 호흡(1·2차 각 1)",
+  "[35] 민규가 새살을 건드림: 앞 대사 벌써요로 동기 충분",
+  "[32] 저울 문단 5문장",
+  "[36] 흥정꾼의 회복 소문: 배급소 주변 시장 소문 수준"
+ ],
+ "review_summary": "(대장 90일 삭제 뒤 재실행) 지적 18→처리 16, 재검수 지적 14→처리 11, filtered 5, 재검수 뒤 처리분은 상한으로 미검수",
+ "stage_targets": [
+  540,
+  900,
+  900,
+  720,
+  540
+ ],
+ "stage_actual_draft": [
+  589,
+  572,
+  854,
+  871,
+  502
+ ],
+ "stage_actual_final": [
+  621,
+  577,
+  775,
+  880,
+  524
+ ],
+ "ledger_added_after_draft": 8,
+ "ledger_added_note": "총수는 작업 기억으로 셈. first_check는 초고 첫 검증의 number_not_in_ledger 실측. '오 형''넷'처럼 검증기가 수치로 잡은 표기가 다수",
+ "ledger_not_in_ledger_first_check": 5
+}

@@ -71,5 +71,15 @@
  "premise_emotions": [],
  "kept_original": [],
  "review": "지적 16건→처리 14건(교대 문장·채혈 문구는 설계 의도 유지), 재검수 지적 7건→처리 6건(독백성 서술은 패턴 32 쪽 유지)",
- "subagents": 2
+ "subagents": 2,
+ "pattern40_fix": {
+  "date": "2026-11-04",
+  "change": "수레 양식과 유진 대사로 교상자·사전 동의서·처분을 심음(내 선택, 사용자 확인 필요)",
+  "v1": "final.v1.txt",
+  "v1_chars": 3000,
+  "chars": 3174,
+  "modifier_ratio": 0.08,
+  "pass": true,
+  "review_39_41": "지적 1(그 뒤로는요?, 대상 문장 밖) 처리 0"
+ }
 }

@@ -55,5 +55,15 @@
  "premise_emotions": [],
  "kept_original": [],
  "review": "지적 8건→처리 7건(번호=세부 지정, 설계서 고침), 재검수 지적 5건→처리 5건",
- "subagents": 2
+ "subagents": 2,
+ "pattern40_fix": {
+  "date": "2026-11-04",
+  "change": "회복자 단서를 민규 대사에",
+  "v1": "final.v1.txt",
+  "v1_chars": 3358,
+  "chars": 3401,
+  "modifier_ratio": 0.05,
+  "pass": true,
+  "review_39_41": "지적 1(UDT, 대상 문장 밖) 처리 0"
+ }
 }

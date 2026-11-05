@@ -2,6 +2,97 @@
 
 닫힌 항목 T-001~T-031은 [TASK-archive.md](TASK-archive.md)로 이동(2026-11-02). 여기에는 열린 항목만 둔다.
 
+## T-047 / 2026-11-05 / (e) T 11~25장 이어 쓰기 완료·새 규정 측정
+
+Roadmap item: (0-2) 후속 (e).
+Result: T 세션(Opus)이 11~25장 15장을 새 규정(continuity·terms_introduced·추적 갱신 장마다·초고 3,600 5단 배분·검수 39~41)으로 집필. 전 장 PASS, 검수 2회. 초고 중앙값 3,163(1~10장 3,118), 3,000 미만 4/15, 3,600 도달 2/15, 보충 4, 재집필 0. 검수 지적 553(장당 37, 1~10장 22), 걸러냄 141(25.5%) — 주 사유는 앞 장에 이미 소개한 용어 재지적. 대장 밖 수치 첫 검증 196(장당 13). 절차 이탈 8건(세션 보고). 자체 결정 25건은 T-track/issues.md "자체 결정" 절, 사용자 확인 전. 보고서 절 추가. (f) 반영: reviewer 40번에 terms_introduced 수록 용어 제외·장비명 비ID 명시.
+Changed files: skills/joestale/references/reviewer-prompt.md, joestale-work/long-run-test/T-track/ch11~ch25 (세션 산출), T-track/issues.md·log.md·tracking.json·세부개요_11-25장.md (세션), reports/장편 일관성 테스트 1권 1~10장.md(절 추가), TASK.md, ROADMAP.md.
+Check / target / result: 분량 규칙 → 세션 작성자에게는 약함(T-046 서브에이전트 10/10 vs 세션 2/15). 걸러낸 비율 25.5% → 감당 가능하나 40번 문구 보강 필요(f). 대장 사후 추가 → 규정 미준수, 상한 후보(h).
+Evidence: T-track/ch11~25/report.json(draft_chars, filtered_count, ledger_not_in_ledger_first_check), T 세션 최종 보고(2026-11-05 01:xx).
+Limits: filtered는 세션 자체 판단, 독립 확인 없음. 최종 자수는 세션 표와 100~200자 차이(세션이 보충 전 값을 적은 듯). 11~25장 세부 개요는 세션이 만든 것이라 입력 동결본 밖. 블라인드 모순 판정은 아직 안 함. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 자체 결정 확인·11~25장 판독, (f)(g)(h) 결정.
+Related issue / knowledge: T-045, T-046, I-26.
+Record handoff gap: none.
+
+## T-046 / 2026-11-04 / (c) 분량 규칙 검증: T 1~10장 초고 재생성 비교
+
+Roadmap item: (0-2) 후속 (c) 증명.
+Result: 같은 설계서(T-track design.json)로 초고만 새 규칙(3,600 5단 배분)으로 재생성(Opus 서브에이전트 10회, 검수·보충 없음). 글자 수 중앙값 3,118 → 3,606, 범위 2,779~3,721 → 3,214~3,619, 3,000 미만 4 → 0, 4,500 초과 0. 수식어 비율 평균 0.068 → 0.045, 문체 위반(G3 제외) 27 → 7, W1 긴 문단 63 → 13. 블라인드 채우기 판정(sonnet 2회 순서 교환): A 구 134·새 176, B 새 150·구 189 — 둘 다 뒤에 놓인 쪽이 많아 순서 편향, 합산 구 323·새 326으로 차이 없음. 부작용: 대장 밖 수치 23 → 60(걸음·발·초를 지어냄), 미등록 인명 0 → 19. 조치: D2 분량 행에 "채울 때 대장에 없는 수치를 만들지 않는다" 추가, SKILL 한 줄. 통과 판정 → (e) 진행.
+Changed files: references/decisions.md, SKILL.md, joestale-work/long-run-test/판정/분량규칙_검증/ (ch01~10 draft_new·stages, measure.json, blind_A·B, 판정A·B.md, blind_key.txt), reports/장편 일관성 테스트 1권 1~10장.md(절 추가), TASK.md, ROADMAP.md.
+Check / target / result: 통과 기준 3,000 미만 0·중앙값 ≥3,300·4,500 초과 0 → 충족. 수식어 차이 ≤0.01 → 오히려 감소. 채우기 블라인드 → 차이 없음.
+Evidence: 판정/분량규칙_검증/measure.json, 판정A.md, 판정B.md.
+Limits: 재생성은 서브에이전트(세션 기억 없음)라 인명·수치 대장 이탈 일부는 조건 차이일 수 있음. ch03은 3,214로 목표 미달(재료 소진 보고). 판정자 순서 편향이 커서 채우기 측정은 "차이 없음"까지만. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: (e) 11~25장에서 초고 분포·G3 수치 재확인.
+Related issue / knowledge: T-045, T-039.
+Record handoff gap: none.
+
+## T-045 / 2026-11-04 / (c) 장편 장 분량 규칙: D2 "분량 (E 본문 장)" 행, D4 보충 2회·재집필 기준
+
+Roadmap item: (0-2) 후속 (c).
+Result: decisions D2에 E 본문 장 3,000~4,500자(세부 개요 지정값 우선), 초고 목표 하한+20%(3,600자)를 5단 구성에 배분. D4 분량 note 행에 E 장은 보충 2회, 가장 짧은 단에 설계 재료로만, 초고가 하한 85% 미만이면 5단 배분을 고쳐 2단계 재집필. SKILL 5단계 한 줄. 글 생성 없음(규칙만).
+Changed files: references/decisions.md, SKILL.md, TASK.md, ROADMAP.md.
+Check / target / result: test_check_text.py 무관(검증기 미변경). 효과는 (e) 11~25장에서 초고 글자 수 분포로 측정.
+Evidence: T-039 보고서 해석 4, N issues H, T log.md(초고 2,500~3,100).
+Limits: 3,600 목표가 묘사 과잉을 부르는지 미확인. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: (e)에서 측정.
+Related issue / knowledge: T-039, T-044.
+Record handoff gap: none.
+
+## T-044 / 2026-11-04 / (d) 기획 입력 모순 정리: long-plan-input 동결 v2
+
+Roadmap item: (0-2) 후속 (d).
+Result: T·N 두 집필 세션의 issues.md(I1~I14, 1~10)와 15차 피드백에서 입력 모순 19건을 합쳐 16항목 24곳 수정. 원칙은 T 본문(본편)이 택한 쪽. 수정: 야간 발사 보고 시점, 태석 소개 문답(패턴 39), 탄피 회수 의무/눕혀 세기 버릇/책상 세움 양식, 1장 관건 50m·30m·발수 이유(패턴 41), 1회차 일시 공개 장, 3장 투시경 주체, 4장 별지 미룬 이유, 5장 채혈 장소·시간·사례(05 헌혈 사례 신설)·조사 오타, 6장 관측 하루 대신 맡기·합동 보급 점검, 7장 사본 수단, 8·9장 간호장교 교대 없음·12시간 안내·정우 입실, 유진 소개 자리, 10장 5단 순서, 교차_대조 #12. 원본은 `long-plan-input/원본_동결v1/`, 목록은 `long-plan-input/변경_기록.md`.
+Changed files: long-plan-input/{01_세계관/01,05, 02_인물/01,02, 04_세부개요/1권_01-10장, 교차_대조}.md, 변경_기록.md(신규), 원본_동결v1/(신규), TASK.md, ROADMAP.md.
+Check / target / result: 24곳 앵커 전부 1회 일치 후 치환. T 1~10장 본문과의 재대조는 안 함(T 선택에 맞췄으므로 어긋남 없어야 하나 미검증).
+Evidence: 변경_기록.md 표.
+Limits: 보류 3건(9장 K10 구절, N 탄피 이유, 05 혈장 채혈 주체 현실성). 2~5권 분권표·11~25장 장별표에는 손 안 댐. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: (c) 장편 분량 행, (e) T 11~25장 이어 쓰기.
+Related issue / knowledge: T-039, T-043, I-26.
+Record handoff gap: none.
+
+## T-043 / 2026-11-04 / 패턴 40 잔여 용어 7건 국소 수정(T 2·5·8·9장, N 1·9장) + continuity terms_introduced·검수 39/40 보강
+
+Roadmap item: (0-2) 후속, I-27.
+Result: 스킬 — continuity에 `terms_introduced`(독자에게 드러난 용어·관행 → 장·방식) 추가(decisions D2, reviewer 앞 장 맥락 절, template, scene-design), 검수 40에 설정 ID 유출·목록 밖 용어, 39에 질책·농담형 비껴감 명시. 본문 — T: 2장 TOD·가산 배급, 5장 회복자, 8장(추가) 동의서·처분 장면, 9장 처분 문장; N: 1장 TOD·탄피 제도, 9장 K5 ID 제거. 전부 PASS, 고친 문장에 39~41 지적 0. T tracking.json terms_introduced 47항목. 이전 판 final.v1.txt 보관.
+Changed files: references/reviewer-prompt.md·decisions.md·design.template.json·scene-design.md, long-run-test/T-track/ch0{2,5,8,9}/*·tracking.json·report.json, N-notrack/ch0{1,9}/*·log.md, TASK.md, ROADMAP.md.
+Check / target / result: 고친 곳 39~41 지적 0 → 통과. 고친 곳 밖 새 지적: T 3건(저확신), N 10건(1장 40 4·41 2·39 1, 9장 3) 미처리.
+Evidence: 두 세션 보고(전/후 표), 판정/패턴39-41_검증/.
+Limits: T 8장 동의서 장면(서술 2문장+대사 2줄, 수레에 양식이 있다는 설정)은 세션 선택 — 사용자 확인 전. N 9·10장 "눕혀서 세고, 세워 두면 굴러가"는 집필자가 붙인 이유가 물리적으로 거꾸로(눕힌 원통이 더 구름) — 미수정, 10장 연동 필요. 새 검수 항목이 용어 지적을 많이 냄(N 1장 4건) — 억지 비율 미측정. 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 결정 2026-11-04 — T 본편, 8장 장면 수락, N 동결(탄피 이유 미수정). 닫힘.
+Related issue / knowledge: I-27, T-041, T-042.
+Record handoff gap: none.
+
+## T-042 / 2026-11-04 / 1장 v2 재작성(Opus, T 세션) + 단면 수정 여부 검증(패턴 39~41 전수 스캔·연속성)
+
+Roadmap item: (0-2) 후속, I-27.
+Result: T-track/ch01 v2 3,672자 PASS(수식어 0.06, 검수 12→11·10→8), 15차 지적 5곳 전부 반영(v1은 final.v1.txt). 검증 ① 패턴 39~41 전수 스캔(sonnet): T 1장 v2 0건, T 2~10장 용어(40) 4건(TOD·가산 배급·회복자·처분/교상자), N 1~10장 3건(1장 TOD·탄피 제도 모순, 9장 지식 ID "K5" 본문 유출), 문답(39)·이유(41)는 1장 밖에서 0. ② 감도: 같은 스캔을 T 1장 v1에 돌려 사용자 지적 4건 중 3건 검출(AA 문답·총성 이유·탄피 제도) + 미지적 1건("손님" 은어), "셋 맞죠?" 비껴감은 질책으로 보고 미검출. ③ 연속성: v2가 바꾼 사실 14건 중 2~10장과 어긋남 0. 결론: 1장 국소 수정이 아니라 결함 유형이 1장(설정 노출이 가장 많은 장)에 집중돼 있었고, 나머지 장의 잔여는 용어 7건.
+Changed files: long-run-test/T-track/ch01/*(v2, v1 보관, README), 판정/패턴39-41_검증/*, TASK.md, ROADMAP.md.
+Check / target / result: v2 결함 0/0/0, 연속성 어긋남 0 → 통과. 스캐너 감도 3/4.
+Evidence: 판정/패턴39-41_검증/scan39_T.md·scan39_N.md·scan39_T_ch01_v1.md·cont_v2.md, ch01/README.md.
+Limits: 사용자 v2 판정 전. 2~10장 용어 7건 미수정. 스캐너가 질책형 비껴감을 못 잡음(검수 39 문구 보강 후보). 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 v2 판정 → 용어 7건 국소 수정 여부.
+Related issue / knowledge: I-27, T-041.
+Record handoff gap: none.
+
+## T-041 / 2026-11-04 / 15차 피드백 → 패턴 39~41(문답 호응·관행 첫 등장·이유 검산), 검수 39~41
+
+Roadmap item: (0-2) 후속, Phase 0 사용자 수락.
+Result: ISSUES I-27. principles 39·40·41 + 검사법(39~41). reviewer 39~41(항목 수 41). decisions D2 3행. scene-design 6-C ④에 첫 등장 관행·용어, 이유 검산 항목. SKILL 1원칙 한 문장. 판정 기록: T(추적 유) 판정승 — 문장·흐름; N은 모순 적음. 블라인드 모순 수(T 1·0 / N 2·2)와 사용자 판정이 어긋난 이유: 판정 유형에 문답 호응·용어 설명·이유 검산이 없었음.
+Changed files: references/principles.md·reviewer-prompt.md·decisions.md·scene-design.md, SKILL.md, ISSUES.md, TASK.md, ROADMAP.md.
+Check / target / result: test_check_text.py ALL OK(검증기 미변경). 패턴 효과는 T 1장 재작성 후 사용자 판정.
+Evidence: I-27 피드백 원문.
+Limits: 패턴 39~41은 검수자만 봄(기계 검사 없음). 커밋 안 함.
+Required specialist verdict: not applicable.
+Completion boundaries: T 1장 v2 재작성·판정 pending.
+Related issue / knowledge: I-27, T-039, T-040.
+Record handoff gap: none.
+
 ## T-040 / 2026-11-04 / 장편 본문 후속 (a) continuity 검수 입력, (b) 검수 34·36 강화 + 6장 재검수 검증
 
 Roadmap item: (0-2) 후속.

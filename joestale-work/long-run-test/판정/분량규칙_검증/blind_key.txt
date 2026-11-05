@@ -1,0 +1,2 @@
+blind_A: X=구 초고(draft.txt) Y=새 초고(draft_new.txt)
+blind_B: X=새 초고 Y=구 초고

@@ -90,5 +90,15 @@
  "premise_emotions": [],
  "kept_original": [],
  "review": "지적 12건→처리 11건(14시 측정은 입력 표 값이라 유지), 재검수 지적 12건→처리 9건(16시 40.2·07시·교상자는 입력 값 유지)",
- "subagents": 2
+ "subagents": 2,
+ "pattern40_fix": {
+  "date": "2026-11-04",
+  "change": "처분 문장을 8장 회상으로",
+  "v1": "final.v1.txt",
+  "v1_chars": 3017,
+  "chars": 3044,
+  "modifier_ratio": 0.09,
+  "pass": true,
+  "review_39_41": "지적 0"
+ }
 }
