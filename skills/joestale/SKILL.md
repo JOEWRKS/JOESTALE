@@ -70,7 +70,7 @@ PYTHONIOENCODING=utf-8 python skills/joestale/scripts/check_text.py draft.txt --
 
 ## 설치
 
-버전은 `VERSION`(현재 0.2.0). 이 프로젝트 안에서는 `.claude/skills/joestale` 정션으로 로드된다. 다른 프로젝트에서도 쓰려면 개인 설치:
+버전은 `VERSION`(현재 0.3.0 — T-063~T-066: 패턴 75~90, 전문 검수자 5-C, W22~W29·G9·G10). 이 프로젝트 안에서는 `.claude/skills/joestale` 정션으로 로드된다. 다른 프로젝트에서도 쓰려면 개인 설치:
 
 ```powershell
 powershell -NoProfile -File skills/joestale/scripts/install.ps1 -Check   # ready / current / blocked

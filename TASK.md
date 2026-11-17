@@ -2,6 +2,14 @@
 
 닫힌 항목 T-001~T-031은 [TASK-archive.md](TASK-archive.md)로 이동(2026-11-02). 여기에는 열린 항목만 둔다.
 
+## T-067 / 2026-11-17 / 전문 검수자 회귀 세트(ch11_v9·v9b), score_review 보정, 검수 문구 보강(사람 말 아닌 꼴), VERSION 0.3.0
+
+Roadmap item: (0-2) 후속. 사용자 "진행".
+Result: 회귀 세트 둘. ch11_v9 = 전문 검수 7인이 읽은 본문(v9_r5)과 그들이 잡아 반영한 17건 → review_out5로 17/17. ch11_v9b = 사용자 판독 5차 대상 본문(v9_r6)과 사용자만 잡은 7줄 → 보강 전 대사 검수자+문장 독자 2/7(○ 행 제외 채점), 전문 대사 ⑦·문장 독자 B·F에 "번역문·대본 같은 꼴"(명사+있어/없어 평가, 정을 거래 말로, ~는 대로 다, 어미만 바꿔 되돌린 답, 쏘아붙이는 명령형 회피, 그림 안 그려지는 감각 문장) 보강 뒤 6/7(놓침 N04 독백 어긋남 → 독백 ③에 추가). 보강 문구가 그 일곱 줄을 예로 들고 있어 적중의 일부는 예시 효과이므로 다음 판에서 다시 재야 한다. score_review: 전문 검수자 표의 ○ 행 제외, 번호 없는 표(인물)의 ×·△ 행 수용 — 옛 세트 ch11_v6는 15/20 그대로. 본문: 문장 독자 D 지적(민규가 K2를 태석에게 넘겼는데 태석이 코펠을 젓는다) → 태석이 사수 자리에 오르고 도현이 코펠을 젓는 것으로 고쳐 final·ch11_v2/final.txt 갱신(PASS). VERSION 0.2.0 → 0.3.0(SKILL 설치 절, install.ps1 -Check ready, 개인 설치 없음).
+Changed files: skills/joestale/VERSION, SKILL.md, references/(reviewer-prompt.md, decisions.md), scripts/score_review.py, regression/ch11_v9/*, regression/ch11_v9b/*(text·design·must_catch·review_in·review_out·review_out_baseline), joestale-work/long-run-test/T-track/ch11_v2/(final.txt, t063/final.txt·check.final.json), TASK.md, ROADMAP.md.
+Check / target / result: test_check_text ALL OK. 검수 서브에이전트 4회(Sonnet). ch11_v9 17/17, ch11_v9b 2/7 → 6/7, ch11_v6 15/20(변동 없음).
+미처리: 커밋 전. ch11_v9b는 예시 효과를 뺀 측정이 필요(다음 장의 판독으로). ch01~ch10 설계서 gist 양식.
+
 ## T-066 / 2026-11-17 / 판독 5차 7건 → 규칙을 피하려 깎은 대사: 패턴 90, W26·W27 문턱 완화, 코펠 장면 둘 재작성
 
 Roadmap item: (0-2) 후속. 사용자 "다시 써".

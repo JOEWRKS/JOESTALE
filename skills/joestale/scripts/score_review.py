@@ -2,7 +2,7 @@
 """검수 독자 출력(마크다운 표)을 정답지와 대조해 적중 수를 센다.
 
 python score_review.py regression/ch11/must_catch.json reader_out.md [reader_out2.md ...] [--lens 문장|연결] [--json]
-여러 출력 파일을 주면 합쳐서(합집합) 센다.
+여러 출력 파일을 주면 합쳐서(합집합) 센다. 전문 검수자 표의 판정 ○ 행은 세지 않는다(T-067).
 """
 import argparse, json, re, sys
 
@@ -20,7 +20,9 @@ def rows(path):
                 out.append((line, line))
             continue
         cells = [c.strip() for c in line.strip("|").split("|")]
-        if not cells or not re.fullmatch(r"\d+", cells[0]):
+        if not cells or not (re.fullmatch(r"\d+", cells[0]) or any(c in ("×", "△") for c in cells)):   # 번호 없는 표(인물 검수자)는 판정 ×·△ 행만 받는다(T-067)
+            continue
+        if any(c == "○" for c in cells):   # 전문 검수자(5-C) 표는 모든 단위에 행이 있다. 판정 ○ 행은 지적이 아니다(T-067)
             continue
         out.append((cells[1] if len(cells) > 1 else "", line))
     return out
