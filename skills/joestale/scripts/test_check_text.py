@@ -121,5 +121,151 @@ w4 = ct.check('"응."\n\n민재는 깊은 한숨을 쉬었다.' + FILL)["notes"]
 expect("W4 상투 beat note", any(n.startswith("W4") for n in w4), w4)
 expect("W4 없음", not any(n.startswith("W4") for n in ct.check("민재는 컵을 두 번 돌렸다. 창문 세 개가 닫혔다.")["notes"]))
 
+# T-050 (2026-11-07): G5 앞 장 문장 재사용, W7 수치 되풀이
+PREV = "태석이 쌀죽을 세 몫으로 덜었다. 알루미늄 컵 하나, 뚜껑 하나, 코펠 하나. 민규가 받은 뚜껑을 후후 불었다."
+NOW = "태석이 죽을 덜었다. 알루미늄 컵 하나, 코펠 뚜껑 하나, 코펠 하나. 창문 세 개가 닫혔다."
+g5 = [v for v in ct.check(NOW, None, None, PREV)["violations"] if v["rule"] == "G5"]
+expect("G5 앞 장 문장 재사용", len(g5) == 1 and "알루미늄" in g5[0]["sentence"], g5)
+expect("G5 prev 없으면 안 봄", "G5" not in rules_of(NOW))
+expect("G5 repeat_ok 면제", not [v for v in ct.check(NOW, {"repeat_ok": ["알루미늄 컵 하나"]}, None, PREV)["violations"] if v["rule"] == "G5"])
+expect("G5 다른 문장 오탐 없음", not [v for v in ct.check("민규는 군장을 끌어당겨 지퍼를 올렸다. 창문 세 개가 닫혔다.", None, None, PREV)["violations"] if v["rule"] == "G5"])
+w7 = ct.check('"닷새 갈 게 사흘 간 거야."\n\n그는 손을 거두었다.\n\n닷새가 사흘이면 무엇이 달라진 것인가.')["notes"]
+expect("W7 수치 되풀이 note", any(n.startswith("W7") and "닷새" in n for n in w7), w7)
+
+# T-051 (2026-11-09): R9 문장 밀도, L1 반영 뒤 분량, W8 긴 문장, W9 대사 서술체 종결
+DENSE = "도현은 격리반 침상에 앓아누운 사이 주마다 도는 근무 순번이 넘어가 그의 조가 야간에서 저녁 근무로 옮겨 와 있는 것을 인수 대장의 날짜와 사수의 서명을 번갈아 보고서야 알았다. " * 25
+PLAIN = "민규가 컵을 들었다. 창문 세 개가 닫혔다. " * 15
+r9 = ct.check(DENSE)
+expect("R9 빽빽한 글 위반", "R9" in rules_of(DENSE), r9["density"])
+expect("R9 보통 글 통과", "R9" not in rules_of(PLAIN), ct.check(PLAIN)["density"])
+expect("R9 서술문 20개 미만이면 안 봄", "R9" not in rules_of(DENSE[:len(DENSE)//5]))
+expect("W8 내용어 13개 이상 note", any(n.startswith("W8") for n in r9["notes"]), [n[:40] for n in r9["notes"]])
+expect("L1 초고 ×1.05 초과 위반", "L1" in [v["rule"] for v in ct.check(PLAIN, None, None, None, int(len(PLAIN) * 0.8))["violations"]])
+expect("L1 초고 이하 통과", "L1" not in [v["rule"] for v in ct.check(PLAIN, None, None, None, len(PLAIN))["violations"]])
+w9 = ct.check(chr(10).join(['"저 판은 내가 치운다."', "", "태석이 판을 들었다.", "", '"꿰맬 건 아니다. 세 시간 됐다."']))["notes"]
+expect("W9 대사 -ㄴ다 종결 note", any(n.startswith("W9") and "치운다" in n for n in w9), w9)
+expect("W9 아니다·됐다는 안 잡음", not any("아니다" in n or "됐다" in n for n in w9 if n.startswith("W9")), w9)
+
+
+# T-053 (2026-11-10): L1 밀도 조건, W10 하한, W11 끊긴 문장, inference 면제
+_d = ct.density_stats(ct.split_sents(PLAIN))
+expect("L1 길어졌어도 밀도 그대로면 통과", "L1" not in [v["rule"] for v in ct.check(PLAIN, None, None, None, int(len(PLAIN) * 0.8), _d)["violations"]])
+expect("L1 길어지고 빽빽해지면 위반", "L1" in [v["rule"] for v in ct.check(DENSE, None, None, None, int(len(DENSE) * 0.8), _d)["violations"]])
+expect("W10 잘게 끊긴 글 note", any(n.startswith("W10") for n in ct.check(PLAIN)["notes"]))
+CHOP = "도현은 장갑을 벗어 겨드랑이에 끼웠다. 맨손으로 서명했다. 민규가 구급낭을 열었다. 붕대를 꺼냈다. 태석이 판을 들었다. 둔치로 던졌다."
+_c = ct.check(CHOP)
+expect("W11 끊긴 문장 3곳 note", any(n.startswith("W11") for n in _c["notes"]) and len(_c["chopped"]) == 3, _c["chopped"])
+INF = "태석은 알고 있었으리라고 도현은 생각했다. 도현은 불안했다."
+expect("inference 없으면 R4·R7", {"R4", "R7"} <= set(rules_of(INF)), rules_of(INF))
+_i = [v["rule"] for v in ct.check(INF, {"inference": ["생각했다", "불안했다"]})["violations"]]
+expect("inference 구절은 R3·R4 면제", not (set(_i) & {"R3", "R4", "R7"}), _i)
+# T-055 (2026-11-10): G8 인물표 근거, X2 금지 표현, X3 예시 복사, W13 동음이의
+PREV = "민규가 말했다. 집사람이랑 돌 지난 애한테 부치려고요. 태석은 묻지 않고 스위치를 내렸다."
+DZ = {"characters": {"민규": {"evidence": ["집사람이랑 돌 지난 애한테"]}, "태석": {"evidence": ["묻지 않고 랜턴을 껐다"]}}, "banned_phrases": ["얼마나 더 빨라지는"], "user_examples": ["알면서 모른 척해 준 거겠지. 무른 사람이었다."]}
+TX = "도현은 컵을 들었다. 그걸 맞으면 얼마나 더 빨라지는 거지. 태석은 알면서 모른 척해 준 것이다. 쌀은 내일 치로 불려 올게."
+_g = ct.check(TX, DZ, None, PREV)
+expect("G8 근거 없는 인물표 위반(태석만)", [v.get("who") for v in _g["violations"] if v["rule"] == "G8"] == ["태석"], _g["violations"])
+expect("X2 금지 표현 위반", any(v["rule"] == "X2" for v in _g["violations"]))
+expect("X3 예시 복사 note", any(n.startswith("X3") for n in _g["notes"]), [n for n in _g["notes"] if n[:2] in ("X3", "W1")])
+expect("W13 동음이의 note", any(n.startswith("W13") and "불려 올" in n for n in _g["notes"]))
+expect("G8은 --prev 없으면 안 봄", not any(v["rule"] == "G8" for v in ct.check(TX, DZ)["violations"]))
+
+# T-057 (2026-11-12): W14 문단 호흡, W15 대사 종결 단조, W16 발화자 표지, W17 받는 줄, W18 자리만 알리는 문장, W19 모름의 보고문
+LONGP = '도현은 컵을 들었다. 민규가 뚜껑을 들었다. 태석이 코펠을 저었다. 창문 세 개가 닫혔다. 바람이 문을 흔들었다.'
+expect('W14 5문장 문단 note', any(n.startswith('W14') for n in ct.check(LONGP)['notes']))
+expect('W14 3문장 문단 통과', not any(n.startswith('W14') for n in ct.check('도현은 컵을 들었다. 민규가 뚜껑을 들었다. 창문 세 개가 닫혔다.')['notes']))
+EFQ = chr(10).join(['"이상 없습니다."', '', '민규가 섰다.', '', '"바람 막는다고요."', '', '태석이 왔다.', '', '"꿰맬 건 아니야."', '', '민규가 앉았다.', '', '"그건 못 들었어요."', '', '태석이 섰다.', '', '"이건 내가 치울게."', '', '민규가 갔다.', '', '"안 팝니다."', '', '태석이 앉았다.', '', '"다 먹으라고 준 겁니다."', '', '민규가 웃었다.', '', '"매주 나온대."', '', '태석이 웃었다.', '', '"세 갑 드릴게요."', '', '민규가 섰다.', '', '"다음 주에 보자."'])
+expect('W15 대사 전부 완결 종결 note', any(n.startswith('W15') for n in ct.check(EFQ)['notes']), [n[:30] for n in ct.check(EFQ)['notes']])
+MIXQ = EFQ.replace('"꿰맬 건 아니야."', '"꿰맬 건 아니고."').replace('"안 팝니다."', '"쌀을요?"').replace('"매주 나온대."', '"매주."')
+expect('W15 섞이면 통과', not any(n.startswith('W15') for n in ct.check(MIXQ)['notes']), [n[:40] for n in ct.check(MIXQ)['notes'] if n.startswith('W15')])
+RUN3 = chr(10).join(['컵이 세 개 놓였다.', '', '"이상 없습니다."', '', '"그래."', '', '"탄피는요?"', '', '"몰라."', '', '민규가 섰다.'])
+DZ2 = {'ledger': {'persons': ['도현', '민규', '태석']}, 'pov': '도현'}
+expect('W16 대사 3연속·이름 없음 note', any(n.startswith('W16') for n in ct.check(RUN3, DZ2)['notes']))
+expect('W16 앞 서술에 이름 있으면 통과', not any(n.startswith('W16') for n in ct.check(RUN3.replace('컵이 세 개 놓였다.', '민규가 컵 세 개를 놓았다.'), DZ2)['notes']))
+expect('W17 pov 반응 없음 note', any(n.startswith('W17') for n in ct.check(RUN3, DZ2)['notes']))
+expect('W17 사이에 pov 줄 있으면 통과', not any(n.startswith('W17') for n in ct.check(RUN3.replace('"탄피는요?"', '도현은 컵을 돌렸다.'), DZ2)['notes']))
+expect('W17 pov 없으면 안 봄', not any(n.startswith('W17') for n in ct.check(RUN3)['notes']))
+STAY = '사내는 계단 위에 남았다. 창문 세 개가 닫혔다.'
+expect('W18 자리만 알리는 문장 note', any(n.startswith('W18') for n in ct.check(STAY)['notes']))
+expect('W18 행동 있으면 통과', not any(n.startswith('W18') for n in ct.check('사내는 계단 위에서 다음 사람을 불렀다. 창문 세 개가 닫혔다.')['notes']))
+UNK = '다음에는 어디가 달라질지 그는 알지 못했다. 창문 세 개가 닫혔다.'
+expect('W19 모름의 보고문 note', any(n.startswith('W19') for n in ct.check(UNK)['notes']))
+expect('W19 inference 면제', not any(n.startswith('W19') for n in ct.check(UNK, {'inference': ['알지 못했다']})['notes']))
+
+# T-058 (2026-11-15): W14 기준 3문장·140자, W20 문단 박자, W21 장의 끝, 박자 문단 R6 면제
+expect('W14 4문장 문단 note', any(n.startswith('W14') for n in ct.check('도현은 컵을 들었다. 민규가 뚜껑을 들었다. 태석이 코펠을 저었다. 창문 세 개가 닫혔다.')['notes']))
+TWO = (chr(10) + chr(10)).join([f'도현은 컵 {i}개를 들었다. 민규가 뚜껑 {i}개를 들었다.' for i in range(2, 24)])
+expect('W20 2문장 문단뿐이면 note', any(n.startswith('W20') for n in ct.check(TWO)['notes']), [n[:40] for n in ct.check(TWO)['notes'] if n.startswith('W20')])
+ONE = (chr(10) + chr(10)).join([f'도현은 컵 {i}개를 들었다.' for i in range(2, 24)])
+expect('W20 1문장 문단이면 통과', not any(n.startswith('W20') for n in ct.check(ONE)['notes']))
+expect('W20 서술 문단 20개 미만이면 안 봄', not any(n.startswith('W20') for n in ct.check('도현은 컵을 들었다. 민규가 뚜껑을 들었다.')['notes']))
+expect('W21 마지막 문단 3문장 note', any(n.startswith('W21') for n in ct.check('민규가 섰다.' + chr(10) + chr(10) + '도현은 컵을 들었다. 민규가 뚜껑을 들었다. 태석이 코펠을 저었다.')['notes']))
+expect('W21 마지막 문단 한 줄이면 통과', not any(n.startswith('W21') for n in ct.check('도현은 컵을 들었다. 민규가 뚜껑을 들었다.' + chr(10) + chr(10) + '도현은 불을 껐다.')['notes']))
+expect('R6 박자 문단 면제', not any(v['rule'] == 'R6' and v.get('paragraph') == 2 for v in ct.check('도현은 컵 세 개를 들었다.' + chr(10) + chr(10) + '단련.')['violations']), [v for v in ct.check('도현은 컵 세 개를 들었다.' + chr(10) + chr(10) + '단련.')['violations'] if v['rule'] == 'R6'])
+# T-063 패턴 75~83 ----------------------------------------------------------
+FRAG_TEXT = "\n\n".join(['"꿰맬 건 아니고. 살갗만."', '"방아쇠 손인데."', '"킬로에 6,000. 깡통은 따로."', '"안 팝니다."', '"혼자 다 먹게?"',
+                            '"먹으라고 준 겁니다."', '"담 주에도 여기."', '"얼굴은 왜."', '"손님 얼굴은 외워 두는 게 장사지."', '"두 개요?"', '"그래. 다음 주 거 나오면 또 둘."', '"매주 나온대."'])
+r = ct.check(FRAG_TEXT)
+expect("W22 토막 대사 note", any(n.startswith("W22") for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W22")])[:120])
+FULL_TEXT = "\n\n".join(['"꿰맬 정도는 아니네."', '"총 쏘기 불편해졸네요, 젠장."', '"뭣하면 왼손으로 쏴야지 뭐."', '"안 팝니다."', '"혼자 그걸 다 먹게?"',
+                            '"먹으라고 준 겁니다."', '"담 주에도 여기 있을 테니까."', '"얼굴은 왜 외웁니까."', '"얼굴이나 튼 셈 치지."', '"두 개요?"', '"애한테 먹여."', '"매주 나온대."'])
+r = ct.check(FULL_TEXT)
+expect("W22 어미를 끝까지 말한 대사는 통과", not any(n.startswith("W22") for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W22")])[:120])
+r = ct.check("줄이 한 걸음 움직일 때마다 몇 킬로인지가 돌아왔다. 도현은 앞사람의 포대를 눈으로 재었다.")
+expect("W23 생각의 명사화 note", any(n.startswith("W23") for n in r["notes"]))
+r = ct.check("줄이 한 걸음 움직일 때마다 도현은 앞사람의 포대를 눈으로 재었다.\n\n'고작 몇백 그램 얹어 주는 건 아니겠지.'")
+expect("W23 독백으로 쓴 궁금함은 통과", not any(n.startswith("W23") for n in r["notes"]))
+r = ct.check("도현은 고개를 들지 않았다.\n\n'싸움 나면 먼저 나가는 몸이다. 그래서 더 받는다. 셈은 맞다.'")
+expect("W24 독백 -다 셋 연속·정당화 note", any(n.startswith("W24") for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W24")])[:120])
+r = ct.check("도현은 고개를 들지 않았다.\n\n'이게 다 내 거라고?'")
+expect("W24 되물음 독백은 통과", not any(n.startswith("W24") for n in r["notes"]))
+r = ct.check("도현은 손을 오므렸다. 보이기 싫은 것은 포대가 아니라 손이었다.")
+expect("W25 대비 꼴 셈 note", any(n.startswith("W25") for n in r["notes"]))
+r = ct.check("민규가 멋쩍은 얼굴로 덮개 끈을 당겨 매 주었다. 민규는 슬픈 얼굴로 끈을 당겼다.")
+expect("R4 조연 표정 어절 면제(슬픈 얼굴)", not any(v["rule"] == "R4" for v in r["violations"]), str([v for v in r["violations"] if v["rule"] == "R4"])[:120])
+r = ct.check("민규는 슬펐다. 끈을 당겼다.")
+expect("R4 시점 인물 감정 명명은 여전히 위반", any(v["rule"] == "R4" for v in r["violations"]))
+r = ct.check('"그건 늘 네가 닦았고. 야, 많이 주면 많이 보태고. 식어, 먹어." 태석이 코펠을 내밀었다.')
+expect("여러 문장 대사의 둘째 문장은 R1·R2 면제(T-063)", not any(v["rule"] in ("R1", "R2") for v in r["violations"]), str([v for v in r["violations"] if v["rule"] in ("R1", "R2")])[:120])
+r = ct.check("도현은 줄에 섰다." + chr(10) + chr(10) + "'더 나오긴 하겠지. 몇백 그램은 아니겠지.'")
+expect("W24 독백 같은 어미 연속 note", any("같은 어미" in n for n in r["notes"]))
+r = ct.check("도현은 줄에 섰다." + chr(10) + chr(10) + "'더 나오긴 할 텐데. 몇백 그램은 아니겠지.'")
+expect("W24 어미가 다르면 통과", not any(n.startswith("W24") for n in r["notes"]))
+r = ct.check("도현은 포대를 들었다." + chr(10) + chr(10) + "'두고 가기엔 좀 그렇네. 아까 그 사람도 있고.'", design={"monologue": ["두고 가기엔"]})
+expect("여러 문장 독백의 둘째 문장도 독백으로(R2 면제, T-063)", not any(v["rule"] == "R2" for v in r["violations"]), str([v for v in r["violations"] if v["rule"] == "R2"])[:100])
+ECHO = '"담배는 됐어. 그냥 가져가."' + chr(10) + chr(10) + '"그냥요?"' + chr(10) + chr(10) + '"그냥. 집에 셋이라며."' + chr(10) + chr(10) + '"다음 주에 또 줄게."' + chr(10) + chr(10) + '"매주요?"' + chr(10) + chr(10) + '"매주 나온대."'
+r = ct.check(ECHO)
+expect("W26 되받기 쌍 둘 이상 note(T-064)", any(n.startswith("W26") for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W26")])[:160])
+r = ct.check('"담배는 됐어. 그냥 가져가."' + chr(10) + chr(10) + '"그냥요?"' + chr(10) + chr(10) + '"애한테나 먹여."' + chr(10) + chr(10) + '"다음 주에도요?"' + chr(10) + chr(10) + '"그건 네가 하는 거 봐서."')
+expect("W26 되받기 한 쌍·태도 답은 통과", not any(n.startswith("W26") for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W26")])[:160])
+r = ct.check('"이게 한 주 치야?"' + chr(10) + chr(10) + '"그렇다던데요."' + chr(10) + chr(10) + '"저도 맞으면 이만큼 나오는 거죠?"' + chr(10) + chr(10) + '"그렇겠지."')
+r = ct.check('"이게 한 주 치야?"' + chr(10) + chr(10) + '"그렇다던데요."' + chr(10) + chr(10) + '"나오는 거죠?"' + chr(10) + chr(10) + '"그렇겠지."' + chr(10) + chr(10) + '"아물었죠?"' + chr(10) + chr(10) + '"그러네."')
+expect("W27 '그렇-' 답 셋 이상 note", any(n.startswith("W27") for n in r["notes"]))
+r = ct.check('"이게 한 주 치야?"' + chr(10) + chr(10) + '"그렇다던데요."' + chr(10) + chr(10) + '"저도 맞으면 이만큼 나오는 거죠?"' + chr(10) + chr(10) + '"네 순번부터 받고 말해."')
+expect("W27 하나는 통과", not any(n.startswith("W27") for n in r["notes"]))
+r = ct.check('"이게 한 주 치야?"' + chr(10) + chr(10) + '"그렇대요."' + chr(10) + chr(10) + '"저도 맞으면 이만큼 나오는 거죠?"' + chr(10) + chr(10) + '"그렇겠지."')
+expect("W27 둘은 통과(T-066 문턱 2)", not any(n.startswith("W27") for n in r["notes"]))
+r = ct.check('"네 쌀도 좀 보태 봐. 끓이는 건 내가 하고."' + chr(10) + chr(10) + '"깡통은 따로 값 매기고."' + chr(10) + chr(10) + '"안 팔면 할 수 없고."' + chr(10) + chr(10) + '"깡통도 하나 따고요."')
+expect("W28 대사 끝 연결어미 셋 이상 note", any(n.startswith("W28") for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W28")])[:160])
+r = ct.check('"네 쌀도 좀 보태 봐. 끓이는 건 형이 해 줄게."' + chr(10) + chr(10) + '"깡통은 따로 값 매겨 줄게."' + chr(10) + chr(10) + '"안 팔면 할 수 없지."')
+expect("W28 어미를 닫으면 통과", not any(n.startswith("W28") for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W28")])[:160])
+r = ct.check('"많이 주면 많이 보탤게요."')
+expect("W29 대사 안 대칭 note", any(n.startswith("W29") for n in r["notes"]))
+r = ct.check('"주는 거 봐서요."')
+expect("W29 대칭 없으면 통과", not any(n.startswith("W29") for n in r["notes"]))
+r = ct.check("'……보태라는 말이 고맙네. 이제 얻어먹는 쪽은 아니라는 거니까.'")
+expect("W24 까닭 한 줄(거니까)은 정당화 note(T-064)", any(n.startswith("W24") and "거니까" in n for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W24")])[:120])
+D10 = {"dialogue_plan": [{"where": "코펠", "lines": [{"who": "태석", "wants": "제안", "gist": "그럼 받아 오면 네 쌀도 좀 보태 봐."}]}]}
+r = ct.check('"그럼 받아 오면 네 쌀도 좀 보태 봐. 끓이는 건 형이 해 줄게."', D10)
+expect("G10 설계서 요지 그대로 옮김 note", any(n.startswith("G10") for n in r["notes"]))
+D10m = {"dialogue_plan": [{"where": "코펠", "lines": [{"who": "태석", "wants": "제안", "move": "농담에 섞어 떠넘기기"}]}]}
+r = ct.check('"그럼 받아 오면 네 쌀도 좀 보태 봐. 끓이는 건 형이 해 줄게."', D10m)
+expect("G10 move만 적은 설계서는 통과", not any(n.startswith("G10") for n in r["notes"]))
+D9 = {"premises": [{"item": "태석이 제 쌀로 셋을 먹인다", "shown_in": "내 쌀 먹는 놈들이 인사가 없어"}]}
+r = ct.check('"내 쌀 먹는 놈들이 인사가 없어."\n\n도현은 코펠을 받았다.', design=D9)
+expect("G9 shown_in이 본문에 있으면 통과", not any(v["rule"] == "G9" for v in r["violations"]))
+r = ct.check("도현은 코펠을 받았다.", design=D9)
+expect("G9 shown_in이 본문에 없으면 위반", any(v["rule"] == "G9" for v in r["violations"]))
+
 print("\n" + ("ALL OK" if not fails else f"FAILED: {fails}"))
 sys.exit(1 if fails else 0)
