@@ -5,6 +5,7 @@ python build_review_inputs.py final.txt --design design.json --out review_in/ [-
 
 만드는 것: 눈_가.md ~ 눈_아.md (항목 검수, 눈마다 항목과 설계서 블록만), 문장독자.md, 플랫폼독자.md, (--memory가 있으면) 연결독자.md.
 --final은 마지막 패스용: 전문_대사·독백·이치·이야기·인물.md + 문장독자.md + 플랫폼독자.md (T-065).
+전문_대화흐름.md는 대사·독백만 뽑은 장면 대본을 준다(T-069). 1회차에도 --flow 로 그것만 만들 수 있다.
 검수자마다 파일 하나만 주면 된다. --short는 1,000자 미만 글용으로 가·다·마 세 눈만 만든다.
 """
 import argparse, json, pathlib, re
@@ -29,7 +30,38 @@ SPECIALISTS = {   # reviewer-prompt.md "전문 검수자" 표와 같아야 한�
     "이치": ["ledger", "setting", "timeline", "assumptions", "continuity"],
     "이야기": ["scenes", "structure", "premises", "hooks", "plants"],
     "인물": ["characters", "pov", "exchanges"],
+    "대화 흐름": ["characters", "exchanges", "pov"],   # T-069: 장면 대본(대사·독백만)을 통째로 읽는다
 }
+
+QUOTE_RE = re.compile(r'^["“\'‘]')
+
+def extract_script(body, gap=2, stage_len=28):
+    """대화 장면 대본(T-069): 대사·독백 문단을 순서대로 뽑고, 사이의 서술은 짧은 지문으로 줄인다.
+    서술 문단이 gap개 이상 이어지면 장면을 끊는다. 대사가 하나도 없는 구간은 대본에 넣지 않는다."""
+    paras = [p.strip() for p in re.split(r"\n\s*\n", body) if p.strip()]
+    scenes, cur, narr = [], [], 0
+    for p in paras:
+        if QUOTE_RE.match(p):
+            if narr >= gap and cur:
+                scenes.append(cur); cur = []
+            cur.append(p); narr = 0
+        else:
+            narr += 1
+            if cur and narr < gap:
+                first = p.split(". ")[0].rstrip(".")
+                if len(first) > stage_len:
+                    first = first[:stage_len].rsplit(" ", 1)[0] + "…"
+                cur.append("(" + first + ")")
+    if cur:
+        scenes.append(cur)
+    scenes = [[l for l in sc] for sc in scenes if sum(1 for l in sc if QUOTE_RE.match(l)) >= 2]
+    out = []
+    for i, sc in enumerate(scenes, 1):
+        # 끝에 매달린 지문은 뗀다
+        while sc and sc[-1].startswith("("):
+            sc.pop()
+        out.append(f"### 장면 {i}\n" + "\n".join(sc))
+    return "\n\n".join(out)
 
 def fenced(text, start):
     a = text.index("```", start) + 3
@@ -41,18 +73,26 @@ def main():
     ap.add_argument("text"); ap.add_argument("--design"); ap.add_argument("--out", required=True)
     ap.add_argument("--memory"); ap.add_argument("--short", action="store_true")
     ap.add_argument("--final", action="store_true", help="마지막 패스: 전문 검수자 5 + 문장·플랫폼 독자(T-065)")
+    ap.add_argument("--flow", action="store_true", help="대화 흐름 검수자 입력만 만든다(1·2회차용, T-069)")
     a = ap.parse_args()
     r = PROMPT.read_text(encoding="utf-8").replace("\r\n", "\n")
     body = pathlib.Path(a.text).read_text(encoding="utf-8").strip()
     design = json.loads(pathlib.Path(a.design).read_text(encoding="utf-8")) if a.design else {}
     out = pathlib.Path(a.out); out.mkdir(parents=True, exist_ok=True)
 
+    if a.flow:
+        keys = SPECIALISTS["대화 흐름"]
+        t = fenced(r, r.index("### 전문 검수자: 대화 흐름"))
+        sub = {k: design[k] for k in keys if k in design}
+        t = t.replace("{대본}", extract_script(body)).replace("{설계서}", json.dumps(sub, ensure_ascii=False, indent=1) if sub else "(없음)")
+        (out / "전문_대화흐름.md").write_text(t, encoding="utf-8", newline="\n")
+        print("만든 파일: 전문_대화흐름.md"); return
     if a.final:
         for name, keys in SPECIALISTS.items():
             t = fenced(r, r.index(f"### 전문 검수자: {name}"))
             sub = {k: design[k] for k in keys if k in design}
-            t = t.replace("{본문}", body).replace("{설계서}", json.dumps(sub, ensure_ascii=False, indent=1) if sub else "(없음)")
-            (out / f"전문_{name}.md").write_text(t, encoding="utf-8", newline="\n")
+            t = t.replace("{본문}", body).replace("{대본}", extract_script(body)).replace("{설계서}", json.dumps(sub, ensure_ascii=False, indent=1) if sub else "(없음)")
+            (out / f"전문_{name.replace(' ', '')}.md").write_text(t, encoding="utf-8", newline="\n")
         i = r.index("### 문장 독자"); pf = r.index("### 플랫폼 독자")
         (out / "문장독자.md").write_text(fenced(r, i).replace("{본문}", body), encoding="utf-8", newline="\n")
         (out / "플랫폼독자.md").write_text(fenced(r, pf).replace("{본문}", body), encoding="utf-8", newline="\n")

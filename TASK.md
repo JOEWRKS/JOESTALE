@@ -2,6 +2,39 @@
 
 닫힌 항목 T-001~T-031은 [TASK-archive.md](TASK-archive.md)로 이동(2026-11-02). 여기에는 열린 항목만 둔다.
 
+## T-071 / 2026-11-18 / 판독 3차 → 채우기 금지(패턴 90 보강): 지적의 기본 처리는 삭제, W5·W17·분량 note는 보고
+
+Roadmap item: (0-2) 후속. 사용자 "문장만 고치지 말고 규칙에서 문제를 파악해서 수정".
+Result: '이번엔 안 눕는다지'와 "숨을 코로만 쉬며 걸었다"의 뿌리는 채우기 — 지적된 독백 자리에 대체 독백(낱말 바꿔치기 포함), note(W5·W17·분량)를 채우려 끼운 동작. principles 90 보강(자리를 채우려고 문장을 짓지 않는다; 기본 처리 삭제; 동의어 바꿔치기도 채우기; 분량은 장면으로), SKILL 4단계 "채우지 않는다", reviewer 처리 규칙 "지적 처리의 기본은 삭제", check_text W5·W17·분량 note 문구를 보고로 바꿈(테스트 ALL OK), decisions 행. 12장: 채우기 줄 넷 삭제, 2,646자(하한 미달 둠), 독백 3, PASS. 떡밥 회수 계획(세라 물음 13장 첫 줄, 로트 번호 16장 황의 바이알·장부 대조, 유진의 칸 1권 말 통보서, 수량 칸 2권 K5)을 design hooks·세부개요·tracking에 적음.
+Changed files: skills/joestale/SKILL.md, references/(principles.md, reviewer-prompt.md, decisions.md), scripts/check_text.py, joestale-work/long-run-test/T-track/(ch12_v2/final.txt·scripts/처치실.txt·design.json·check.final.json, 세부개요_11-25장.md, tracking.json), 보고서, TASK.md, ROADMAP.md.
+Check / target / result: 검증기 PASS, 테스트 ALL OK. note 분량 −354, W5 12연속(둠).
+미처리: 사용자 판독 전. T-068~T-071 커밋 전. 13~25장 옛 본문은 새 11·12장 기준으로 다시 써야 함.
+
+## T-070 / 2026-11-17 / 12장 판독 2차 11건 → 패턴 92(대화 조각의 이유)·90·79 보강, 작성자 통독 재작성
+
+Roadmap item: (0-2) 후속. 사용자 판독 "전체적으로 실망이다".
+Result: 공통 뿌리 셋 — 규칙 피하기(한글 숫자·쪼갠 문장), 검수 지적을 설명·회상·티키타카로 메움, 인물 자리에서 생각 안 함. principles 90 보강(숫자는 숫자로, 이어지는 행동은 한 문장), 92 신설(대화 조각마다 있을 이유: 독자가 알아야/떡밥/꼭 읽히고 싶은 것; 없으면 서술 한 줄·삭제; 지적을 설명으로 메우지 않음), 79 보강(겪은 사람은 남들보다를 묻는다, 수 세기·읽기 중첩 금지); reviewer 대화 흐름 ⑧; decisions 행; SKILL 8~92. 본문: 작성자가 독자로 통독해 11건과 같은 꼴을 고침(세라 입장 둘로, 망우동 회상·황 손가락 삭제, "다른 사람들은 얼마나 걸립니까", 독백 둘 교체, 37.4·38도, 바늘 동안 각인 읽기). 검수자는 띄우지 않음. 최종 2,751자(하한 미달, 채우기 금지)·대사 39·독백 4·PASS.
+Changed files: skills/joestale/SKILL.md, references/(principles.md, reviewer-prompt.md, decisions.md), joestale-work/long-run-test/T-track/ch12_v2/(final.txt, scripts/처치실.txt, design.json, check.final.json), 보고서(판독 2차 절·본문), TASK.md, ROADMAP.md.
+Check / target / result: 검증기 PASS. note 분량 −249, W28 3(없던데/안 와서/싸웠는데 — 입말 꼬리, 둠).
+미처리: 사용자 판독 전. 분량 하한 미달은 판독 뒤 장면을 더할지 결정(채우기 문장으로 메우지 않음). 커밋 전.
+판독 3차(2026-11-18) 3건: '이번엔 안 눕는다지' → '이번엔 바로 돌아간다고 했지'(10장 유진의 말을 되뇜), '숨을 코로만 쉬며' 삭제(뜻 없음), 봉인·번호 떡밥은 "나쁘지 않다, 회수를 잘 해야" → 회수 계획을 ch12_v2/design.json hooks·세부개요 12장·tracking F06b(paid_plan 16)에 적음: 세라의 물음은 13장 첫 줄, 로트 번호는 16장 황의 바이알·장부 대조, 유진의 칸은 1권 말 통보서, 수량 칸은 2권 K5. PASS 유지.
+
+## T-069 / 2026-11-17 / 판독 "더 못 읽겠다" → 대화는 대본으로 먼저(패턴 91), 전문 검수자 '대화 흐름' 신설, 독백 검수자 강화, 12장 처치실 장면 대본 재작성
+
+Roadmap item: (0-2) 후속. 사용자 "서로의 대화가 매끄러운지 / 독백이 상황에 맞고 실제 독백할 법한 말인지를 검수해야", "11장에서 지적한 건 결국 11장에 국한된 해결".
+Result: 원인은 절차: 설계서 줄을 서술 사이에 채우고 지적을 줄 단위로 고침, 검수는 줄과 바로 앞 줄만 봄. 수정: principles 91(대본 먼저, 통독, 서술은 그 뒤; 검수 반영도 대본 재작성), reviewer-prompt 전문 검수자 '대화 흐름'(장면 대본 통독: 화제 전환 까닭·답 없는 질문·사라진 인물·속말 아닌 독백·대사 같은 줄) 신설 + 독백 ① 강화("지우고 실제 속말을 적어 보아 다르면 ×") + 처리 규칙 둘, build_review_inputs 대본 추출(extract_script)·`--flow`·전문_대화흐름.md, SKILL 2단계·5-C 여덟 명, scene-design, decisions 행. 12장: scripts/처치실.txt 대본 → 서술 끼움 → 재검 3명(흐름 ×1·△6, 독백 ×3·△3, 문장 37) → 요지 속말 독백 셋 삭제·교체, 세라 설명 사이 도현 답, 유진 안내 둘로, 정보 넘기는 대사 수정. 최종 2,929자·대사 43·독백 4·PASS. 메모리: fix-the-procedure-not-the-instance.
+Changed files: skills/joestale/SKILL.md, references/(principles.md, reviewer-prompt.md, scene-design.md, decisions.md), scripts/build_review_inputs.py, joestale-work/long-run-test/T-track/ch12_v2/(scripts/처치실.txt, final.txt, final_before_script.txt, design.json, check.final.json, review_in5·review_in_flow, review_out5(+decisions.md)), 보고서(판독 절·본문), TASK.md, ROADMAP.md.
+Check / target / result: 검증기 PASS. note 분량 2,929(−71), W15·W20. 검수 서브에이전트 3회(Sonnet). 전문 대화 흐름 입력의 대본 추출 확인(장면 7).
+미처리: 사용자 판독 전. 옛 ch12/ 보관. 커밋 전. 12장 분량 하한 미달.
+
+## T-068 / 2026-11-17 / 12장 「로트」 첫 판 — 새 양식(move·values·check·전문 검수자 마지막 패스)으로 쓴 첫 장, 검수 4회 전부 처리
+
+Roadmap item: (0-2) 후속. 사용자 "진행해"(12장 새 양식).
+Result: ch12_v2 설계서(세부 개요 12장 + 인물 카드 유진·세라 + ch11_v2 연속성; dialogue_plan은 move·info만, shown_in 핵, scenes.check 8장면 ✓, setting.values·same_as_now) → 초고 → 1회차 10명 55건 → 처치실 장면 재작성 → 2회차 4명 52건 → 마지막 패스 7명 136건(× 7) → 확인 패스 2명. 지적마다 반영/기각 사유(review_out3/decisions.md). 큰 수정: 세라가 먼저 묻고 도현이 짧게 답함(조심하던 사람이 먼저 지르지 않게), 봉인 공정 논리(띠를 병에 두른 뒤 천공 — 롤 천공은 구멍 수를 셀 수 있어 폐기), 망우동·황을 서술 한 줄로 깔고 독백은 '그 창고'로, 손 대목·세라 설명 축소, '물려도·가산·한 사람 피' 삭제, K2는 운전병에게, 세라 의심 한 번, 결미 판돈 = 검수표. 검수 항목 18(독백 자리)을 패턴 78·79에 맞게 갱신. 최종 2,958자·대사 31·독백 6·PASS, 플랫폼 독자 "다음 화 연다"(판돈 약함 지적은 결미 수정으로 처리).
+Changed files: joestale-work/long-run-test/T-track/ch12_v2/(design.json, draft.txt, draft_r1.txt, draft_r2.txt, final.txt, check.*.json, review_in·in2·in3·in4, review_out·out2·out3(+decisions.md)·out4), skills/joestale/references/reviewer-prompt.md(항목 18), joestale-work/reports/12장 첫 판 (새 양식, T-068).md(신규), TASK.md, ROADMAP.md.
+Check / target / result: 검증기 PASS(설계서·앞 장 11개·--draft). note: W15 94%, W20 47%, 분량 −42. 검수 서브에이전트 23회(Sonnet). 전문 검수자 7인 패스에서 × 7건 전부 반영.
+미처리: 사용자 판독 전(수락 관문). 옛 ch12/는 보관(교체는 판독 뒤). 회귀 ch11_v9b 예시 효과 측정은 이 장 판독의 새 줄로. 커밋 전.
+
 ## T-067 / 2026-11-17 / 전문 검수자 회귀 세트(ch11_v9·v9b), score_review 보정, 검수 문구 보강(사람 말 아닌 꼴), VERSION 0.3.0
 
 Roadmap item: (0-2) 후속. 사용자 "진행".

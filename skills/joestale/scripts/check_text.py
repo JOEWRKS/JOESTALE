@@ -406,7 +406,7 @@ def length_note(text, rng):
     n = len(text.replace("\n", "").replace("\r", ""))
     a, b = rng
     if a <= n <= b: return None
-    return f"분량: {n}자 (기준 {a}~{b}자)"
+    return f"분량: {n}자 (기준 {a}~{b}자. 모자라면 장면을 더하지 문장을 더하지 않는다, D2·패턴 90)"
 
 def is_emotion_token(t):
     """R4 감정어 판정. 형용사(VA*)는 어간 접두 일치, 명사(NNG)·어근(XR)은 전체 일치만 — 수직손잡이 "그립"(NNG)이 "그립다" 어간에 걸리지 않게(I-24)."""
@@ -686,7 +686,7 @@ def check(text, design=None, length=None, prev=None, draft_chars=None, draft_den
     for q in unanchored_dialogue_runs(paras, persons):   # W16 발화자 표지
         notes.append(f"W16 대사 3연속인데 앞 서술에 인물 이름이 없음: 「{q[:30]}」 (셋 이상 장면이면 앞뒤 행동으로 발화자를)")
     for q in no_pov_reaction_runs(paras, pov, mono=mono):   # W17 받는 줄
-        notes.append(f"W17 남의 말·사건 3연속에 {pov}의 반응 없음: 「{q[:30]}」부터 (속·판단·몸 한 줄)")
+        notes.append(f"W17 남의 말·사건 3연속에 {pov}의 반응 없음: 「{q[:30]}」부터 (보고다. 그 자리에서 인물이 실제로 하는 것이 바로 떠오를 때만 한 줄, 아니면 둔다 — 패턴 90)")
     for s_ in sents:
         if '"' in s_ or '“' in s_ or s_ in monologued:
             continue
@@ -747,7 +747,7 @@ def check(text, design=None, length=None, prev=None, draft_chars=None, draft_den
         else:
             run += 1; best = max(best, run)
     if best >= 5:
-        notes.append(f"W5 대사·독백 없는 서술문 {best}개 연속 (기준 4개, 사이에 속마음 한 줄이나 대사 한 줄)")
+        notes.append(f"W5 대사·독백 없는 서술문 {best}개 연속 (기준 4개. 보고다 — 채우려고 속말·대사를 짓지 않는다, 패턴 90)")
     for i, p in enumerate(paras, 1):   # W1 묘사 과잉 의심: 문단 5문장 이상 (decisions D2 "문단 4문장 이하")
         n = len(split_sents(p))
         if n >= 5:
