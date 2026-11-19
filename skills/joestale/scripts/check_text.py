@@ -14,7 +14,7 @@
   W14 문단 3문장·140자 초과 note · W15 대사 종결 단조(EF 비율 ≥0.9) note · W16 대사 3연속에 발화자 표지 없음 note · W17 남의 말·사건 3연속에 pov 반응 없음 note · W18 자리만 알리는 문장 note · W19 모름의 보고문 note (T-057)
   W20 서술 문단 박자(20개 이상에서 1문장 문단 < 50% 또는 3문장 이상 > 10%) note · W21 마지막 문단 2문장 이상·70자 초과 note · 박자 문단(1문장·20자 이하)은 R6 면제 (T-058)
   W22 토막 대사(완결 종결 아닌 줄 > 35% 또는 셋 연속) note · W23 생각의 명사화("~인지가/생각이 돌아왔다") note · W24 독백(정당화·-다 셋 연속) note · W25 대비 꼴 셈("A가 아니라 B였다") note · G9 premises[].shown_in 본문 부재 위반 · R4 조연 표정 어절 면제 (T-063)
-  W26 되받기 쌍 둘 이상 note · W27 '그렇-' 사실 답 둘 이상 note · W28 대사 끝 연결어미 셋 이상 note · W29 대사 안 대칭("많이 주면 많이") note · G10 설계서 dialogue_plan 요지 그대로 옮김 note · W24에 "거니까" (T-064)
+  W26 되받기 쌍 둘 이상 note · W27 '그렇-' 사실 답 둘 이상 note · W28 대사 끝 연결어미 셋 이상 note · W29 대사 안 대칭("많이 주면 많이") note · W30 대사 안 인칭 지칭(성 하나·그/그녀·당신) note(패턴 94, T-075) · G10 설계서 dialogue_plan 요지 그대로 옮김 note · W24에 "거니까" (T-064)
   L1 반영 뒤 분량(--draft: 초고 ×1.05를 넘고 밀도도 오르면 위반. 이야기가 늘어 길어진 것은 통과) · W8 내용어 13개 이상 문장 note · W9 대사 안 서술체 종결(-ㄴ다·-는다) note
 목록은 references/lexicon.json. Kiwi 오타 교정은 쓰지 않는다. 띄어쓰기는 보고만.
 """
@@ -478,6 +478,34 @@ def connective_tails(text):
                 break
     return out
 
+PERSON_PRONOUN_PAT = re.compile(r"(?<![가-힣])(그녀[가-힣]{0,2}|그(?:는|가|를|의|에게|한테)|당신[가-힣]{0,2})(?![가-힣])")   # W30 대사 안 3인칭 대명사·'당신'(패턴 94)
+PARTICLE_PAT = r"(?:한테서|한테는|한테도|한테|한텐|에게서|에게는|에게|께서|께|더러|보고|이랑|하고|이야|이|가|은|는|을|를|도|과|와|의|야)"
+
+def person_calls(text, design):
+    """W30 대사·독백 안 인칭 지칭(패턴 94): ① 대장 인물의 성 하나+조사("황한테") ② 3인칭 대명사(그녀·그는·그가·그를) ③ '당신'. 성+직함("황 사장")·이름·관계말은 잡지 않고, 서술은 보지 않는다. note다."""
+    persons = ((design or {}).get("ledger") or {}).get("persons") or []
+    surnames = set()
+    for p_ in persons:
+        p_ = p_.strip()
+        if " " in p_ and len(p_.split()[0]) == 1 and re.fullmatch(r"[가-힣]", p_.split()[0]):
+            surnames.add(p_.split()[0])
+        elif len(p_) >= 3 and re.fullmatch(r"[가-힣]+", p_):
+            surnames.add(p_[0])
+    sur_pat = re.compile(r"(?<![가-힣])(" + "|".join(sorted(surnames)) + r")" + PARTICLE_PAT + r"(?![가-힣])") if surnames else None
+    out = []
+    for q in re.findall(r"[\"“'‘]([^\"”'’]+)[\"”'’]", text):
+        hit = []
+        if sur_pat and sur_pat.search(q):
+            hit.append("성만")
+        m = PERSON_PRONOUN_PAT.search(q)
+        if m:
+            hit.append(m.group(1))
+        if hit:
+            out.append((q.strip(), "·".join(hit)))
+    return out
+
+surname_calls = lambda text, design: [q for q, _ in person_calls(text, design)]   # 호환
+
 def symmetric_dialogue(text):
     """W29 대칭 수사(패턴 87): 한 대사 안에서 같은 낱말이 -면/-니/-고 건너 되풀이("많이 주면 많이")."""
     return [q.strip() for q in re.findall(r'["“]([^"”]+)["”]', text) if SYMM_PAT.search(q)]
@@ -723,6 +751,9 @@ def check(text, design=None, length=None, prev=None, draft_chars=None, draft_den
     ct_ = connective_tails(text)   # W28 대사 끝 연결어미(패턴 87)
     if len(ct_) > TAIL_MAX:
         notes.append(f"W28 대사 끝 연결어미 {len(ct_)}줄(장당 {TAIL_MAX}): " + " / ".join(x[:20] for x in ct_[:5]) + " (둘째 정보는 한 문장으로 잇거나 지운다)")
+    sc_ = person_calls(text, design)   # W30 대사 안 인칭 지칭(패턴 94)
+    if sc_:
+        notes.append(f"W30 대사 안 인칭 지칭 {len(sc_)}줄: " + " / ".join(f"「{x[:18]}」({k})" for x, k in sc_[:5]) + " (성 하나·그/그녀·당신은 번역투. 그 자리의 호칭·이름·관계말로, 패턴 94)")
     for q in symmetric_dialogue(text):   # W29 대칭 수사(패턴 87)
         notes.append(f"W29 대사 안 대칭: 「{q[:30]}」 (작가의 말맛이지 그 자리 사람의 말이 아니다)")
     for g in copied_gists(text, design):   # G10 설계서 요지 옮김(패턴 85)

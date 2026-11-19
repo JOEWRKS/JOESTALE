@@ -2,6 +2,30 @@
 
 닫힌 항목 T-001~T-031은 [TASK-archive.md](TASK-archive.md)로 이동(2026-11-02). 여기에는 열린 항목만 둔다.
 
+## T-075 / 2026-11-19 / 14장 판독 1차 2건 → 패턴 94(대사 호칭·용어 재시드), 항목 40 예외 축소, 전문 대사 ⑧, 검증기 W30, 회귀 세트 ch14_v1
+
+Roadmap item: (0-2) 후속. 사용자 판독 "'손님'이 뭘 말하는지 … 짐작이 안 가는데", "한국이 누가 사람을 성만으로 불러", "다른 건 굳".
+Result: ① '손님'은 1장 은어가 열세 장을 쉰 것 — 항목 40의 terms_introduced 예외가 넓어 문장 독자의 지적을 작성자가 기각. 예외를 '앞 세 장 안에 쓰인 용어'로 좁히고 패턴 94에 재시드 규칙. ② 대사의 '황한테'는 호칭 규칙이 없어 다섯 패스가 지나감 → 패턴 94(대사 안 인칭 지칭: 성 하나·그/그녀·당신은 입말이 아님, 같은 상대는 한 호칭으로), 전문 대사 ⑧, check_text W30(대사·독백 안 대장 인물의 성+조사, 3인칭 대명사, '당신' — note로만; 서술·성+직함·관계말은 안 잡음) + 테스트 일곱. 사용자 "이번 화 전용으로 만들지 말고 인칭 명사도 전체적으로, 과하게 규제하진 말고" 반영. 1~14장 final에 W30 0건(과잉 없음). 회귀 세트 ch14_v1(must_catch 2): 옛 대사 문구 0/1 → W30 1/1, 보강 대사 문구 1/1. 11~13장 final W30 0건. 본문: 손님 단서 한 구절, '황' → '황 사장' 다섯(하나는 회귀 대사 검수자가 잡음, W30에 '한테는' 추가).
+Changed files: skills/joestale/SKILL.md, references/(principles.md, reviewer-prompt.md, decisions.md), scripts/(check_text.py, test_check_text.py), regression/ch14_v1/*, joestale-work/long-run-test/T-track/ch14_v2/(final.txt, final_v1.txt, design.json, check.final.json), 보고서(판독 1차 절·본문), TASK.md, ROADMAP.md.
+Check / target / result: 검증기 PASS 2,164자, 테스트 ALL OK(W30 셋 추가).
+미처리: 사용자 재판독 전. 커밋 전. 1~10장 옛 본문의 대사 성 호칭은 새 11~14장 기준으로 다시 쓸 때 W30이 잡음.
+Required specialist verdict: not applicable.
+Completion boundaries: 재판독 → 수락 시 커밋 → 15장.
+Related issue / knowledge: 패턴 40·75·93·94, T-073·T-074.
+Record handoff gap: none.
+
+## T-074 / 2026-11-19 / 14장 「쪽지」 첫 판(ch14_v2): domain_rules 첫 적용, 검수 다섯 패스
+
+Roadmap item: (0-2) 후속. 사용자 "커밋이랑 푸시하고 다음 작업 ㄱ".
+Result: 설계서에 setting.domain_rules 여섯 줄(통과 시간은 군사보안·총기 불이전·교대와 도착 보고·수당 수치 금지·스마트폰과 차단·총구)을 먼저 적고 대본(scripts/둑길.txt v1~v4) → 서술 → 1·2회차(열한 명) → 마지막 패스(여덟) → 확인 패스(넷) → 마지막 문장 독자. 지적 전부 반영/기각 사유(review_out~out4/decisions.md). 2회차 이치 검수자가 domain_rules를 보고 '찢은 조각을 흙에 둠'을 보안 문제로 잡음(93의 첫 실효). 분량은 장면 둘을 더해도 하한 미달(2,127자) — 문장을 보태지 않음. F12 회수(동생 번호, K15 △), 황의 요구 둘(사수 접촉은 16장, 통과 시간 거절), 02-09, 6만 원 떠안음, 지훈 앞 '없습니다'.
+Changed files: joestale-work/long-run-test/T-track/ch14_v2/(design.json, scripts/*, draft*.txt, final.txt, check.*.json, review_in*/, review_out*/), tracking.json, 세부개요_11-25장.md(14장 회수 계획), 보고서 "14장 첫 판 (쪽지, T-074).md", TASK.md, ROADMAP.md.
+Check / target / result: 검증기 PASS 2,126자(하한 3,000 미달, note), 독백 0. 마지막 문장 독자 26건(B 6·I 0) → 다섯 반영, 하나 기각.
+미처리: 사용자 판독 전. 플랫폼 P4(도현이 숨기는 까닭이 안 보임)·P2 다섯, 문장 B는 기각 사유로 둠. 커밋 전. 15장 이후 개요의 장면 수가 분량에 못 미침 — 개요를 볼 것.
+Required specialist verdict: not applicable.
+Completion boundaries: 판독 → 수락 시 커밋 → 15장.
+Related issue / knowledge: 패턴 85·92·93, T-072·T-073.
+Record handoff gap: none.
+
 ## T-073 / 2026-11-19 / 13장 판독 1차 2건 → 패턴 93(직종의 규칙), setting.domain_rules, 전문 이치 ⑨, 회귀 세트 ch13_v1
 
 Roadmap item: (0-2) 후속. 사용자 판독 "총번 6자리 아님?", "민규한테 총 넘겨서 만져보게 하는 건 군필자 입장에서 팍 식음 — 총기 피탈 방지", "그 외엔 전반적으로 양호하다".
