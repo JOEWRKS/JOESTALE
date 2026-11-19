@@ -2,6 +2,30 @@
 
 닫힌 항목 T-001~T-031은 [TASK-archive.md](TASK-archive.md)로 이동(2026-11-02). 여기에는 열린 항목만 둔다.
 
+## T-073 / 2026-11-19 / 13장 판독 1차 2건 → 패턴 93(직종의 규칙), setting.domain_rules, 전문 이치 ⑨, 회귀 세트 ch13_v1
+
+Roadmap item: (0-2) 후속. 사용자 판독 "총번 6자리 아님?", "민규한테 총 넘겨서 만져보게 하는 건 군필자 입장에서 팍 식음 — 총기 피탈 방지", "그 외엔 전반적으로 양호하다".
+Result: 뿌리는 직종 실무 세부를 쓰는 쪽(지어낸 자릿수, 지적 "탄 없어"를 메우려 넣은 장면)도 검수 쪽(이치 ①~⑧에 직종 규칙 없음)도 안 본 것. principles 93 신설 + 검사법 75~93, scene-design 1-B·design.template `setting.domain_rules`, reviewer 전문 이치 ⑨·항목 49, SKILL 1·2단계·8~93, decisions 행. 회귀 세트 regression/ch13_v1(must_catch 2, 옛 문구 baseline 0/2; 보강 문구 결과는 아래). 13장 본문: 자릿수 삭제, 총 쥐어 보는 장면 삭제(민규의 바람은 눈으로), 둘째 발 뒤 총구 내림(회귀 검수자 A 지적), 대본 v5, design domain_rules 5줄.
+Changed files: skills/joestale/SKILL.md, references/(principles.md, reviewer-prompt.md, scene-design.md, design.template.json, decisions.md), regression/ch13_v1/*, joestale-work/long-run-test/T-track/ch13_v2/(final.txt, final_v1.txt, scripts/행정반.txt·행정반_v4.txt, design.json, check.final.json), 보고서(판독 1차 절·본문), TASK.md, ROADMAP.md.
+Check / target / result: 검증기 PASS 3,095자, 테스트 ALL OK(검증기 미변경). 회귀 ch13_v1: 옛 문구(review_out3 이치) 0/2 → 보강 문구 A 2/2·B 2/2(domain_rules 채움), 대조군(domain_rules 비움) 2/2 — ⑨ 문구만으로도 잡음(예시 효과 아님).
+미처리: 사용자 재판독 전. 커밋 전. 회귀 세트 ch11_v9·v9b는 이치 문구만 바뀌어 다시 돌리지 않음(대사·문장 독자 세트).
+Required specialist verdict: not applicable.
+Completion boundaries: 재판독 → 수락 시 교체·커밋 → 14장.
+Related issue / knowledge: 패턴 84·90·93, T-072.
+Record handoff gap: none.
+
+## T-072 / 2026-11-18 / 13장 「맞바꾼 총」 첫 판(ch13_v2): 대본 먼저 양식의 둘째 장, 검수 여섯 패스
+
+Roadmap item: (0-2) 후속. 사용자 "13장 진행"(12장 판독 통과 뒤).
+Result: 설계서(move형·shown_in 핵·scenes.check·values) → 대본 둘(scripts/검문.txt·행정반.txt v1~v4) → 서술 끼움 → 1·2회차(열한 명) → 마지막 패스(전문 검수자 6 + 두 독자) → 확인 패스 둘 → 마지막 문장 독자. 지적 전부 반영/기각 사유(review_out~out6/decisions.md). 커피값 농은 세 패스 연속 × → 접음(이 장 안에 뜻이 안 섬). 독백 셋 중 둘(요약·바람 선언) 삭제, 12장 회수용 소품(통조림·38) 장치로 잡혀 삭제. F13·F05 심음, 14장 전조(민규의 끊긴 말).
+Changed files: joestale-work/long-run-test/T-track/ch13_v2/(design.json, scripts/*, draft*.txt, final.txt, check.*.json, review_in*/, review_out*/), tracking.json, 세부개요_11-25장.md(13장 회수 계획), 보고서 "13장 첫 판 (대본 먼저, T-072).md", TASK.md, ROADMAP.md.
+Check / target / result: 검증기 PASS 3,178자(3,000~4,500), 대사 41·독백 1. note W5 13연속·W7 '두 발'(둠).
+미처리: 사용자 판독 전. 플랫폼 P2 5·P4 1, 문장 B 3 기각으로 둠. 스킬 파일 변경 없음(절차는 12장 것 그대로 적용). 커밋 전.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 판독 → 수락 시 14장(대본 먼저).
+Related issue / knowledge: 패턴 85~92, T-069~T-071.
+Record handoff gap: none.
+
 ## T-071 / 2026-11-18 / 판독 3차 → 채우기 금지(패턴 90 보강): 지적의 기본 처리는 삭제, W5·W17·분량 note는 보고
 
 Roadmap item: (0-2) 후속. 사용자 "문장만 고치지 말고 규칙에서 문제를 파악해서 수정".
