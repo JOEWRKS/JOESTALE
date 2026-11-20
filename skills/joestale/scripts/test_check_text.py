@@ -282,5 +282,31 @@ expect("G9 shown_in이 본문에 있으면 통과", not any(v["rule"] == "G9" fo
 r = ct.check("도현은 코펠을 받았다.", design=D9)
 expect("G9 shown_in이 본문에 없으면 위반", any(v["rule"] == "G9" for v in r["violations"]))
 
+DT = {"ledger": {"persons": ["도현", "서도현", "유진", "한유진", "정우", "류정우"]}}
+r = ct.check('서도현은 처치대에 앉았다. 한유진이 고개를 들었다.' + chr(10) + chr(10) + '"가세요, 중사님."' + chr(10) + chr(10) + '"네, 반장님하고 같이요."', design=DT)
+expect("W31 안 묶인 호칭 note(중사님·반장님)", any(n.startswith("W31") and "중사님" in n and "반장님" in n for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W31")])[:160])
+r = ct.check('서도현 중사는 처치대에 앉았다. 간호장교 한유진 중위가 고개를 들었다. 복도에서 격리반장 류정우 대위가 유진을 불렀다.' + chr(10) + chr(10) + '"가세요, 중사님."' + chr(10) + chr(10) + '"네, 류 반장님하고 같이요."' + chr(10) + chr(10) + '"중위님이 지키십니까."', design=DT)
+expect("W31 서술에서 묶인 호칭은 통과", not any(n.startswith("W31") for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W31")])[:160])
+r = ct.check('도현은 걸었다.' + chr(10) + chr(10) + '"한 중위님, 가세요."', design=DT)
+expect("W31 대사 안의 성+직책만으로는 안 묶임(서술이 묶어야 함)", any(n.startswith("W31") for n in r["notes"]))
+r = ct.check('"네, 반장님하고 같이요."' + chr(10) + chr(10) + '복도에서 반장 류정우가 유진을 불렀다.', design=DT)
+expect("W31 대사 뒤에 묶인 것은 늦음(note)", any(n.startswith("W31") and "반장님" in n for n in r["notes"]))
+DT2 = {"ledger": {"persons": ["도현", "서도현", "중사님", "중위님"]}}
+r = ct.check('서도현은 걸었다.' + chr(10) + chr(10) + '"가세요, 중사님."', design=DT2)
+expect("W31 대장의 호칭 항목은 이름이 아님", any(n.startswith("W31") and "중사님" in n for n in r["notes"]))
+r = ct.check("지난주 바늘 자리는 멍도 없이 살빛이었다. 지난번 자리보다 한 마디 위였다. 지난주 것도 있었다. 도현은 걸었다.")
+expect("W33 묘사의 지난주·지난번은 안 셈", not any(n.startswith("W33") for n in r["notes"]))
+
+D32 = {"premises": [{"item": "10장 모릅니다", "shown_in": "x"}, {"item": "9장 네 명", "shown_in": "x"}, {"item": "4장 옆 침대", "shown_in": "x"}, {"item": "8장 양식", "shown_in": "x"}]}
+r = ct.check("도현은 걸었다.", design=D32)
+expect("W32 앞 장 전제 넷은 note", any(n.startswith("W32") for n in r["notes"]))
+D32b = {"premises": D32["premises"][:3]}
+r = ct.check("도현은 걸었다.", design=D32b)
+expect("W32 셋은 통과", not any(n.startswith("W32") for n in r["notes"]))
+r = ct.check("열흘 전 퇴실 서류 앞에서 그는 모른다고 했다. 작년 가을에 문자가 왔다. 넉 달 동안 등 뒤에서 잤다. 도현은 걸었다.")
+expect("W33 앞 일 요약문 셋은 note", any(n.startswith("W33") for n in r["notes"]))
+r = ct.check("열흘 전 퇴실 서류 앞에서 그는 모른다고 했다. 도현은 걸었다.")
+expect("W33 하나는 통과", not any(n.startswith("W33") for n in r["notes"]))
+
 print("\n" + ("ALL OK" if not fails else f"FAILED: {fails}"))
 sys.exit(1 if fails else 0)

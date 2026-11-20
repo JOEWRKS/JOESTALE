@@ -2,6 +2,45 @@
 
 닫힌 항목 T-001~T-031은 [TASK-archive.md](TASK-archive.md)로 이동(2026-11-02). 여기에는 열린 항목만 둔다.
 
+## T-078 / 2026-11-20 / 15장 판독 1차 3건 → 패턴 95(장마다 사람·앞 일 다시 세움)·96(질문형 독백), W31~W33, 처리 규칙(앞 장 전제 기각 상한·독백 관문), 회귀 세트 ch15_v1
+
+Roadmap item: (0-2) 후속. 사용자 판독 "중위님이 누구야. 반장은 또 누구지", "짐작해야 하는 게 많아서 혼란스러움", "'P-16은 지금 어디서 자나' 어거지. 살아있는지를 의심해야 하는 단계", "문장만 고치지 말고 규칙을 고치라고 누누이 말함".
+Result: 뿌리 셋이 모두 작성자의 기각 규칙 부재였다. ① 호칭 앵커 규칙 없음 → 패턴 95 ①, 인물 ②, W31(대사의 '~님' 호칭이 그 대사보다 앞 서술에서 대장 이름과 묶였나. 대장의 호칭 항목·대사 안 성+직책은 묶임이 아님). ② '앞 장을 모르는 독자' 지적을 연재 전제로 무제한 기각 → 패턴 95 ②③, 처리 규칙 '앞 장 전제 기각은 셋까지', W32(premises에 앞 장 번호 넷 이상)·W33(앞 일 요약문 셋 이상, 때 표지+보고 서술어). ③ 전문 독백 × 두 패스 연속을 설계 훅으로 기각 → 패턴 96, 전문 독백 ⑧(상황이 먼저 묻는 것), 처리 규칙 '독백 관문'. 테스트 열 추가 ALL OK. 11~15장 final 조사: W31 11장 1·12장 2·13장 1·14장 1·15장 3(과잉 아님, 다음 재판독 때 앵커). 회귀 ch15_v1: 옛 검증기 0/3 → W31·W32. 본문 반영(서도현 중사·간호장교 한유진 중위·격리반장 류정우 대위·'격리반장님', 9장·10장 요약문 삭제, 독백 '살아 있긴 한가') 2,532자 PASS.
+Changed files: skills/joestale/SKILL.md, references/(principles.md, reviewer-prompt.md, decisions.md), scripts/(check_text.py, test_check_text.py), regression/ch15_v1/*, joestale-work/long-run-test/T-track/ch15_v2/(final.txt, final_v1.txt, design.json, scripts/처치실.txt v8, check.final.json), 보고서 15장(판독 1차 절), TASK.md, ROADMAP.md.
+Check / target / result: test_check_text ALL OK. check_text 15장 final PASS, W31~W33 0건. 사용자 재판독 "통과"(2026-11-20).
+Evidence: regression/ch15_v1/README.md, review_out/verifier_notes.md(W31 3·W32 6) vs review_out_baseline(0).
+Limits: W33은 때 표지+보고 서술어 둘이 있어야 세어 15장 옛 본문에서는 2문장(기준 3)으로 안 울림 — W32가 잡는다. 호칭 앵커가 뒤에 오는 경우(12장 '중사님')는 다음 재판독 때. 플랫폼 독자가 넷 패스에서 같은 자리를 짚었는데 기각한 전례(T-062)가 또 반복됨 — 기각 상한을 규칙으로 둔 것이 이번 수정.
+Required specialist verdict: not applicable.
+Completion boundaries: 재판독 통과. 커밋·푸시(T-076~T-078) 대기 → 16장 「빚」.
+Related issue / knowledge: 패턴 79·90·94·95·96, T-062·T-075·T-077.
+Record handoff gap: none.
+
+## T-077 / 2026-11-19 / 15장 「이관 목록」 첫 판(ch15_v2): 보강 개요 → domain_rules 6 → 대본 v1~v7 → 검수 여섯 패스
+
+Roadmap item: (0-2) 후속. 사용자 "15장 집필"(개요 보강 T-076 통과).
+Result: design.json(domain_rules 6: 체온 기록·관찰 뒤 귀대, 완료 확인서, 이관 목록은 보고 문서·남의 기록 안 봄, 인식표 한 줄 셋, 격리반 안 총기 반입 안 함, 수치 금지) → 대본 처치실.txt v1(옛 ch15 문장을 기억에서 옮긴 줄 아홉이 있어 v2로 다시) → 초고 3,039자 PASS → 1회차(11명, 125건+흐름 ×1△5) → r1 2,711 → 2회차(11명, 흐름 ×2△2) → r2 2,749 → 마지막 패스(8명: 대사 △8·독백 ×1·이치 △22·이야기·인물·흐름 ×1△3, 문장 32, 플랫폼 23) → r3 2,666 → 확인 패스(눈 사 ×2·문장 ×2·플랫폼·대사·독백·흐름) → r4 2,611 → 관문 2차(눈 사 ×2·문장 ×2·플랫폼) → r5 2,653 → 마지막 문장 독자 → final 2,630자 PASS. 모든 지적에 반영/기각 사유(review_out~out6/decisions.md). 뿌리 셋: 유진의 설명 턴(인식표·입회·날짜)을 도현의 되묻기로 쪼갬, 지시어(그거·저건·그 뒤)에 이름, P-16 자리에 코·국밥을 깔고 독백은 'P-16은 지금 어디서 자나'. 진짜 오류 둘을 검수가 잡음: 판을 걸었다가 다시 쥠(위치 어긋남), 봉지에 제 줄이 달린 판(같은 줄 규칙과 어긋남). 관문(눈 사 46~48 0, 55 남음 / 문장 B 반영 가능한 것 전부 / 플랫폼 P2·P4는 설계 선택)은 두 번 모두 0은 아니었음.
+Changed files: joestale-work/long-run-test/T-track/ch15_v2/(design.json, scripts/처치실.txt v1~v7, draft*.txt, final.txt, check.*.json, review_in*/, review_out*/decisions.md), 세부개요_11-25장.md(15장 회수 계획), tracking.json(notes), 보고서 "15장 첫 판 (이관 목록, T-077).md", TASK.md, ROADMAP.md.
+Check / target / result: check_text PASS(2,630자, 수식어 0.04, W30 0건, L1·R9 통과). 분량 하한 미달(3,000) — 설명 턴·되받기·중복을 깎은 만큼 줄었고 문장을 보태지 않음(D2·패턴 90). 사용자 판독 대기.
+Evidence: ch15_v2/review_out*/decisions.md, check.final.json, 보고서.
+Limits: 플랫폼 독자 다섯 판 중 마지막 하나가 "다음 화 열겠는가: 아니오"(앞 넷은 예). 같은 자리의 같은 지적(번호를 읽는·적는 까닭, 클립보드 장치, 도현의 속)이 네 패스에서 반복 — 이 장만 읽는 독자와 연재 독자의 눈이 갈리는 자리. 사용자 판독에 맡김. 12장 "운전병에게 맡겨 두었다"는 재판독 때 15장 '차에 둠'과 같이 볼 것.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 판독 → 반영 → 커밋. 16장 「빚」은 그 뒤.
+Related issue / knowledge: 패턴 90·91·93·94, T-074·T-076, F01·F17·K17.
+Record handoff gap: none.
+
+## T-076 / 2026-11-19 / 15장 「이관 목록」 개요 보강(집필 전)
+
+Roadmap item: (0-2) 후속. 사용자 "개요 먼저 보강".
+Result: 세부개요 15장 절을 다시 씀. 분량 배분(3,600: 500/900/800/800/600)과 14장·옛 15장 미달 원인(발단·결말이 서술 몇 줄) 명시, 대기 의자·인식표 걸기·확인서를 장면으로. 직종 규칙 초안 여섯(체온 기록·관찰 뒤 귀대, 완료 확인서 서명, 이관 목록은 보고 문서·남의 기록 안 봄, 인식표 한 줄 두 개, 격리반 안 총기 반입 안 함(12장 전례 ↔ 13장 불이전 — '차에 둠'), 모르는 수치 금지). 호칭 고정(중사님/중위님/한 중위/반장님). 이유 검산 보강(왜 그 줄만 번호, 왜 묻지 않나 두 겹). 대본 교환 7 + 독백 1. 금지 공개에 조기 자격 45일·K5 추가. 유진 wants("스물세 번")·10장 자필 여백 회수.
+Changed files: joestale-work/long-run-test/T-track/세부개요_11-25장.md(15장 절), TASK.md, ROADMAP.md.
+Check / target / result: 문서만. 사용자 판독 대기 → 통과 뒤 design.json(domain_rules 6) → 대본 → 초고.
+Evidence: 세부개요 15장 "보강(T-076)" 문단.
+Limits: 관찰 시간 분 수치는 기획에 없어 유진 대사로만 허용(쓰지 않아도 됨). 총기 '차에 둠'은 12장 문장("운전병에게 맡겨 두었다")과 어감이 달라 12장 재판독 때 같이 볼 것.
+Required specialist verdict: not applicable.
+Completion boundaries: 개요 사용자 통과 → T-077 15장 첫 판.
+Related issue / knowledge: 패턴 90·93·94, T-074·T-075, F01·F17·K17.
+Record handoff gap: none.
+
 ## T-075 / 2026-11-19 / 14장 판독 1차 2건 → 패턴 94(대사 호칭·용어 재시드), 항목 40 예외 축소, 전문 대사 ⑧, 검증기 W30, 회귀 세트 ch14_v1
 
 Roadmap item: (0-2) 후속. 사용자 판독 "'손님'이 뭘 말하는지 … 짐작이 안 가는데", "한국이 누가 사람을 성만으로 불러", "다른 건 굳".

@@ -14,7 +14,7 @@
   W14 문단 3문장·140자 초과 note · W15 대사 종결 단조(EF 비율 ≥0.9) note · W16 대사 3연속에 발화자 표지 없음 note · W17 남의 말·사건 3연속에 pov 반응 없음 note · W18 자리만 알리는 문장 note · W19 모름의 보고문 note (T-057)
   W20 서술 문단 박자(20개 이상에서 1문장 문단 < 50% 또는 3문장 이상 > 10%) note · W21 마지막 문단 2문장 이상·70자 초과 note · 박자 문단(1문장·20자 이하)은 R6 면제 (T-058)
   W22 토막 대사(완결 종결 아닌 줄 > 35% 또는 셋 연속) note · W23 생각의 명사화("~인지가/생각이 돌아왔다") note · W24 독백(정당화·-다 셋 연속) note · W25 대비 꼴 셈("A가 아니라 B였다") note · G9 premises[].shown_in 본문 부재 위반 · R4 조연 표정 어절 면제 (T-063)
-  W26 되받기 쌍 둘 이상 note · W27 '그렇-' 사실 답 둘 이상 note · W28 대사 끝 연결어미 셋 이상 note · W29 대사 안 대칭("많이 주면 많이") note · W30 대사 안 인칭 지칭(성 하나·그/그녀·당신) note(패턴 94, T-075) · G10 설계서 dialogue_plan 요지 그대로 옮김 note · W24에 "거니까" (T-064)
+  W26 되받기 쌍 둘 이상 note · W27 '그렇-' 사실 답 둘 이상 note · W28 대사 끝 연결어미 셋 이상 note · W29 대사 안 대칭("많이 주면 많이") note · W30 대사 안 인칭 지칭(성 하나·그/그녀·당신) note(패턴 94, T-075) · W31 대사의 호칭이 그 장 안에서 사람과 안 묶임 note · W32 앞 장 전제 넷 이상 note · W33 앞 일 요약문 셋 이상 note(패턴 95, T-078) · G10 설계서 dialogue_plan 요지 그대로 옮김 note · W24에 "거니까" (T-064)
   L1 반영 뒤 분량(--draft: 초고 ×1.05를 넘고 밀도도 오르면 위반. 이야기가 늘어 길어진 것은 통과) · W8 내용어 13개 이상 문장 note · W9 대사 안 서술체 종결(-ㄴ다·-는다) note
 목록은 references/lexicon.json. Kiwi 오타 교정은 쓰지 않는다. 띄어쓰기는 보고만.
 """
@@ -506,6 +506,48 @@ def person_calls(text, design):
 
 surname_calls = lambda text, design: [q for q, _ in person_calls(text, design)]   # 호환
 
+TITLE_WORDS = "간호장교|군의관|소대장|대대장|중대장|반장|사장|선생|기사|사수|관측병|통신병|운전병|대위|중위|소위|상사|중사|하사|병장|상병|일병|이병|과장|부장|팀장|원장|교수|박사|형사|경장|순경|이사|대표|주임|실장"
+TITLE_CALL_PAT = re.compile(r"(?<![가-힣])(" + TITLE_WORDS + r")님")   # W31 대사 안 '~님' 호칭(패턴 95)
+RECALL_PAT = re.compile(r"((?:열흘|사흘|나흘|닷새|이틀|보름|일주일|한 달|두 달|석 달|넉 달) 전|지난달|작년|재작년|그날 밤|그때|그 밤|(?:넉 달|석 달|두 달|한 달) 동안)")   # W33 앞 일 요약문(패턴 95): 때 표지
+RECALL_VERB_PAT = re.compile(r"(물었|말했|했다고|하던 말|들었|올렸|왔|갔|받았|썼|적었|잤|살았|했다)")   # + 앞 일을 보고하는 서술어
+RECALL_MAX = 3
+PRIOR_PREMISE_MAX = 3
+
+
+def title_anchors(text, design):
+    """W31 대사의 호칭 앵커(패턴 95): 대사·독백 안에서 '~님'으로 부른 직책·계급(중위님·반장님·중사님)이 그 대사보다 앞의 서술에서 사람과 묶였나. 묶임 = 서술 문장에서 그 직책이 대장 인물의 이름(호칭 항목은 제외)과 8자 안에 함께 있거나("간호장교 한유진 중위", "격리반장 류정우 대위") 성+직책 꼴("한 중위", "류 반장")이 있음. 대사 뒤에 나오는 묶임은 늦다. 안 묶인 호칭을 돌려준다. note다."""
+    persons = ((design or {}).get("ledger") or {}).get("persons") or []
+    title_re = re.compile("(?:" + TITLE_WORDS + ")님?$")
+    names = [p for p in persons if 2 <= len(p) <= 4 and re.fullmatch(r"[가-힣]+", p) and not title_re.search(p)]
+    surnames = {n[0] for n in names if len(n) >= 3}
+    anchored, out = set(), []
+    for s_ in re.split(r"(?<=[.!?])\s+|\n", text):
+        if not s_.strip():
+            continue
+        is_dialogue = '"' in s_ or "“" in s_ or "'" in s_
+        for m in TITLE_CALL_PAT.finditer(s_) if is_dialogue else []:
+            t = m.group(1)
+            if t not in anchored and t + "님" not in out:
+                out.append(t + "님")
+        if is_dialogue:
+            continue
+        for t in re.findall("(?:" + TITLE_WORDS + ")", s_):
+            ti = s_.find(t)
+            if any(n in s_ and abs(s_.find(n) - ti) <= 8 for n in names) or any(re.search(sn + r"\s?" + t, s_) for sn in surnames):
+                anchored.add(t)
+    return out
+
+
+def prior_premises(design):
+    """W32 앞 장 전제 수(패턴 95): premises[].item에 'N장'이 든 것. 셋을 넘으면 note."""
+    out = []
+    for pr in (design or {}).get("premises") or []:
+        it = pr.get("item") or ""
+        if re.search(r"\d+장", it):
+            out.append(it[:24])
+    return out
+
+
 def symmetric_dialogue(text):
     """W29 대칭 수사(패턴 87): 한 대사 안에서 같은 낱말이 -면/-니/-고 건너 되풀이("많이 주면 많이")."""
     return [q.strip() for q in re.findall(r'["“]([^"”]+)["”]', text) if SYMM_PAT.search(q)]
@@ -754,6 +796,15 @@ def check(text, design=None, length=None, prev=None, draft_chars=None, draft_den
     sc_ = person_calls(text, design)   # W30 대사 안 인칭 지칭(패턴 94)
     if sc_:
         notes.append(f"W30 대사 안 인칭 지칭 {len(sc_)}줄: " + " / ".join(f"「{x[:18]}」({k})" for x, k in sc_[:5]) + " (성 하나·그/그녀·당신은 번역투. 그 자리의 호칭·이름·관계말로, 패턴 94)")
+    ta_ = title_anchors(text, design)   # W31 대사의 호칭 앵커(패턴 95)
+    if ta_:
+        notes.append(f"W31 대사의 호칭 {len(ta_)}개가 이 장 안에서 사람과 묶이지 않음: " + ", ".join(ta_) + " (첫 등장 서술에 이름+직책 한 번 — 연재의 장은 따로 읽힌다, 패턴 95)")
+    pp_ = prior_premises(design)   # W32 앞 장 전제 수(패턴 95)
+    if len(pp_) > PRIOR_PREMISE_MAX:
+        notes.append(f"W32 앞 장 전제 {len(pp_)}개(기준 {PRIOR_PREMISE_MAX}): " + " / ".join(pp_[:6]) + " (넷째부터는 이 장 안에서 사람·사건을 세우거나 뺀다. '연재 전제' 기각도 셋까지, 패턴 95)")
+    rc_ = [s_ for s_ in sents if s_ not in spoken and s_ not in monologued and '"' not in s_ and "“" not in s_ and RECALL_PAT.search(s_) and RECALL_VERB_PAT.search(s_)]   # W33 앞 일 요약문(패턴 95)
+    if len(rc_) >= RECALL_MAX:
+        notes.append(f"W33 앞 일을 요약하는 서술 {len(rc_)}문장: " + " / ".join(x[:22] for x in rc_[:5]) + " (관건 선택의 까닭을 앞 장 요약으로 대지 않는다. 이 장의 행동으로, 패턴 95)")
     for q in symmetric_dialogue(text):   # W29 대칭 수사(패턴 87)
         notes.append(f"W29 대사 안 대칭: 「{q[:30]}」 (작가의 말맛이지 그 자리 사람의 말이 아니다)")
     for g in copied_gists(text, design):   # G10 설계서 요지 옮김(패턴 85)
