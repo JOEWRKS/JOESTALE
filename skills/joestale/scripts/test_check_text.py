@@ -291,6 +291,10 @@ r = ct.check('도현은 걸었다.' + chr(10) + chr(10) + '"한 중위님, 가�
 expect("W31 대사 안의 성+직책만으로는 안 묶임(서술이 묶어야 함)", any(n.startswith("W31") for n in r["notes"]))
 r = ct.check('"네, 반장님하고 같이요."' + chr(10) + chr(10) + '복도에서 반장 류정우가 유진을 불렀다.', design=DT)
 expect("W31 대사 뒤에 묶인 것은 늦음(note)", any(n.startswith("W31") and "반장님" in n for n in r["notes"]))
+DT3 = {"pov": "도현", "ledger": {"persons": ["도현", "서도현", "유진", "한유진"]}, "characters": {"유진": {"speech": {"address": "도현에게 '중사님', 정우에게 '반장님'"}}}}
+r = ct.check('서도현은 처치대에 앉았다.' + chr(10) + chr(10) + '"가세요, 중사님."' + chr(10) + chr(10) + '"네, 반장님하고 같이요."', design=DT3)
+expect("W31 시점 인물을 부르는 호칭은 면제(characters.speech.address), 남의 호칭은 그대로", any(n.startswith("W31") and "반장님" in n and "중사님" not in n for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W31")])[:160])
+expect("W31 면제 본문은 W34도 없음", not any(n.startswith("W34") for n in r["notes"]))
 DT2 = {"ledger": {"persons": ["도현", "서도현", "중사님", "중위님"]}}
 r = ct.check('서도현은 걸었다.' + chr(10) + chr(10) + '"가세요, 중사님."', design=DT2)
 expect("W31 대장의 호칭 항목은 이름이 아님", any(n.startswith("W31") and "중사님" in n for n in r["notes"]))
@@ -307,6 +311,22 @@ r = ct.check("열흘 전 퇴실 서류 앞에서 그는 모른다고 했다. 작
 expect("W33 앞 일 요약문 셋은 note", any(n.startswith("W33") for n in r["notes"]))
 r = ct.check("열흘 전 퇴실 서류 앞에서 그는 모른다고 했다. 도현은 걸었다.")
 expect("W33 하나는 통과", not any(n.startswith("W33") for n in r["notes"]))
+
+D34 = {"pov": "도현", "ledger": {"persons": ["도현", "서도현", "서도현 중사", "민규", "박민규"]}}
+r = ct.check("서도현 중사는 총을 병기고에 넣고 나왔다. 거점 문 앞에 관측병 박민규가 서 있었다.", design=D34)
+expect("W34 시점 인물 풀네임+계급 서술은 note", any(n.startswith("W34") and "서도현 중사" in n for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W34")])[:120])
+r = ct.check("서도현은 총을 병기고에 넣고 나왔다. 거점 문 앞에 관측병 박민규가 서 있었다.", design=D34)
+expect("W34 풀네임만(계급 없음)은 통과", not any(n.startswith("W34") for n in r["notes"]))
+r = ct.check("도현은 걸었다." + chr(10) + chr(10) + '"서도현 중사 맞지?"', design=D34)
+expect("W34 대사 안은 안 셈", not any(n.startswith("W34") for n in r["notes"]))
+r = ct.check('"그거 봐 주면 3월 9일까진 그 번호 안 건드려."' + chr(10) + chr(10) + '"검문 시간 못 드립니다."')
+expect("W35 명사+안/못 조사 떼기는 note", any(n.startswith("W35") and "번호 안 건드려" in n for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W35")])[:140])
+r = ct.check('"그 번호는 안 건드린다고 약속하지."' + chr(10) + chr(10) + '"검문 시간은 못 드립니다."' + chr(10) + chr(10) + '"말 한 번 안 해 본 사람 일에 왜 나서나."' + chr(10) + chr(10) + '"나도 못 가렸어. 이제 안 베여. 그거 안 팔아? 주시면 안 돼요? 아직 못 드세요."')
+expect("W35 조사·수량·부사·대명사·-면 뒤는 안 셈", not any(n.startswith("W35") for n in r["notes"]), str([n for n in r["notes"] if n.startswith("W35")])[:140])
+r = ct.check('"그 번호 안 건드린다고 약속하지."')
+expect("W35 안/못 뒤가 이어지면 안 셈", not any(n.startswith("W35") for n in r["notes"]))
+r = ct.check("그 번호 안 건드린다. 검문 시간 못 준다.")
+expect("W35 서술은 안 셈", not any(n.startswith("W35") for n in r["notes"]))
 
 print("\n" + ("ALL OK" if not fails else f"FAILED: {fails}"))
 sys.exit(1 if fails else 0)

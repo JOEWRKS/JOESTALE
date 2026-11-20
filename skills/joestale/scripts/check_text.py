@@ -14,7 +14,7 @@
   W14 문단 3문장·140자 초과 note · W15 대사 종결 단조(EF 비율 ≥0.9) note · W16 대사 3연속에 발화자 표지 없음 note · W17 남의 말·사건 3연속에 pov 반응 없음 note · W18 자리만 알리는 문장 note · W19 모름의 보고문 note (T-057)
   W20 서술 문단 박자(20개 이상에서 1문장 문단 < 50% 또는 3문장 이상 > 10%) note · W21 마지막 문단 2문장 이상·70자 초과 note · 박자 문단(1문장·20자 이하)은 R6 면제 (T-058)
   W22 토막 대사(완결 종결 아닌 줄 > 35% 또는 셋 연속) note · W23 생각의 명사화("~인지가/생각이 돌아왔다") note · W24 독백(정당화·-다 셋 연속) note · W25 대비 꼴 셈("A가 아니라 B였다") note · G9 premises[].shown_in 본문 부재 위반 · R4 조연 표정 어절 면제 (T-063)
-  W26 되받기 쌍 둘 이상 note · W27 '그렇-' 사실 답 둘 이상 note · W28 대사 끝 연결어미 셋 이상 note · W29 대사 안 대칭("많이 주면 많이") note · W30 대사 안 인칭 지칭(성 하나·그/그녀·당신) note(패턴 94, T-075) · W31 대사의 호칭이 그 장 안에서 사람과 안 묶임 note · W32 앞 장 전제 넷 이상 note · W33 앞 일 요약문 셋 이상 note(패턴 95, T-078) · G10 설계서 dialogue_plan 요지 그대로 옮김 note · W24에 "거니까" (T-064)
+  W26 되받기 쌍 둘 이상 note · W27 '그렇-' 사실 답 둘 이상 note · W28 대사 끝 연결어미 셋 이상 note · W29 대사 안 대칭("많이 주면 많이") note · W30 대사 안 인칭 지칭(성 하나·그/그녀·당신) note(패턴 94, T-075) · W31 대사의 호칭이 그 장 안에서 사람과 안 묶임 note(시점 인물을 부르는 호칭은 면제, T-080) · W32 앞 장 전제 넷 이상 note · W33 앞 일 요약문 셋 이상 note(패턴 95, T-078) · W34 서술이 시점 인물을 풀네임+계급으로 부름 note · W35 대사 안 명사+안/못 조사 떼기 note(패턴 97, T-080) · G10 설계서 dialogue_plan 요지 그대로 옮김 note · W24에 "거니까" (T-064)
   L1 반영 뒤 분량(--draft: 초고 ×1.05를 넘고 밀도도 오르면 위반. 이야기가 늘어 길어진 것은 통과) · W8 내용어 13개 이상 문장 note · W9 대사 안 서술체 종결(-ㄴ다·-는다) note
 목록은 references/lexicon.json. Kiwi 오타 교정은 쓰지 않는다. 띄어쓰기는 보고만.
 """
@@ -512,11 +512,52 @@ RECALL_PAT = re.compile(r"((?:열흘|사흘|나흘|닷새|이틀|보름|일주�
 RECALL_VERB_PAT = re.compile(r"(물었|말했|했다고|하던 말|들었|올렸|왔|갔|받았|썼|적었|잤|살았|했다)")   # + 앞 일을 보고하는 서술어
 RECALL_MAX = 3
 PRIOR_PREMISE_MAX = 3
+NEG_DROP_PAT = re.compile(r"([가-힣]{2,}) (안|못) ([가-힣]{1,6})(?=[.!?…]|$)")   # W35 대사 안 명사+안/못(패턴 97): 조사 없이 안/못이 붙고 그 서술어로 문장이 끝나는 꼴("번호 안 건드려."). "안 건드린다고 약속하지"처럼 이어지면 아님
+NEG_DROP_OK_TAIL = "은는이가을를도만에로서께야나며랑와과면까럼지"   # 앞 낱말 끝이 조사면 뗀 것이 아님
+NEG_DROP_COUNTERS = ("번", "개", "명", "시", "분", "날", "달", "해", "살", "잔", "병", "줄", "장", "통", "발", "방", "채", "켤레")   # "한 번 안 해 본"처럼 수량 뒤는 부사구
+NEG_DROP_MAX = 0   # 장당 상한(하나라도 있으면 note)
+NEG_DROP_ADVERBS = ("아직", "이제", "아예", "절대", "다시", "별로", "아무도", "하나도", "전혀", "그거", "그걸", "그건", "이거", "이걸", "저거", "거기", "여기", "지금", "오늘", "내일", "어제", "같이", "진짜", "정말", "너무", "얼마", "거의", "통", "영", "꼭", "잘", "못", "안", "왜", "다")   # 부사·대명사 뒤의 안/못은 입말
+
+def pov_fullname_rank(text, design):
+    """W34 시점 인물 풀네임+계급 서술(패턴 97 ③): 설계서 pov(이름)에 성이 붙은 대장 인물("서도현")이 서술(대사 밖)에서 직책·계급과 붙어 나오면("서도현 중사는") 그 꼴을 돌려준다. 호칭 앵커(95 ①)는 남의 호칭에 두는 것이고 시점 인물은 연재가 부르던 대로 쓴다. note다."""
+    pov = (design or {}).get("pov")
+    if not isinstance(pov, str) or not pov:
+        return []
+    persons = ((design or {}).get("ledger") or {}).get("persons") or []
+    fulls = [p for p in persons if isinstance(p, str) and p != pov and " " not in p and p.endswith(pov) and 1 <= len(p) - len(pov) <= 2]
+    if not fulls:
+        return []
+    narr = strip_quotes(text)
+    out = []
+    for f in fulls:
+        for m in re.finditer(re.escape(f) + r" ?(" + TITLE_WORDS + r")(?=[은는이가도의 ,.])", narr):
+            out.append(m.group(0))
+    return out
+
+def neg_drops(text):
+    """W35 대사 안 명사+안/못 조사 떼기(패턴 97 ②): 큰따옴표 대사 안에서 두 글자 이상 낱말 뒤에 조사 없이 안/못이 붙고 그 서술어로 문장이 끝나는 꼴("그 번호 안 건드려."). "안 건드린다고 약속하지"처럼 말이 이어지면 세지 않는다. 앞 낱말 끝이 조사·수량 단위면 세지 않는다. 꼴 목록을 돌려준다."""
+    out = []
+    for m_ in DIALOG_PAT.finditer(text):
+        q = m_.group(1)
+        for m in NEG_DROP_PAT.finditer(q):
+            w = m.group(1)
+            if w[-1] in NEG_DROP_OK_TAIL or w.endswith(NEG_DROP_COUNTERS) or w in NEG_DROP_ADVERBS or w.endswith(NEG_DROP_ADVERBS):
+                continue
+            out.append(q[max(0, m.start() - 4):m.end() + 6].strip())
+    return out
 
 
 def title_anchors(text, design):
-    """W31 대사의 호칭 앵커(패턴 95): 대사·독백 안에서 '~님'으로 부른 직책·계급(중위님·반장님·중사님)이 그 대사보다 앞의 서술에서 사람과 묶였나. 묶임 = 서술 문장에서 그 직책이 대장 인물의 이름(호칭 항목은 제외)과 8자 안에 함께 있거나("간호장교 한유진 중위", "격리반장 류정우 대위") 성+직책 꼴("한 중위", "류 반장")이 있음. 대사 뒤에 나오는 묶임은 늦다. 안 묶인 호칭을 돌려준다. note다."""
+    """W31 대사의 호칭 앵커(패턴 95): 대사·독백 안에서 '~님'으로 부른 직책·계급(중위님·반장님)이 그 대사보다 앞의 서술에서 사람과 묶였나. 묶임 = 서술 문장에서 그 직책이 대장 인물의 이름(호칭 항목은 제외)과 8자 안에 함께 있거나("간호장교 한유진 중위", "격리반장 류정우 대위") 성+직책 꼴("한 중위", "류 반장")이 있음. 대사 뒤에 나오는 묶임은 늦다. 시점 인물을 부르는 호칭(설계서 characters[].speech.address에 "<pov>에게 '중사님'"으로 적힌 것)은 면제한다 — 시점 인물은 서술이 소개하지 않는다(패턴 97 ③, W34). 안 묶인 호칭을 돌려준다. note다."""
     persons = ((design or {}).get("ledger") or {}).get("persons") or []
+    pov = (design or {}).get("pov")
+    pov_titles = set()
+    if isinstance(pov, str) and pov:
+        for c in ((design or {}).get("characters") or {}).values():
+            addr = ((c or {}).get("speech") or {}).get("address") if isinstance(c, dict) else None
+            if isinstance(addr, str):
+                for m in re.finditer(re.escape(pov) + r"에게([^.;,]*)", addr):
+                    pov_titles.update(re.findall("(" + TITLE_WORDS + ")님", m.group(1)))
     title_re = re.compile("(?:" + TITLE_WORDS + ")님?$")
     names = [p for p in persons if 2 <= len(p) <= 4 and re.fullmatch(r"[가-힣]+", p) and not title_re.search(p)]
     surnames = {n[0] for n in names if len(n) >= 3}
@@ -527,6 +568,8 @@ def title_anchors(text, design):
         is_dialogue = '"' in s_ or "“" in s_ or "'" in s_
         for m in TITLE_CALL_PAT.finditer(s_) if is_dialogue else []:
             t = m.group(1)
+            if t in pov_titles:
+                continue
             if t not in anchored and t + "님" not in out:
                 out.append(t + "님")
         if is_dialogue:
@@ -799,6 +842,12 @@ def check(text, design=None, length=None, prev=None, draft_chars=None, draft_den
     ta_ = title_anchors(text, design)   # W31 대사의 호칭 앵커(패턴 95)
     if ta_:
         notes.append(f"W31 대사의 호칭 {len(ta_)}개가 이 장 안에서 사람과 묶이지 않음: " + ", ".join(ta_) + " (첫 등장 서술에 이름+직책 한 번 — 연재의 장은 따로 읽힌다, 패턴 95)")
+    pf_ = pov_fullname_rank(text, design)   # W34 시점 인물 풀네임+계급(패턴 97)
+    if pf_:
+        notes.append(f"W34 서술이 시점 인물을 풀네임+계급으로 부름 {len(pf_)}곳: " + ", ".join(pf_[:4]) + " (호칭 앵커는 남의 호칭에. 시점 인물은 연재가 부르던 대로 — 자기소개가 된다, 패턴 97)")
+    nd_ = neg_drops(text)   # W35 대사 안 명사+안/못 조사 떼기(패턴 97)
+    if len(nd_) > NEG_DROP_MAX:
+        notes.append(f"W35 대사 안 조사를 뗀 안/못 {len(nd_)}곳: " + " / ".join(f"「{x}」" for x in nd_[:5]) + " (약속·거절·조건은 그 일의 서술어로 — 안 건드린다고 약속하지, 패턴 97)")
     pp_ = prior_premises(design)   # W32 앞 장 전제 수(패턴 95)
     if len(pp_) > PRIOR_PREMISE_MAX:
         notes.append(f"W32 앞 장 전제 {len(pp_)}개(기준 {PRIOR_PREMISE_MAX}): " + " / ".join(pp_[:6]) + " (넷째부터는 이 장 안에서 사람·사건을 세우거나 뺀다. '연재 전제' 기각도 셋까지, 패턴 95)")

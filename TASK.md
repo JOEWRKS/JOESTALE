@@ -2,6 +2,28 @@
 
 닫힌 항목 T-001~T-031은 [TASK-archive.md](TASK-archive.md)로 이동(2026-11-02). 여기에는 열린 항목만 둔다.
 
+## T-080 / 2026-11-20 / 16장 판독 1차 5건 → 패턴 97(대사는 그 자리의 일·건·조건을 집어 말함), W34·W35, 처리 규칙(말투 지적 기각 금지·shown_in·호칭 앵커는 남의 호칭에), 회귀 세트 ch16_v1
+
+Roadmap item: (0-2) 후속. 사용자 판독 "갑자기 풀네임을 본문에서 불러버리니 이상하잖아", "병 보는 건 … 뭘 했는지 명확히 쓰지", "말 두 가지가 아니라 제안 두 가지 또는 알아오라고 시킨 건", "안 건드린다고 약속하지. 이런 식으로 쓰는 게 자연스러운 거 아니냐", "자연스럽게 사람이 할 만한 말을 해 제발".
+Result: 다섯 중 넷은 검수자(마지막 문장 독자 10, 문장 독자 a 15·b 11, 눈 사 b 55 ×2)가 짚은 것을 작성자가 '황의 입말'·'삼키는 사람'·shown_in 구절로 기각한 것 — 말투 지적을 인물의 결로 기각한 꼴. 하나는 패턴 95 ①(호칭 앵커)을 시점 인물에 적용한 과적용(1~14장 "서도현은" → 15·16장 "서도현 중사는"). 패턴 97 ①~③ + 기각 금지 셋, 전문 대사 ⑧·⑨, 처리 규칙 셋(T-080), 검증기 W34(시점 인물 풀네임+계급 서술)·W35(대사 안 명사+안/못으로 끝나는 꼴; 조사·수량·부사·대명사·-면 뒤, 이어지는 말은 제외), 회귀 세트 regression/ch16_v1(검증기 2·대사 3; 옛 검증기 1/2 → 새 2/2). 본문 다섯 자리 반영, 2,169자 PASS, W31~W35 0건. **재판독 통과(2026-11-21 "지금 쓴건 통과").** 같은 날 사용자 "15장도 같이 고쳐" → 15장 final 첫 문장 "서도현 중사는" → "서도현은"(앞 판 final_v2.txt); 그러자 W31이 '중사님'을 잡아(95 ①과 97 ③의 충돌) W31이 시점 인물을 부르는 호칭(characters[].speech.address의 "<pov>에게 '~님'")을 면제하도록 고침, 95 ①의 예 "서도현 중사" 삭제. 15장 2,529자 PASS, W31~W35 0건.
+Changed files: skills/joestale/SKILL.md, references/(principles.md 97행·검사법 75~97, reviewer-prompt.md 전문 대사 ⑧·⑨·처리 규칙 셋, decisions.md), scripts/(check_text.py W34·W35, test_check_text.py), regression/ch16_v1/*, T-track/ch16_v2/(final.txt, final_v1.txt, design.json, scripts/창고.txt v8, check.final.json), 보고서 16장(판독 1차 절), TASK.md, ROADMAP.md.
+Check / target / result: test_check_text ALL OK(W31 면제 테스트 둘 추가). 1~15장 final 조사: W35 0건(초기 판은 "아직 못 드세요"·"그거 안 팔아" 같은 입말을 잡아 부사·대명사·-면·이어지는 말을 제외), W34는 15장 final 1건 → 수정해 0건. 16장 재판독 통과.
+Evidence: regression/ch16_v1/README.md, review_out/verifier_notes.md vs review_out_baseline.
+Limits: W35는 문장 끝 꼴만 잡는다(사용자 지적의 핵심은 전보 종결). 포괄 낱말(①)은 검증기로 못 잡고 전문 대사 ⑧이 본다 — 회귀 T03·T04는 대사 lens. 플랫폼 '다음 화 아니오'·분량 하한은 이번 판독에 안 올라 그대로.
+Required specialist verdict: not applicable.
+Completion boundaries: 16장 재판독 통과, 15장 수정 반영. 커밋 전(T-079·T-080).
+
+## T-079 / 2026-11-20 / 16장 「빚」 첫 판(ch16_v2) — 패턴 95·96·W31~W33 적용 첫 장
+
+Roadmap item: (0-2) 후속. 사용자 "커밋·푸시 후 16장".
+Result: design.json(domain_rules 5, 앞 장 전제 셋 5·14·12장 + shown_in, 호칭 앵커) → 대본 창고.txt v1~v7 → 초고 2,379 → 1·2회차 → 마지막 패스 → 확인 패스(독백 × 두 패스 연속 → 삭제) → 관문 2차 → 마지막 문장 독자 한 번. 최종 2,148자 PASS, W31~W33 0건. 심음: F18(6만 원이 돌아옴), 유예 03-09·호출 조건, 셋째 병 H29-0111-C(F06b 전조), 황이 둘째 병을 못 가림, 통과 시간 거절. 가을 이름은 이 장에서 안 나옴(17장 앵커).
+Changed files: joestale-work/long-run-test/T-track/ch16_v2/(design.json, scripts/창고.txt v1~v7, draft~draft_r6, final.txt, check.*.json, review_in~in6, review_out~out6/decisions.md), 보고서 「16장 첫 판 (빚, T-079).md」, 세부개요_11-25장.md(16장 회수 계획), tracking.json(notes), TASK.md, ROADMAP.md.
+Check / target / result: check_text final PASS(2,148자, 하한 3,000 미달). 관문 두 번 모두 미달(눈 사 1·1, 문장 B 6·5, 플랫폼 P2 4·P4 2). 플랫폼 독자 '다음 화 아니오' ×2(마지막 둘). 마지막 문장 독자 '끝까지 읽음 예'.
+Evidence: review_out5/decisions.md, review_out6/decisions.md, check.final.json.
+Limits: 분량이 15장보다 더 줄었다(한 자리 한 상대의 장 둘 연속 하한 미달) — 하한을 장별로 둘지 사용자 판단. 플랫폼 '아니오'의 뿌리(도현이 왜 나서나·번호가 무엇인가)는 앞 장 전제 셋 상한과 삼키는 사람의 결 사이에 있어 규칙끼리 부딛힘 — 판독에서 어느 쪽을 풀지 묻는다. 대본 v6 사본 누락.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 판독 대기. 커밋 전(T-079).
+
 ## T-078 / 2026-11-20 / 15장 판독 1차 3건 → 패턴 95(장마다 사람·앞 일 다시 세움)·96(질문형 독백), W31~W33, 처리 규칙(앞 장 전제 기각 상한·독백 관문), 회귀 세트 ch15_v1
 
 Roadmap item: (0-2) 후속. 사용자 판독 "중위님이 누구야. 반장은 또 누구지", "짐작해야 하는 게 많아서 혼란스러움", "'P-16은 지금 어디서 자나' 어거지. 살아있는지를 의심해야 하는 단계", "문장만 고치지 말고 규칙을 고치라고 누누이 말함".
