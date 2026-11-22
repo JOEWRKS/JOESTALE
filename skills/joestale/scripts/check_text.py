@@ -14,7 +14,7 @@
   W14 문단 3문장·140자 초과 note · W15 대사 종결 단조(EF 비율 ≥0.9) note · W16 대사 3연속에 발화자 표지 없음 note · W17 남의 말·사건 3연속에 pov 반응 없음 note · W18 자리만 알리는 문장 note · W19 모름의 보고문 note (T-057)
   W20 서술 문단 박자(20개 이상에서 1문장 문단 < 50% 또는 3문장 이상 > 10%) note · W21 마지막 문단 2문장 이상·70자 초과 note · 박자 문단(1문장·20자 이하)은 R6 면제 (T-058)
   W22 토막 대사(완결 종결 아닌 줄 > 35% 또는 셋 연속) note · W23 생각의 명사화("~인지가/생각이 돌아왔다") note · W24 독백(정당화·-다 셋 연속) note · W25 대비 꼴 셈("A가 아니라 B였다") note · G9 premises[].shown_in 본문 부재 위반 · R4 조연 표정 어절 면제 (T-063)
-  W26 되받기 쌍 둘 이상 note · W27 '그렇-' 사실 답 둘 이상 note · W28 대사 끝 연결어미 셋 이상 note · W29 대사 안 대칭("많이 주면 많이") note · W30 대사 안 인칭 지칭(성 하나·그/그녀·당신) note(패턴 94, T-075) · W31 대사의 호칭이 그 장 안에서 사람과 안 묶임 note(시점 인물을 부르는 호칭은 면제, T-080) · W32 앞 장 전제 넷 이상 note · W33 앞 일 요약문 셋 이상 note(패턴 95, T-078) · W34 서술이 시점 인물을 풀네임+계급으로 부름 note · W35 대사 안 명사+안/못 조사 떼기 note(패턴 97, T-080) · G10 설계서 dialogue_plan 요지 그대로 옮김 note · W24에 "거니까" (T-064)
+  W26 되받기 쌍 둘 이상 note · W27 '그렇-' 사실 답 둘 이상 note · W28 대사 끝 연결어미 셋 이상 note · W29 대사 안 대칭("많이 주면 많이") note · W30 대사 안 인칭 지칭(성 하나·그/그녀·당신) note(패턴 94, T-075) · W31 대사의 호칭이 그 장 안에서 사람과 안 묶임 note(시점 인물을 부르는 호칭은 면제, T-080) · W32 앞 장 전제 넷 이상 note · W33 앞 일 요약문 셋 이상 note(패턴 95, T-078) · W34 서술이 시점 인물을 풀네임+계급으로 부름 note · W35 대사 안 명사+안/못 조사 떼기 note(패턴 97, T-080) · W36 사다리 물음(앞뒤가 다른 사람의 대사인 짧은 '가서요/그래서요' 꼴) note · W37 대사 풀이 어미('-는 겁니다/-는 거예요') 셋 이상 note · W38 대사 안 '명사+일' 포괄 지칭 note(패턴 97 ④·98, T-082) · G10 설계서 dialogue_plan 요지 그대로 옮김 note · W24에 "거니까" (T-064)
   L1 반영 뒤 분량(--draft: 초고 ×1.05를 넘고 밀도도 오르면 위반. 이야기가 늘어 길어진 것은 통과) · W8 내용어 13개 이상 문장 note · W9 대사 안 서술체 종결(-ㄴ다·-는다) note
 목록은 references/lexicon.json. Kiwi 오타 교정은 쓰지 않는다. 띄어쓰기는 보고만.
 """
@@ -546,6 +546,48 @@ def neg_drops(text):
             out.append(q[max(0, m.start() - 4):m.end() + 6].strip())
     return out
 
+LADDER_PAT = re.compile(r"^(그래서|그러고|그러면|그럼|가서|와서|누가|언제까지|언제|어디서|왜|뭘|무슨|그다음에?|다음에?|그리고|그런데)[가-힣 ]{0,8}(요|죠|데요|는데요|나요|까요|가요)[.?]?$")   # W36 사다리 물음(패턴 98): 다음 사실을 끌어내려고 둔 짧은 되물음
+LADDER_MAX = 0
+EXPLAIN_PAT = re.compile(r"[가-힣]는 (겁니다|거예요|거야|거요)(?=[.!…]|$)")   # W37 풀이 어미(패턴 97 ④): 제 행동을 가르치듯 푸는 평서의 '-는 겁니다'("점만 찍는 겁니다"). 물음("뭘 보시는 거예요?")과 과거 관형형("찍은 겁니다")은 세지 않는다
+EXPLAIN_MAX = 1
+NOUN_IL_PAT = re.compile(r"(?<![가-힣])([가-힣]{2,4}) 일(로|을|은|이|도|에|이라|이에요|입니다|이면|이니)(?=[ .!?,]|$)")   # W38 '명사+일' 포괄 지칭(패턴 97 ①): "번호 일", "유예 일"
+NOUN_IL_OK = ("무슨", "어떤", "그런", "이런", "저런", "다른", "좋은", "나쁜", "급한", "바쁜", "작은", "남의", "우리", "회사", "집안", "농사", "오늘", "내일", "어제", "이번", "다음", "지난", "주말", "평일", "하는", "하실", "되는", "없는", "있는", "힘든", "쉬운", "궂은", "큰일", "잔일", "뒷일", "옛일", "별일", "헛일", "할일", "온일", "볼일", "큰", "할", "볼", "한", "온", "간", "갈", "올", "안", "못", "잘", "첫", "모든", "온갖", "같은", "여러", "그날", "그때", "이날", "온종일", "하루", "밭일", "집일", "군일", "일일", "사람", "남의", "자네", "당신", "제", "내", "네", "저희")
+
+def ladder_questions(text):
+    """W36 사다리 물음(패턴 98): 대사 세 줄이 잇따르는 자리에서 가운데 줄이 '가서요/그래서요/누가요' 꼴의 짧은 되물음이면 — 다음 사실을 끌어내려고 둔 물음일 가능성. 한 턴에 사실이 둘이라 나눌 때 상대에게 물음을 만들어 주면 생긴다. 가운데 줄들을 돌려준다. note다."""
+    paras = [l.strip() for l in text.split("\n") if l.strip()]
+    def dlg(x):
+        return x[:1] in '"“' and x[-1:] in '"”.?!…'
+    out = []
+    for i in range(1, len(paras) - 1):
+        a, b, c = paras[i - 1], paras[i], paras[i + 1]
+        if dlg(a) and dlg(b) and dlg(c):
+            core = b.strip('"“”')
+            if len(core) <= 12 and LADDER_PAT.match(core):
+                out.append(b)
+    return out
+
+def explain_endings(text):
+    """W37 풀이 어미(패턴 97 ④): 큰따옴표 대사 안에서 '-는/-ㄴ 겁니다·거예요·거야'로 끝나는 꼴. 제 행동·사정을 상대에게 가르치듯 푸는 어미라 셋을 넘으면 note."""
+    out = []
+    for m_ in DIALOG_PAT.finditer(text):
+        q = m_.group(1)
+        for m in EXPLAIN_PAT.finditer(q):
+            out.append(q[max(0, m.start() - 10):m.end()].strip())
+    return out
+
+def noun_il(text):
+    """W38 '명사+일' 포괄 지칭(패턴 97 ①): 대사 안에서 "번호 일로", "유예 일을"처럼 '일'이 사건·건·부탁을 대신하는 꼴. 그 일의 낱말로 집어 말한다. note다."""
+    out = []
+    for m_ in DIALOG_PAT.finditer(text):
+        q = m_.group(1)
+        for m in NOUN_IL_PAT.finditer(q):
+            w = m.group(1)
+            if w in NOUN_IL_OK or w[-1] in "은는이가을를의도만에서" or w.endswith(("하는", "되는", "있는", "없는", "오는", "가는", "큰", "한", "할", "볼")):
+                continue
+            out.append(q[max(0, m.start() - 4):m.end() + 4].strip())
+    return out
+
 
 def title_anchors(text, design):
     """W31 대사의 호칭 앵커(패턴 95): 대사·독백 안에서 '~님'으로 부른 직책·계급(중위님·반장님)이 그 대사보다 앞의 서술에서 사람과 묶였나. 묶임 = 서술 문장에서 그 직책이 대장 인물의 이름(호칭 항목은 제외)과 8자 안에 함께 있거나("간호장교 한유진 중위", "격리반장 류정우 대위") 성+직책 꼴("한 중위", "류 반장")이 있음. 대사 뒤에 나오는 묶임은 늦다. 시점 인물을 부르는 호칭(설계서 characters[].speech.address에 "<pov>에게 '중사님'"으로 적힌 것)은 면제한다 — 시점 인물은 서술이 소개하지 않는다(패턴 97 ③, W34). 안 묶인 호칭을 돌려준다. note다."""
@@ -848,6 +890,15 @@ def check(text, design=None, length=None, prev=None, draft_chars=None, draft_den
     nd_ = neg_drops(text)   # W35 대사 안 명사+안/못 조사 떼기(패턴 97)
     if len(nd_) > NEG_DROP_MAX:
         notes.append(f"W35 대사 안 조사를 뗀 안/못 {len(nd_)}곳: " + " / ".join(f"「{x}」" for x in nd_[:5]) + " (약속·거절·조건은 그 일의 서술어로 — 안 건드린다고 약속하지, 패턴 97)")
+    lq_ = ladder_questions(text)
+    if len(lq_) > LADDER_MAX:
+        notes.append(f"W36 사다리 물음 {len(lq_)}곳: " + ", ".join(lq_[:4]) + " (한 턴을 나눌 때 상대에게 다음 사실을 끌어내는 되물음을 만들어 주지 않는다 — 같은 사람이 숨을 끊고 잇거나 상대의 몸·태도 한 줄이 사이에 선다, 패턴 98)")
+    ee_ = explain_endings(text)
+    if len(ee_) > EXPLAIN_MAX:
+        notes.append(f"W37 대사 풀이 어미(-는 겁니다/-는 거예요) {len(ee_)}곳: " + ", ".join("「" + x + "」" for x in ee_[:4]) + " (제 행동을 가르치듯 푸는 어미 — 한 행동은 그 서술어로 끝낸다: 적었습니다·안 적었습니다, 패턴 97 ④)")
+    ni_ = noun_il(text)
+    if ni_:
+        notes.append(f"W38 대사 안 '명사+일' 포괄 지칭 {len(ni_)}곳: " + ", ".join("「" + x + "」" for x in ni_[:4]) + " ('일'이 사건·건·부탁을 대신한다 — 그 일의 낱말로: 번호를 쥔 건, 유예, 부탁, 패턴 97 ①)")
     pp_ = prior_premises(design)   # W32 앞 장 전제 수(패턴 95)
     if len(pp_) > PRIOR_PREMISE_MAX:
         notes.append(f"W32 앞 장 전제 {len(pp_)}개(기준 {PRIOR_PREMISE_MAX}): " + " / ".join(pp_[:6]) + " (넷째부터는 이 장 안에서 사람·사건을 세우거나 뺀다. '연재 전제' 기각도 셋까지, 패턴 95)")

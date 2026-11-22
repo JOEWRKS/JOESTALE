@@ -2,6 +2,50 @@
 
 닫힌 항목 T-001~T-031은 [TASK-archive.md](TASK-archive.md)로 이동(2026-11-02). 여기에는 열린 항목만 둔다.
 
+## T-084 / 2026-11-23 / 17장 통과 기록 + 패턴 100 "어투는 어미가 아니라 말로 하는 일" — speech.endings → with_words·heard, 입말 통독에 구별 판정 추가
+
+Roadmap item: (0-2) 후속. 사용자 "대화가 훨씬 매끄러워졌다. 이제 캐릭터성에 맞는 어투를 구사하게 하면 좀 규칙이 뭉개지거나 지시가 과해질 수 있나?" → 합의: 어미 규칙이 아니라 말로 하는 일로. "재판독 끝내고 ㄱ".
+Result: 17장 통과 기록(보고서·TASK T-083). 위험의 자리를 짚음 — 13~17장 `speech.endings`가 '짧은 사실 문장', '짧게 묻고 짧게 답한다'로 퇴화해 진술서·인터뷰 결을 설계서가 먼저 주문했다(11장 '농담 끝에 챙기는 말'·'-지로 흥정'은 맞는 꼴). 패턴 100: speech에 길이·어미 목록을 적지 않고 말로 하는 일 두세 줄(`with_words`)과 들려주는 샘플 셋(`heard`)만; 한 인물 세 줄·특정 어미 쓰라/말라는 과함; 검증기 어투 정규식 없음; 입말 통독에 둘째 판정 '이름 가리고 들어도 누가 말하는지 아는가'(구별 ○△×) 추가, △·×는 어미가 아니라 with_words를 고쳐 장면을 다시 말함. 17장 설계서 speech 넷을 새 꼴로 고쳐 씀(본문 불변).
+Changed files: skills/joestale/references/principles.md(100행, 86행 참조, 검사법 75~100), reviewer-prompt.md(입말 통독 둘째 판정·표·처리 규칙), scene-design.md(speech 규격), SKILL.md(2·5-B단계), decisions.md(100행), T-track/ch17_v2/design.json(speech 넷, assumptions), 보고서 17장(판독 결과), TASK.md, ROADMAP.md, 메모리 dialogue-unit-is-exchange.
+Check / target / result: test_check_text OK(W31은 speech.address만 읽음 — 불변). build_review_inputs --speech가 새 표(구별 열)로 입말통독.md를 만드는지 ch17로 확인.
+Evidence: ch17_v2/design.json characters[].speech(전·후는 regression/ch17_v1/design.json에 옛 꼴), principles 100행.
+Limits: 구별 판정은 18장에서 처음 실행 — 판정의 결이 사용자 판독과 맞는지는 18장 판독으로 확인. 11~16장 설계서의 endings는 그대로 둔다(본문 통과 뒤). 분량 하한 미달(15~17장) 그대로.
+Required specialist verdict: not applicable.
+Completion boundaries: 커밋 전(T-081~T-084). 다음: 18장 「떡국」.
+
+## T-083 / 2026-11-22 / 17장 판독 2차 "로봇 말투" → 대사 생성·검수 단위를 줄에서 교환·장면으로(패턴 99), 입말 통독 검수 신설(--speech), 대사 패스 상한 셋, 17장 세 장면 대사를 통째로 다시 말함
+
+Roadmap item: (0-2) 후속. 사용자 판독 "로봇이냐? 뭔 말투가 자폐아같네", "소대장이 그러더군요. 가 더 자연스럽지 않겠냐", "원래는 안되죠. 가 맞지 않냐", "행위 하나하나 짚지 말라고", "자꾸 문장 하나하나만 신경쓰니까 이상한 문장들이 자꾸 보이잖아. 내가 하나하나 짚어줘야돼? 문장을 생성하고 검수하는 방법부터 바꾸라고".
+Result: 다섯 자리 전부 T-082 반영에서 W37·X3를 피하려 낱말을 바꾼 자리("가려 주는 겁니다 → 가려 줍니다", "깜박이고 → 반짝하고", "그랬습니다 → 말이 그렇습니다", "안 됩니다 → 안 되는 일입니다"). 밑의 뿌리는 대사를 move 목록으로 한 줄씩 짓고 일곱 패스의 줄 지적을 줄마다 고쳐 끼운 방식 — 규칙들이 함께 끌어당기는 꼴(한 줄 한 사실·완결 종결·군말 없음)로 수렴. 검수자들이 진술서·안내문·인터뷰·로봇이라 여섯 패스 짚었고 '삼키는 사람'으로 기각했다. 수정: 패턴 99(대본은 장면을 통째로 말하고 규칙은 뒤에 대조; 대사 지적은 교환 단위, 장면에 셋 이상·두 패스 연속이면 장면 대본 다시; 대사 패스 셋까지; 검증기를 피한 낱말 바꿈은 결함), SKILL 2·4·5-B단계, 처리 규칙 T-083, 새 검수 "입말 통독"(reviewer-prompt 절 + build_review_inputs --speech → 입말통독.md: 장면마다 사람 말로 들리나 하나만 판정, 결 여섯 가지, 다시 말할 범위), decisions 97·98·99 행, 메모리 dialogue-unit-is-exchange. 17장: 대본 v8로 세 장면 대사를 처음부터 다시 말함(final_v2.txt 보관). 2,806자 PASS. 입말 통독 1차: 1차 ○△△×△○△ → 2차 ○○△×△○△ → 3차 ○○△△△○○(상한 셋, × 없음; 3·4 인터뷰 결 남음 — review_out9/decisions.md).
+Changed files: skills/joestale/SKILL.md(2·4·5-B단계), references/(principles.md 99행·검사법 75~99, reviewer-prompt.md 입말 통독 절·처리 규칙, decisions.md 97·98·99행), scripts/build_review_inputs.py(--speech), T-track/ch17_v2/(final.txt, final_v2.txt, scripts/야적장.txt v8·v7 복원, design.json, review_in7·review_out7, check.final.json), 보고서 17장(판독 2차 절), TASK.md, ROADMAP.md, 메모리.
+Check / target / result: 검증기 PASS, W31~W38 0, X3 note 셋(흔한 구절 — 둠). 입말 통독 결과는 review_out7/입말통독.md. 사용자 재판독 대기.
+Evidence: review_out7/입말통독.md, scripts/야적장_v7.txt(줄 고침 방식의 마지막 판) vs 야적장.txt(v8, 통째로).
+Limits: 입말 통독은 이번이 첫 실행 — 판정의 결이 사용자 판독과 맞는지는 재판독으로 확인. 교환 단위 재작성이 16장 이전 본문에는 적용되지 않았다. 분량 하한 미달 그대로. T-082 patch가 SKILL.md에서 멎어 decisions 97 행이 빠졌던 것을 이번에 넣었고, 사본 둘(final_v2·대본 v7)을 덮어써 보고서·v6에서 복원했다.
+Required specialist verdict: not applicable.
+Completion boundaries: 2026-11-23 사용자 통과. 커밋 전(T-081~T-084).
+
+## T-082 / 2026-11-21 / 17장 판독 1차 4건 → 패턴 97 ①④ 보강·98(사다리 물음), W36~W38, collect_examples.py(검수 예시 → user_examples → X3), 회귀 세트 ch17_v1
+
+Roadmap item: (0-2) 후속. 사용자 판독 "대화 교류가 좀 어색한데"(가서 뭘 하셨는데요), "그 번호 일? 정확히 무슨 사건을 언급하는건데", "이건 누구 가르치는 문장인데?"(점만 찍는 겁니다), "무슨 뜻인지 모르겠어"(점이 안쪽으로 들어갔다).
+Result: 넷 다 검수자가 앞 패스에서 짚은 것 — ① 한 턴 과적 지적을 받아 턴을 나누며 상대의 사다리 물음을 만들고, 토막 지적을 받자 늘려 둠(흐름 ③ 두 패스 기각) ② 패턴 97 ① 포괄 낱말 목록에 '일'이 없음 ③ 풀이 어미(-는 겁니다)에 규칙 없음 → 내용만 바꾸고 어미는 둠 ④ 문장 독자의 "계산해야 한다" 지적을 검수자의 고친 문장으로 바꿔 옮김(검수 예시를 user_examples에 모으지 않아 X3 침묵). 패턴 97 ① '일·얘기'·④ 풀이 어미, 패턴 98 사다리 물음(나뉜 둘째 사실은 같은 사람이 숨을 끊어 잇거나 상대의 몸 한 줄), 처리 규칙 셋(T-082), 전문 대사 ⑩, 검증기 W36(앞뒤가 대사인 짧은 되물음)·W37(평서 '-는 겁니다' 둘 이상)·W38('명사+일'), scripts/collect_examples.py(문장 독자 고친 문장에서 원문에 없는 12자 이상 토막 → design.user_examples, --reset). 17장 설계서에 토막 87 모음 → X3가 final_v1에서 21곳 검출(낱말 바꿈 빼고 열다섯 문장 옮김) → 전부 제 말로. 네 자리 반영. 2,599자 PASS, W31~W38·X3 0건.
+Changed files: skills/joestale/SKILL.md, references/(principles.md 97·98행·검사법 75~98, reviewer-prompt.md 전문 대사 ⑩·처리 규칙 셋, decisions.md), scripts/(check_text.py W36~W38, test_check_text.py, collect_examples.py 신설), regression/ch17_v1/*, T-track/ch17_v2/(final.txt, final_v1.txt, design.json user_examples 87·assumptions, scripts/야적장.txt v7, check.final.json), 보고서 17장(판독 1차 절), TASK.md, ROADMAP.md.
+Check / target / result: test_check_text ALL OK(W36 ×3, W37 ×2, W38 ×3 추가). 1~16장 final 조사: W36 0, W38 0(초기 판은 16장 "사람 일"을 잡아 예외 추가), W37은 7장 1건(유진의 설명 — 둠; 초기 판은 물음·과거 관형형까지 잡아 평서 '-는'으로 좁힘). collect_examples 초기 판은 원문까지 모아 X3가 본문 전체를 잡음 → 원문에 없는 12자 이상 토막만. 회귀 ch17_v1 옛 0/4 → 새 4/4. 사용자 재판독 대기.
+Evidence: regression/ch17_v1/README.md, review_out/verifier_notes.md vs review_out_baseline.
+Limits: W36은 앞뒤가 대사인 짧은 되물음 꼴만 잡는다(사이에 서술이 있으면 못 잡음 — 대화 흐름 ③이 본다). W37은 평서 '-는 겁니다'만(간호장교의 설명처럼 그 사람의 일인 풀이도 잡힘, 전문 대사 ⑩이 가름). X3는 8자 창이라 "안주머니에 넣었다" 같은 흔한 구절도 걸릴 수 있다 — note. 분량 하한 미달은 그대로.
+Required specialist verdict: not applicable.
+Completion boundaries: 재판독 대기. 커밋 전(T-081·T-082).
+
+## T-081 / 2026-11-21 / 17장 「지도」 첫 판(ch17_v2) — 패턴 97·W34·W35·W31 면제 적용 첫 장, 대본 v1~v6, 검수 일곱 패스, 2,583자 PASS(하한 미달 보고)
+
+Roadmap item: (0-2) 11~25장 연장 — 17장. 사용자 "커밋·푸시 후 17장".
+Result: design.json(domain_rules 7: 보급 호송·지도/좌표·보고와 차단·간헐 통신·물류 기사·회복자 연락 고리·수치 금지, 앞 장 전제 셋 3·5·16장, K15 금지) → 대본 scripts/야적장.txt v1~v6 → 초고 2,964 → 1회차(눈 가~아+문장+플랫폼+흐름, 134건) → 2회차(117건) → 마지막 패스(전문 여섯+문장·플랫폼, 97건) → 확인 패스(눈 사 ×2·문장 ×2·플랫폼·대사, 90건) → 관문 2차(37건, 뒤로가기 없음 두 번 연속) → 마지막 문장 독자(21건, 열 곳 반영). 최종 2,583자 PASS, W31~W35 0건. 뿌리 지적: 자기소개·설명 대사, 앞 장 인물 이름만 끌어옴(민규), 독백의 대상 없음 → 삭제, 유예 한 턴 과적 → 두 턴, 1.5km·축척은 도현이 먼저·가을이 격자에 손톱을 견줌, 지도→번호 고리를 가을의 물음("이 불빛이 그 번호 쪽이라는 거예요?")과 도현의 "모릅니다. 자리만 압니다"로, 끝 약속은 서술어 갖춤(패턴 97 ②). 기각의 축: 삼키는 사람(속말·까닭 보태기)은 말할 내용의 기각, 말투 지적은 전부 반영(T-080 처리 규칙).
+Changed files: T-track/ch17_v2/(design.json, scripts/야적장.txt v1~v6, draft.txt, draft_r1~r6, final.txt, check.*.json, review_in~in6, review_out~out6 + decisions.md ×6, prev.txt), tracking.json(notes·terms_introduced), 세부개요_11-25장.md(17장 회수 계획), 보고서 17장, TASK.md, ROADMAP.md.
+Check / target / result: 검증기 PASS, W31~W35 0건. 플랫폼 독자 "다음 화" 여섯 패스 전부 예, "뒤로가기 자리" 확인 패스부터 없음. 하한 3,000 미달(2,583) — 15·16·17장 세 장 연속. 사용자 판독 대기.
+Evidence: ch17_v2/review_out*/decisions.md, check.final.json, 보고서 17장 수치표.
+Limits: 플랫폼 P5(주인공의 속)·P4(응원할 이유)는 여섯 패스 내내 남음(삼키는 사람의 결과 맞서는 지적 — 말할 내용의 기각). 분량 하한은 지적의 결("지우라")과 맞서 세 장 연속 미달 — 하한 재검토 후보. 가을의 호칭 "사수님"은 황의 말에 묶었으나 독자에게 낯섦.
+Required specialist verdict: not applicable.
+Completion boundaries: 사용자 판독 대기. 커밋 전(T-081).
+
 ## T-080 / 2026-11-20 / 16장 판독 1차 5건 → 패턴 97(대사는 그 자리의 일·건·조건을 집어 말함), W34·W35, 처리 규칙(말투 지적 기각 금지·shown_in·호칭 앵커는 남의 호칭에), 회귀 세트 ch16_v1
 
 Roadmap item: (0-2) 후속. 사용자 판독 "갑자기 풀네임을 본문에서 불러버리니 이상하잖아", "병 보는 건 … 뭘 했는지 명확히 쓰지", "말 두 가지가 아니라 제안 두 가지 또는 알아오라고 시킨 건", "안 건드린다고 약속하지. 이런 식으로 쓰는 게 자연스러운 거 아니냐", "자연스럽게 사람이 할 만한 말을 해 제발".

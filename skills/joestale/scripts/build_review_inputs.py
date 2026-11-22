@@ -6,6 +6,7 @@ python build_review_inputs.py final.txt --design design.json --out review_in/ [-
 만드는 것: 눈_가.md ~ 눈_아.md (항목 검수, 눈마다 항목과 설계서 블록만), 문장독자.md, 플랫폼독자.md, (--memory가 있으면) 연결독자.md.
 --final은 마지막 패스용: 전문_대사·독백·이치·이야기·인물.md + 문장독자.md + 플랫폼독자.md (T-065).
 전문_대화흐름.md는 대사·독백만 뽑은 장면 대본을 준다(T-069). 1회차에도 --flow 로 그것만 만들 수 있다.
+--speech는 입말 통독(장면 단위 '사람 말로 들리나' 판정, T-083) 입력만 만든다.
 검수자마다 파일 하나만 주면 된다. --short는 1,000자 미만 글용으로 가·다·마 세 눈만 만든다.
 """
 import argparse, json, pathlib, re
@@ -74,12 +75,18 @@ def main():
     ap.add_argument("--memory"); ap.add_argument("--short", action="store_true")
     ap.add_argument("--final", action="store_true", help="마지막 패스: 전문 검수자 5 + 문장·플랫폼 독자(T-065)")
     ap.add_argument("--flow", action="store_true", help="대화 흐름 검수자 입력만 만든다(1·2회차용, T-069)")
+    ap.add_argument("--speech", action="store_true", help="입말 통독 입력만 만든다(대사만 뽑은 대본, 장면 단위 판정, T-083)")
     a = ap.parse_args()
     r = PROMPT.read_text(encoding="utf-8").replace("\r\n", "\n")
     body = pathlib.Path(a.text).read_text(encoding="utf-8").strip()
     design = json.loads(pathlib.Path(a.design).read_text(encoding="utf-8")) if a.design else {}
     out = pathlib.Path(a.out); out.mkdir(parents=True, exist_ok=True)
 
+    if a.speech:
+        t = fenced(r, r.index("### 입말 통독"))
+        t = t.replace("{대본}", extract_script(body))
+        (out / "입말통독.md").write_text(t, encoding="utf-8", newline="\n")
+        print("만든 파일: 입말통독.md"); return
     if a.flow:
         keys = SPECIALISTS["대화 흐름"]
         t = fenced(r, r.index("### 전문 검수자: 대화 흐름"))
