@@ -1,0 +1,1 @@
+../ch01/final.txt ../ch02/final.txt ../ch03/final.txt ../ch04/final.txt ../ch05/final.txt ../ch06/final.txt ../ch07/final.txt ../ch08/final.txt ../ch09/final.txt ../ch10/final.txt ../ch11_v2/final.txt ../ch12_v2/final.txt ../ch13_v2/final.txt ../ch14_v2/final.txt ../ch15_v2/final.txt ../ch16_v2/final.txt ../ch17_v2/final.txt 

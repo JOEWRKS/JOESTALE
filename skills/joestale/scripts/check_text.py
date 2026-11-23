@@ -14,7 +14,7 @@
   W14 문단 3문장·140자 초과 note · W15 대사 종결 단조(EF 비율 ≥0.9) note · W16 대사 3연속에 발화자 표지 없음 note · W17 남의 말·사건 3연속에 pov 반응 없음 note · W18 자리만 알리는 문장 note · W19 모름의 보고문 note (T-057)
   W20 서술 문단 박자(20개 이상에서 1문장 문단 < 50% 또는 3문장 이상 > 10%) note · W21 마지막 문단 2문장 이상·70자 초과 note · 박자 문단(1문장·20자 이하)은 R6 면제 (T-058)
   W22 토막 대사(완결 종결 아닌 줄 > 35% 또는 셋 연속) note · W23 생각의 명사화("~인지가/생각이 돌아왔다") note · W24 독백(정당화·-다 셋 연속) note · W25 대비 꼴 셈("A가 아니라 B였다") note · G9 premises[].shown_in 본문 부재 위반 · R4 조연 표정 어절 면제 (T-063)
-  W26 되받기 쌍 둘 이상 note · W27 '그렇-' 사실 답 둘 이상 note · W28 대사 끝 연결어미 셋 이상 note · W29 대사 안 대칭("많이 주면 많이") note · W30 대사 안 인칭 지칭(성 하나·그/그녀·당신) note(패턴 94, T-075) · W31 대사의 호칭이 그 장 안에서 사람과 안 묶임 note(시점 인물을 부르는 호칭은 면제, T-080) · W32 앞 장 전제 넷 이상 note · W33 앞 일 요약문 셋 이상 note(패턴 95, T-078) · W34 서술이 시점 인물을 풀네임+계급으로 부름 note · W35 대사 안 명사+안/못 조사 떼기 note(패턴 97, T-080) · W36 사다리 물음(앞뒤가 다른 사람의 대사인 짧은 '가서요/그래서요' 꼴) note · W37 대사 풀이 어미('-는 겁니다/-는 거예요') 셋 이상 note · W38 대사 안 '명사+일' 포괄 지칭 note(패턴 97 ④·98, T-082) · G10 설계서 dialogue_plan 요지 그대로 옮김 note · W24에 "거니까" (T-064)
+  W26 되받기 쌍 둘 이상 note · W27 '그렇-' 사실 답 둘 이상 note · W28 대사 끝 연결어미 셋 이상 note · W29 대사 안 대칭("많이 주면 많이") note · W30 대사 안 인칭 지칭(성 하나·그/그녀·당신) note(패턴 94, T-075) · W31 대사의 호칭이 그 장 안에서 사람과 안 묶임 note(시점 인물을 부르는 호칭은 면제, T-080) · W32 앞 장 전제 넷 이상 note · W33 앞 일 요약문 셋 이상 note(패턴 95, T-078) · W34 서술이 시점 인물을 풀네임+계급으로 부름 note · W35 대사 안 명사+안/못 조사 떼기 note(패턴 97, T-080) · W36 사다리 물음(앞뒤가 다른 사람의 대사인 짧은 '가서요/그래서요' 꼴) note · W37 대사 풀이 어미('-는 겁니다/-는 거예요') 셋 이상 note · W38 대사 안 '명사+일' 포괄 지칭 note(패턴 97 ④·98, T-082) · W39 설계서가 사실을 대사에 배정(premises.shown_in 구절이 따옴표 안 / plants.inside·hooks.payoff에 '대사·턴·입으로') note · W40 대사가 행동 중계('여긴 내가 치워' — 1인칭+반말 현재형) note(패턴 101·97 ②, T-086) · W41 대사 종결 어절 되풀이(같은 마지막 어절이 한 장에 셋 이상 — '먹어' 다섯) note(패턴 100, T-087) · W42 수치 하나로 끝나는 대사가 그 앞 서술에 없음('10분이야.', '서른다섯.' — 아는 것을 가리키는 수치) note(패턴 102, T-088) · G10 설계서 dialogue_plan 요지 그대로 옮김 note · W24에 "거니까" (T-064)
   L1 반영 뒤 분량(--draft: 초고 ×1.05를 넘고 밀도도 오르면 위반. 이야기가 늘어 길어진 것은 통과) · W8 내용어 13개 이상 문장 note · W9 대사 안 서술체 종결(-ㄴ다·-는다) note
 목록은 references/lexicon.json. Kiwi 오타 교정은 쓰지 않는다. 띄어쓰기는 보고만.
 """
@@ -589,6 +589,94 @@ def noun_il(text):
     return out
 
 
+ACTION_RELAY_TAIL = re.compile(r"(어|아|워|해|가|봐|줘|놔|둬|서)$")   # W40 행동 중계 어미(패턴 97 ②·101): 1인칭 주어 뒤 반말 현재형 — 사람은 약속·제안을 -ㄹ게·-자·-ㄹ까로 한다
+ACTION_RELAY_SKIP = re.compile(r"(었|았|겠|였|셨|웠|렸|났|왔|갔|했|됐|봤|줬|넜|섰|탔|잤|샀|썼)[어아]$|^(알아|몰라|맞아|좋아|싫어|괜찮아|같아|있어|없어|아니야|돼|되)$")
+
+
+def action_relay(text):
+    """W40 행동 중계(패턴 101·97 ②): 대사 안에서 '내가/제가/나는/저는 + … + -어/-아.' 꼴 — "여긴 내가 치워", "내가 가". 행동을 지문처럼 중계하는 말이다. 약속·제안이면 '-ㄹ게·-자·-ㄹ까'로, 과거 보고('내가 갔어')·상태('나는 몰라')는 세지 않는다. note다."""
+    out = []
+    for m_ in DIALOG_PAT.finditer(text):
+        q = m_.group(1)
+        for sent in re.split(r"[.!?…]\s*", q):
+            sent = sent.strip()
+            m = re.match(r"^(?:여긴|여기는|이건|그건|그럼|그러면|오늘은|이번엔|이번에는)?\s*(내가|제가|나는|저는)\s+([가-힣 ]{1,16})$", sent)
+            if not m:
+                continue
+            w = m.group(2).split()[-1]
+            if not ACTION_RELAY_TAIL.search(w) or ACTION_RELAY_SKIP.search(w) or len(w) < 2:
+                continue
+            out.append(sent)
+    return out
+
+
+def facts_assigned_to_dialogue(text, design):
+    """W39 설계서가 사실을 대사에 배정(패턴 101): ① premises[].shown_in 구절이 따옴표 대사 안에 있으면(전제를 대사로 깔았다) ② plants[].inside·hooks[].payoff·planning_ref.first_terms에 '대사·턴·입으로·말로'가 있으면(설계서가 사실을 대사에 배정했다). note다."""
+    out = []
+    if not isinstance(design, dict):
+        return out
+    quotes = [m.group(1) for m in DIALOG_PAT.finditer(text)]
+    for pr in design.get("premises") or []:
+        si = (pr or {}).get("shown_in") if isinstance(pr, dict) else None
+        if si and any(si in q for q in quotes):
+            out.append(f"전제 '{si}'가 대사 안")
+    for pl in design.get("plants") or []:
+        ins = (pl or {}).get("inside", "") if isinstance(pl, dict) else ""
+        if re.search(r"대사|턴|입으로|말로", ins or ""):
+            out.append(f"plants '{(pl.get('fact') or '')[:18]}' → {ins[:24]}")
+    return out
+
+
+TAIL_REPEAT_MAX = 2
+TAIL_REPEAT_OK = ("예", "네", "아니요", "아닙니다", "아니", "그래", "그렇죠", "알아요", "알겠습니다", "고맙습니다", "모릅니다", "몰라요", "몰라", "맞습니다", "맞아요", "됐어", "됐습니다", "거예요", "겁니다", "거야", "거요", "돼요", "됩니다", "있어요", "없어요", "있습니다", "없습니다", "그래요", "아니에요", "아니야", "그렇습니다", "그러니까", "그래서", "왜요", "뭐예요", "예요", "이에요", "입니다", "합니다", "해요")   # 문법 어미만 남는 꼴은 입버릇이 아니라 세지 않는다
+
+
+def tail_repeats(text):
+    """W41 대사 종결 어절 되풀이(패턴 100): 큰따옴표 대사의 문장마다 마지막 어절(문장부호 뗀 것)을 세어 같은 어절이 TAIL_REPEAT_MAX를 넘으면 돌려준다. 인물표 heard 샘플('먹어')을 화제 닫는 만능 답으로 되풀이하는 작성자의 버릇을 잡는다. 예/아니요·인사는 세지 않는다. note다."""
+    cnt = {}
+    for m_ in DIALOG_PAT.finditer(text):
+        for sent in re.split(r"[.!?…]+\s*", m_.group(1)):
+            w = sent.strip().split()
+            if not w:
+                continue
+            t = re.sub(r"[^가-힣]", "", w[-1])
+            if len(t) < 2 or t in TAIL_REPEAT_OK:
+                continue
+            cnt[t] = cnt.get(t, 0) + 1
+    return [(t, n) for t, n in cnt.items() if n > TAIL_REPEAT_MAX]
+
+
+NUM_TOKEN = r"(?:\d+(?:분의 \d+|[.,]\d+)?\s?(?:분|시간|시|번|발|개|명|동|되|줄|년|월|일|주|km|m|kg|%|원|도)?|(?:하나|둘|셋|넷|다섯|여섯|일곱|여덟|아홉|열|스물|서른|마흔|쉰|예순|백|천|만|한|두|세|네)(?:\s?(?:분|시간|번|발|개|명|동|되|줄|밤|달|해|주|시))?)"
+NUM_SENTENCE = re.compile(r"^(?:들어와|가자|앉아|그래|예|아니)?[,.]?\s*(" + NUM_TOKEN + r")\s?(?:이야|이에요|예요|입니다|이고요|요|이다|야|이네요|네요|이지|이면|이지요|이군)?$")   # W42: 수치가 문장 전부인 대사 — '10분이야', '서른다섯', '13시 20분' (아는 것을 가리키는 수치)
+NUM_OK = ("하나", "둘", "셋", "넷", "한 번", "두 번", "세 번", "예", "한 명", "두 명")
+
+
+def numbers_unanchored(text):
+    """W42 독자가 모르는 수치를 대사가 가리킨다(패턴 102): 대사 문장이 수치 하나로 끝나는 꼴('10분이야.', '서른다섯.')인데 그 수치가 앞 서술(따옴표 밖)에 한 번도 없으면 돌려준다. 말하는 사람과 듣는 사람만 아는 수치는 독자에게 아무것도 가리키지 않는다. 인물이 새로 알려 주는 수치('3월 9일까지 미뤄 놨어')는 세지 않는다. note다."""
+    out = []
+    narr_before = []
+    pos = 0
+    for m_ in DIALOG_PAT.finditer(text):
+        narr_before.append(text[pos:m_.start()])
+        pos = m_.end()
+        narr = re.sub(r"\s+", "", "".join(narr_before))
+        q = m_.group(1)
+        for sent in re.split(r"[.!?…]+(?=\s|$)", q):   # 소수점(37.4)은 안 가른다
+            sent = sent.strip()
+            m = NUM_SENTENCE.match(sent)
+            if not m:
+                continue
+            tok = m.group(1).strip()
+            if tok in NUM_OK:
+                continue
+            key = re.sub(r"\s+", "", tok)
+            digits = re.sub(r"\D", "", key)
+            if key in narr or (digits and len(digits) >= 2 and digits in narr):
+                continue
+            out.append(f"「{sent}」")
+    return out
+
+
 def title_anchors(text, design):
     """W31 대사의 호칭 앵커(패턴 95): 대사·독백 안에서 '~님'으로 부른 직책·계급(중위님·반장님)이 그 대사보다 앞의 서술에서 사람과 묶였나. 묶임 = 서술 문장에서 그 직책이 대장 인물의 이름(호칭 항목은 제외)과 8자 안에 함께 있거나("간호장교 한유진 중위", "격리반장 류정우 대위") 성+직책 꼴("한 중위", "류 반장")이 있음. 대사 뒤에 나오는 묶임은 늦다. 시점 인물을 부르는 호칭(설계서 characters[].speech.address에 "<pov>에게 '중사님'"으로 적힌 것)은 면제한다 — 시점 인물은 서술이 소개하지 않는다(패턴 97 ③, W34). 안 묶인 호칭을 돌려준다. note다."""
     persons = ((design or {}).get("ledger") or {}).get("persons") or []
@@ -899,6 +987,18 @@ def check(text, design=None, length=None, prev=None, draft_chars=None, draft_den
     ni_ = noun_il(text)
     if ni_:
         notes.append(f"W38 대사 안 '명사+일' 포괄 지칭 {len(ni_)}곳: " + ", ".join("「" + x + "」" for x in ni_[:4]) + " ('일'이 사건·건·부탁을 대신한다 — 그 일의 낱말로: 번호를 쥔 건, 유예, 부탁, 패턴 97 ①)")
+    ar_ = action_relay(text)   # W40 행동 중계(패턴 101·97 ②)
+    if ar_:
+        notes.append(f"W40 대사가 행동을 중계 {len(ar_)}곳: " + ", ".join("「" + x + "」" for x in ar_[:4]) + " (1인칭+반말 현재형은 지문이다 — 약속·제안은 -ㄹ게·-자·-ㄹ까로: 내가 치울게, 패턴 101·97 ②)")
+    nu_ = numbers_unanchored(text)   # W42 독자가 모르는 수치(패턴 102)
+    if nu_:
+        notes.append(f"W42 수치만인 대사가 앞 서술에 없음 {len(nu_)}곳: " + ", ".join(nu_[:4]) + " (말하는 사람과 듣는 사람만 아는 수치 — 그 대사 앞 서술이 사물·수치를 이름으로 세운다, 패턴 102)")
+    tr_ = tail_repeats(text)   # W41 대사 종결 어절 되풀이(패턴 100)
+    if tr_:
+        notes.append("W41 대사 종결 어절 되풀이: " + ", ".join(f"'{t}' {n}회" for t, n in tr_[:4]) + " (인물표 heard 샘플을 화제 닫는 만능 답으로 쓰고 있다 — 한 장에 한 번, 나머지는 그 자리에서 그 사람이 하려는 다른 말로, 패턴 100)")
+    fa_ = facts_assigned_to_dialogue(text, design)   # W39 설계서가 사실을 대사에 배정(패턴 101)
+    if fa_:
+        notes.append(f"W39 설계서가 사실을 대사에 배정 {len(fa_)}곳: " + ", ".join(fa_[:4]) + " (전제·훅·첫 등장 용어는 사물·서술·행동에 둔다. 대사가 짐 목록을 들고 들어가면 몇 번 다시 말해도 설명이 된다, 패턴 101)")
     pp_ = prior_premises(design)   # W32 앞 장 전제 수(패턴 95)
     if len(pp_) > PRIOR_PREMISE_MAX:
         notes.append(f"W32 앞 장 전제 {len(pp_)}개(기준 {PRIOR_PREMISE_MAX}): " + " / ".join(pp_[:6]) + " (넷째부터는 이 장 안에서 사람·사건을 세우거나 뺀다. '연재 전제' 기각도 셋까지, 패턴 95)")

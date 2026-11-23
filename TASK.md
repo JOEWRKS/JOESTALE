@@ -2,6 +2,61 @@
 
 닫힌 항목 T-001~T-031은 [TASK-archive.md](TASK-archive.md)로 이동(2026-11-02). 여기에는 열린 항목만 둔다.
 
+## T-089 / 2026-11-23 / 기각의 기준(패턴 103) — '보태라'만 기각, '읽히지 않는다'는 기각 없음, 두 눈 일치 기각 없음, 기각 사유 금지 목록
+
+Roadmap item: (0-2) 후속. 사용자 "기각 기준 먼저".
+Result: 17·18장 판독 열여덟 자리 전부가 검수가 먼저 짚고 작성자가 '삼키는 사람'·'전제 앵커'·'훅 설계'·'입버릇'으로 기각한 자리. 지적을 두 종류로 가름 — ① 보태라(속말·까닭·감정·설명·다짐): 결·금지 공개·훅 셋을 사유로 기각 가능 ② 읽히지 않는다(뜻·지시 대상·화자·입말·되풀이·어긋남): 사유 불문 기각 없음, 반영은 옮기기·펴기·지우기. 두 눈 일치 기각 없음. 기각마다 decisions에 문장·사유. 판독에 걸린 사유는 금지 목록(reviewer-prompt 처리 규칙 머리). 한 패스 기각 과반이면 설계서 수정. 메모리 review-rejection-criterion.
+Changed files: skills/joestale/references/principles.md(103행·검사법 75~103), reviewer-prompt.md('기각의 기준' 절 + 금지 목록), SKILL.md(5단계), decisions.md(103행), TASK.md, ROADMAP.md, 메모리.
+Check / target / result: 문서 규칙(검증기 변경 없음). 19장 첫 패스에서 기각 종류·건수를 decisions에 적어 확인.
+Evidence: 18장 review_out3/decisions.md '기각: 플랫폼 P5·H … 삼키는 사람의 결로 기각' ↔ 판독 1~3차 열세 자리.
+Limits: ①②의 경계 사례(예: '도현의 속이 없다' — 보태라인가 읽히지 않는다인가)는 ①로 둔다. 플랫폼 P4·P5는 보태라 종류라 여전히 기각 가능 — 판독에서 걸리면 금지 목록에 넣는다.
+Required specialist verdict: not applicable.
+Completion boundaries: 커밋 전(T-085~T-089). 다음: 커밋·푸시 → 19장.
+
+## T-088 / 2026-11-23 / 18장 판독 3차 "뭐가 10분인지 / 북한 말하는지 / 은유가 안 읽혀" → 패턴 102(대사가 가리키는 것은 독자가 아는 것), W42, 18장 세 자리
+
+Roadmap item: (0-2) 후속. 사용자 판독 세 자리('10분이야', '대대 통신병 말이야', '올해도 그 칸은 제가 써요'), "제발 규칙 좀 제대로 써".
+Result: 뿌리 하나 — 말하는 사람·듣는 사람만 아는 것을 대사가 가리킴(버너 10분이 이 장 서술에 없음, 전언의 대상 '북쪽'을 K8 오해로 접음, 결미 훅을 은유로 접음). 문장 독자 세 패스 지적을 삼키는 결·훅 설계로 기각한 것이 되풀이 원인. 수정: 패턴 102(①앞 서술이 사물·수치를 세움 ②전언은 출처·어미·대상 한 문장, K8은 사실 금지 ③결미 훅은 은유로 접지 않음·'무슨 뜻' 기각 금지), W42(수치 하나로 끝나는 대사가 앞 서술에 없음 — 새로 알려 주는 수치 제외, 소수점 안 가름), 테스트 2건 ALL OK, 처리 규칙·SKILL·decisions. 18장: 버너 10분 서술 + '10분 아직 안 됐어', 전언 세 줄에 북쪽·철책·출처, 결미 '사람이 있어도 그 칸에 0을 쓰는 건 제 손이에요. 올해도요'. 3,076자 PASS(하한 넘음), W39~W42 0. 11~17장 final W42 0.
+Changed files: skills/joestale/scripts/check_text.py(W42), test_check_text.py(2건), references/principles.md(102행·검사법 75~102), reviewer-prompt.md(처리 규칙 T-088), SKILL.md(2단계), decisions.md, T-track/ch18_v2/(final.txt, final_v3.txt, draft.txt, design.json, scripts 컨테이너 v7·드럼통 v8 + 보관), 보고서 18장(판독 3차 절), TASK.md, ROADMAP.md.
+Check / target / result: test_check_text ALL OK. 검증기 PASS. 재판독 대기.
+Evidence: final_v3.txt ↔ final.txt(세 자리), check.final.json.
+Limits: W42는 수치만인 대사만 센다 — '그 칸'·'저 위' 같은 지시어는 못 잡는다(문장 독자 C·G가 맡음, 기각 금지 규칙으로 받침). 입말 통독은 다시 띄우지 않음(세 줄). 판독 1~3차가 전부 '설계·결을 이유로 검수 지적을 기각한 자리'에서 났다 — 기각의 기준을 다음 장에서 다시 본다.
+Required specialist verdict: not applicable.
+Completion boundaries: 2026-11-23 사용자 통과. 커밋 전(T-085~T-088).
+
+## T-087 / 2026-11-23 / 18장 판독 2차 "'먹어' 다섯, 무슨 규칙이냐" → 패턴 100 보강(heard 샘플은 한 장에 한 번), W41(대사 종결 어절 되풀이), 18장 '먹어' 둘로
+
+Roadmap item: (0-2) 후속. 사용자 판독 "먹어가 총 몇 번 나오는지 세봐라. 한 장면에서 먹으라는 말만 5번이 나오는 게 맞냐? 무슨 규칙이냐?".
+Result: 다섯(도현 하나 포함). 규칙이 시킨 것이 아니라 태석 with_words 샘플('먼저 먹어', '식어')을 패턴 86의 만능 답으로 써 화제마다 닫은 작성자 버릇 — 1회차 대화 흐름이 짚었는데 기각. 수정: 패턴 100 보강, W41(TAIL_REPEAT_MAX 2, 예/아니요·문법 어미 제외), 테스트 2건 ALL OK, 처리 규칙(같은 말로 닫힌다 지적 기각 금지), decisions 행. 18장: 둘만 남김, 대본 컨테이너 v6, with_words 보강(태석 '먹어는 한 번', 도현 '밥 얘기로 자르지 않는다'). 2,982자 PASS, W41 0. 11~17장 final W41 0(어미만 남는 꼴 제외 뒤).
+Changed files: skills/joestale/scripts/check_text.py(W41), test_check_text.py(2건), references/principles.md(100행·검사법), reviewer-prompt.md(처리 규칙 T-087), decisions.md, T-track/ch18_v2/(final.txt, final_v2.txt, design.json, scripts/컨테이너.txt v6·_v5), 보고서 18장(판독 2차 절), TASK.md, ROADMAP.md.
+Check / target / result: test_check_text ALL OK. 검증기 PASS, W39·W40·W41 0. 재판독 대기.
+Evidence: scripts/컨테이너_v5.txt ↔ 컨테이너.txt(v6).
+Limits: W41은 종결 어절만 센다 — 문장 가운데 되풀이('먹어, 애냐')는 못 잡는다. 입말 통독은 다시 띄우지 않음(대사 세 줄 끝 어절 삭제만).
+Required specialist verdict: not applicable.
+Completion boundaries: 판독 3차 → T-088 반영. 커밋 전(T-085~T-088).
+
+## T-086 / 2026-11-23 / 18장 판독 1차 "원인이 뭐야" → 패턴 101(설계서는 대사에 사실을 배정하지 않는다)·97 ④(대사는 지문이 아니다), W39·W40, 18장 재배정·명단 장면 v5~v7
+
+Roadmap item: (0-2) 후속. 사용자 판독 다섯 자리("여긴 내가 치워 — 내가 치울게가 맞잖아. 왜 자꾸 일케 쓰냐고. 원인이 뭐야", "처치 받은 사람을 조의 반까지 — 이게 무슨 말이야", "그렇게 쏜 사수가 수백입니다 — 저만 그렇게 맞춘 게 아닐 텐데요로 가야지", "확인 서명만이고요 — 무슨 뜻이야", "구역 내 인원 칸 0 — 안 읽히네"), "규칙 고쳤어? 언제쯤 대화문 제대로 만들래".
+Result: 뿌리 둘. ① 설계서(plants.inside·hooks·shown_in·첫 등장 용어)가 사실을 "지훈의 설명 두 턴"처럼 대사에 배정 → 99로 장면을 네 번 다시 말해도 설명으로 되돌아옴(패턴 85를 설계 단계에서 어김, 전제 앵커라며 기각). ② 대본에서 지문과 대사를 같은 손으로 써 대사가 행동 중계·통계 진술이 됨. 수정: 패턴 101 + W39(shown_in 구절이 따옴표 안·plants에 대사 배정), 97 ④ + W40(1인칭+반말 현재형), scene-design plants 규격, SKILL 2단계, reviewer-prompt 처리 규칙(전제 앵커 기각 금지), decisions 101행, 테스트 4건 ALL OK. 18장: plants·hooks·premises 재배정(양식 칸·조항·서술), 명단 장면 v5→v7(지훈 설명 삭제, 도현이 아는 것을 내놓고 물음 넷을 물음 아닌 반응으로), 태석 "내가 치울게". 문장 독자 서술 열 곳. 2,985자 PASS, W39·W40 0. 입말 통독 5·6·7차: 장면 6 ××→○○△△○△○○○ (× 없음, 장면 6 △ 인터뷰·각본).
+Changed files: skills/joestale/scripts/check_text.py(W39·W40), test_check_text.py(4건), references/principles.md(101행·97 ④·검사법 75~101), scene-design.md(plants 규격), reviewer-prompt.md(처리 규칙 T-086), SKILL.md(2단계), decisions.md(101행), T-track/ch18_v2/(design.json, scripts 컨테이너 v5·드럼통 v5~v7 + 보관, draft_r5·r6·r6pre, final.txt, final_v1.txt, check.r6·r7·final, review_in_final3·review_in_speech, review_out4(decisions.md)·review_out_speech4~6·review_out_speech), 보고서 18장(판독 1차 절), TASK.md, ROADMAP.md.
+Check / target / result: test_check_text ALL OK(W39 ×2, W40 ×2 포함). 검증기 PASS. 입말 통독 7차는 review_out_speech/입말통독.md. 재판독 대기.
+Evidence: design.json plants(전·후: 보고서 T-085 절 vs 현재), scripts/드럼통_v4.txt ↔ 드럼통.txt(v7).
+Limits: ① 명단 장면은 사실을 종이로 옮기고 지훈의 설명을 지워도 입말 통독이 △·× 사이 — 도현이 받는 장면이라 묻는 쪽이 고정되는 구조. 재판독으로 판단. ② 떡국 장면 3(황·소문)은 대화 흐름 ×가 남았으나 상한으로 둠 — 다음 장 with_words에 "도현은 밥 얘기로 자르지 않는다". ③ 분량 하한 미달 그대로. ④ 서브에이전트 sonnet 6회(입말 3·문장 1·대화 흐름 1·문장 1).
+Required specialist verdict: not applicable.
+Completion boundaries: 판독 2차 → T-087 반영. 커밋 전(T-085~T-087).
+
+## T-085 / 2026-11-23 / 18장 「떡국」 첫 판(ch18_v2) — 패턴 99·100 첫 적용 장, 대본 v1~v4, 입말 통독 넷·검수 세 패스, 2,944자 PASS(하한 미달·명단 장면 입말 × 보고)
+
+Roadmap item: (0-2) 후속. 사용자 "커밋·푸시 후 18장"(T-081~T-084는 b68df54로 푸시).
+Result: design.json(domain_rules 13, 전제 셋 2·7·3장, speech with_words·heard 넷, 02-10 가을은 bridges에만) → 대본을 장면 통째로(컨테이너·드럼통) → 입말 통독 먼저 → 서술. 1회차 13명(180건) 뿌리 셋: 06:40→08:10 시간 틈, 이 장만 읽는 독자가 못 푸는 지시어 열, 장면 3 각본·장면 5 인터뷰 → 소대장을 떡국 끝 06:45로, 앵커 한 줄씩, 두 장면 통째로(v3). 2회차 10명(142건): 장면 5 입말 ×, 떡국 장면 열두 턴 설계에 마흔 턴, 태석 45세 판단 줄 ××, 지훈 '저도' 다섯 → 두 장면 통째로(v4, 대사 패스 넷째 = 상한 뒤 장면 재진술). 최종 읽기 3명(39건): 서술 아홉 곳만. 2,944자 PASS, W31~W38 0, X3 note 하나(둠). 입말 4차 장면 6(명단) × 남음 — 뿌리는 개요(첫 등장 용어 셋을 지훈의 대사로). 보고서 18장.
+Changed files: T-track/ch18_v2/(design.json, scripts/컨테이너.txt·드럼통.txt v4 + _v1~_v3, draft.txt·draft_r1~r4·draft_r4pre, final.txt, prev.txt, check.*.json, review_in·review_in_flow·review_in_final·review_in_final2·review_in_speech, review_out1·review_out2·review_out3(decisions.md)·review_out_speech1~3·review_out_speech), 보고서 18장, TASK.md, ROADMAP.md, tracking.json, 세부개요_11-25장.md(18장 회수 계획).
+Check / target / result: 검증기 PASS(위반 0, note 19). 입말 통독 1~4차 결과는 review_out_speech1~3·review_out_speech/입말통독.md. 사용자 판독 대기.
+Evidence: scripts/컨테이너_v1.txt ↔ 컨테이너.txt(v4), 드럼통_v1.txt ↔ 드럼통.txt(v4); review_out3/decisions.md.
+Limits: ① 명단 장면은 네 번 다시 말해도 인터뷰 결 — 개요의 "첫 등장 용어 = 지훈 대사"와 입말 통독이 맞선다. 절차 제안(판독 뒤 결정): 첫 등장 용어는 사물·서술(양식 제목·조항·공보문)로 깔고 대사는 태도만 남기는 것을 scene-design에 적을지. ② 분량 하한 미달 네 장 연속 — 검수의 "대화가 길다"와 하한 3,000이 맞선다(장편 분량 행 재검토). ③ 입말 통독 검수자가 발화자를 잘못 짚은 사례(소문 줄을 도현으로) — 대본에 이름이 없는 것이 설계라 그대로 두되, 셋 장면에서 도현·태석의 '먹어'가 겹치는 것은 다음 장 with_words에 반영. ④ 플랫폼 P5·P4(주인공의 속) 17장과 같이 남음. ⑤ 13명·10명·3명 서브에이전트(sonnet) 세 패스 + 입말 4회 = 30회.
+Required specialist verdict: not applicable.
+Completion boundaries: 판독 1차 → T-086 반영. 커밋 전(T-085·T-086).
+
 ## T-084 / 2026-11-23 / 17장 통과 기록 + 패턴 100 "어투는 어미가 아니라 말로 하는 일" — speech.endings → with_words·heard, 입말 통독에 구별 판정 추가
 
 Roadmap item: (0-2) 후속. 사용자 "대화가 훨씬 매끄러워졌다. 이제 캐릭터성에 맞는 어투를 구사하게 하면 좀 규칙이 뭉개지거나 지시가 과해질 수 있나?" → 합의: 어미 규칙이 아니라 말로 하는 일로. "재판독 끝내고 ㄱ".
